@@ -2,6 +2,7 @@ import ImgLogin from "../../../../assets/images/login.png";
 import {
   Box,
   FormControl,
+  FormHelperText,
   Grid2,
   IconButton,
   TextField,
@@ -10,13 +11,29 @@ import {
 import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
 import OutlinedInput from "@mui/material/OutlinedInput";
-import { Link } from "react-router-dom";
-import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { useContext, useState } from "react";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import InputAdornment from "@mui/material/InputAdornment";
+import { useForm } from "react-hook-form";
+import axios from "axios";
+import { User_URls } from "../../../../constants/End_Points";
+import { AuthContext } from "../../../../context/authcontext";
+import { toast } from "react-toastify";
+import {
+  EmailValidation,
+  PasswordValidation,
+} from "../../../../constants/Validations";
+
+type DataLogin = {
+  email: string;
+  password: string;
+};
 export default function Login() {
   /*functions for eye toggle */
+  const { saveLoginData }: any = useContext(AuthContext);
+  let navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const handleClickShowPassword = () => setShowPassword((show) => !show);
   const handleMouseDownPassword = (
@@ -29,17 +46,39 @@ export default function Login() {
   ) => {
     event.preventDefault();
   };
+  let {
+    register,
+    formState: { errors, isSubmitting },
+    handleSubmit,
+  } = useForm<DataLogin>({ mode: "onChange" });
+
+  const onSubmit = async (data: DataLogin) => {
+    try {
+      let response = await axios.post(User_URls.login, data);
+      console.log(response);
+      localStorage.setItem("token", response.data.data.token);
+      saveLoginData();
+      toast.success(response.data.message || "Login Successfully");
+      navigate("/dashboard");
+    } catch (error: any) {
+      toast.error(error.response.data.message || "An error occurred");
+    }
+  };
+
   return (
     <div>
       <Box
         sx={{
           height: "100vh",
-          overflow: { xs: "auto", sm: "auto", md: "hidden" },
+          overflow: { xs: "auto", md: "hidden" },
         }}
       >
         <Grid2 container>
-          <Grid2 width={"50%"} size={{ xs: 12, sm: 12, md: 6 }}>
-            <Box sx={{ marginLeft: "5%", marginTop: "20px", height: "13%" }}>
+          <Grid2
+            width={{ xs: "85%", sm: "95%", md: "50%" }}
+            size={{ xs: 12, md: 6 }}
+          >
+            <Stack sx={{ marginLeft: "3%", marginTop: "20px"}} height={{xs:"6%",sm:"13%"}}>
               <Typography
                 variant="h5"
                 style={{ fontSize: "26px", fontWeight: "500" }}
@@ -48,17 +87,17 @@ export default function Login() {
                 <span style={{ color: "#3252DF" }}>Stay</span>
                 <span style={{ color: "#152C5B" }}>cation.</span>
               </Typography>
-            </Box>
+            </Stack>
 
-            <Box
+            <Stack
               sx={{
                 display: "flex",
                 flexDirection: "column",
                 width: { xs: "100%", sm: "80%", md: "70%" },
-                margin: { xs: "10%", sm: "auto", md: "auto" },
+                margin: { xs: "10%", sm: "auto" },
               }}
             >
-              <Box>
+              <Stack>
                 <Typography
                   variant="h5"
                   style={{ fontSize: "30px", fontWeight: "500" }}
@@ -74,8 +113,9 @@ export default function Login() {
                     marginY: 3,
                   }}
                 >
-                  <p>If you don’t have an account register</p>
-                  <p>
+                  <span>If you don’t have an account register</span>
+                  <br />
+                  <span>
                     You can {""}
                     <Link
                       to={"/register"}
@@ -87,11 +127,12 @@ export default function Login() {
                     >
                       Register here !
                     </Link>{" "}
-                  </p>
+                  </span>
                 </Typography>
-              </Box>
+              </Stack>
 
               <FormControl
+                onSubmit={handleSubmit(onSubmit)}
                 sx={{ display: "flex", flexDirection: "column" }}
                 component="form"
               >
@@ -114,8 +155,16 @@ export default function Login() {
                   }}
                   type="email"
                   id="email"
+                  error={!!errors.email}
+                  //helperText={errors.email?.message}
                   placeholder="Please type here ..."
+                  {...register("email", EmailValidation)}
                 />
+                {errors.email && (
+                  <FormHelperText style={{ color: "#d32f2f" }}>
+                    {errors.email?.message}
+                  </FormHelperText>
+                )}
 
                 <label
                   htmlFor="password"
@@ -137,6 +186,9 @@ export default function Login() {
                   }}
                   placeholder="Please type here ..."
                   id="password"
+                  error={!!errors.password}
+                  // helperText={errors.password?.message}
+                  {...register("password", PasswordValidation)}
                   type={showPassword ? "text" : "password"}
                   endAdornment={
                     <InputAdornment position="end">
@@ -153,6 +205,11 @@ export default function Login() {
                     </InputAdornment>
                   }
                 />
+                {errors.password && (
+                  <FormHelperText style={{ color: "#d32f2f" }}>
+                    {errors.password?.message}
+                  </FormHelperText>
+                )}
 
                 <Link
                   to={"/forget-password"}
@@ -167,8 +224,9 @@ export default function Login() {
                   ForgetPassword?
                 </Link>
 
-                <Stack sx={{ marginBlock: "7%" }} spacing={2} direction="row">
+                <Stack sx={{ my: 4 }} spacing={2} direction="row">
                   <Button
+                    disabled={isSubmitting}
                     type="submit"
                     sx={{
                       width: "100%",
@@ -183,11 +241,14 @@ export default function Login() {
                   </Button>
                 </Stack>
               </FormControl>
-            </Box>
+            </Stack>
           </Grid2>
 
-          <Grid2 size={{ xs: 12, sm: 12, md: 6 }}>
-            <Box
+          <Grid2
+            display={{ xs: "none", md: "inline" }}
+            size={{ xs: 12, md: 6 }}
+          >
+            <Stack
               sx={{
                 height: "100vh",
                 backgroundImage: `url(${ImgLogin})`,
@@ -197,7 +258,7 @@ export default function Login() {
                 margin: "10px",
                 borderRadius: "15px",
               }}
-            ></Box>
+            ></Stack>
           </Grid2>
         </Grid2>
       </Box>
