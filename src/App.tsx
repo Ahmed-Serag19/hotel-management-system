@@ -35,6 +35,7 @@ const routes = createBrowserRouter([
   {
     path: "dashboard",
     element: (
+      
    //  <ProtectedRoute>
         <MasterLayout/>
     //  </ProtectedRoute>
