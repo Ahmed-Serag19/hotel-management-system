@@ -123,7 +123,7 @@ export default function Login() {
                     <Link
                       to={"/register"}
                       style={{
-                        color: "#152C5B",
+                        color: "#eb5148",
                         textDecoration: "none",
                         fontWeight: "600",
                       }}
