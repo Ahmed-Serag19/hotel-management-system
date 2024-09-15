@@ -15,7 +15,7 @@ import { useForm } from "react-hook-form";
 import axios from "axios";
 import { User_URls } from "../../../../constants/End_Points";
 import { toast } from "react-toastify";
-import register from "../../../../assets/images/register.png";
+import RegisterImg from "../../../../assets/images/register.png";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 
@@ -89,14 +89,21 @@ export default function Register() {
       <Box
         sx={{
           height: "100vh",
-          overflow: { xs: "auto", md: "hidden" },
+          overflow: "auto", // Allow scrolling for overflow
+          display: "flex", // Use flexbox to layout children
+          flexDirection: { xs: "column", md: "row" }, // Stack items vertically on xs screens and horizontally on md and above
         }}
       >
-        <Grid2 container>
-          <Grid2 width={{ xs: "85%", sm: "95%", md: "50%" }} xs={12} md={6}>
+        <Grid2 container sx={{ flex: 1 }}>
+          <Grid2
+            width={{ xs: "90%", sm: "95%", md: "50%" }}
+            xs={12}
+            md={6}
+            sx={{ margin: "auto", padding: { xs: 2, md: 4 } }} // Center and add padding
+          >
             <Stack
-              sx={{ marginLeft: "3%", marginTop: "20px" }}
-              height={{ xs: "6%", sm: "13%" }}
+              sx={{ marginLeft: { xs: 0, md: "3%" }, marginTop: "20px" }}
+              height={{ xs: "auto", sm: "auto" }}
             >
               <Typography
                 variant="h5"
@@ -111,8 +118,8 @@ export default function Register() {
               sx={{
                 display: "flex",
                 flexDirection: "column",
-                width: { xs: "100%", sm: "80%", md: "70%" },
-                margin: { xs: "10%", sm: "auto" },
+                width: "100%",
+                margin: "auto",
               }}
             >
               <Stack>
@@ -272,8 +279,6 @@ export default function Register() {
                 />
 
                 {/* Password */}
-
-                {/* Password */}
                 <label
                   htmlFor="password"
                   style={{
@@ -384,21 +389,20 @@ export default function Register() {
 
           {/* Grid for Image */}
           <Grid2
-            display={{ xs: "none", md: "inline" }}
+            display={{ xs: "none", md: "block" }}
             size={{ xs: 12, md: 6 }}
-          >
-            <Stack
-              sx={{
-                height: "100vh",
-                backgroundImage: `url(${register})`,
-                backgroundSize: "cover",
-                backgroundPosition: "100% 100%",
-                backgroundRepeat: "no-repeat",
-                margin: "10px",
-                borderRadius: "15px",
-              }}
-            ></Stack>
-          </Grid2>
+            sx={{
+              position: "sticky",
+              top: 0, // Stick to the top of the viewport
+              height: "100vh",
+              backgroundImage: `url(${RegisterImg})`,
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+              backgroundRepeat: "no-repeat",
+              borderRadius: "15px",
+              zIndex: 1, // Ensure it's on top of other content
+            }}
+          ></Grid2>
         </Grid2>
       </Box>
     </div>
