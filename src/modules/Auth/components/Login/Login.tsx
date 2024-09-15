@@ -191,7 +191,9 @@ export default function Login() {
                   id="password"
                   error={!!errors.password}
                   // helperText={errors.password?.message}
-                  {...register("password", PasswordValidation)}
+                  {...register("password", {
+                    required: "Password is required",
+                  })}
                   type={showPassword ? "text" : "password"}
                   endAdornment={
                     <InputAdornment position="end">
