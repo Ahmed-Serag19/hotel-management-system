@@ -78,7 +78,10 @@ export default function Login() {
             width={{ xs: "85%", sm: "95%", md: "50%" }}
             size={{ xs: 12, md: 6 }}
           >
-            <Stack sx={{ marginLeft: "3%", marginTop: "20px"}} height={{xs:"6%",sm:"13%"}}>
+            <Stack
+              sx={{ marginLeft: "3%", marginTop: "20px" }}
+              height={{ xs: "6%", sm: "13%" }}
+            >
               <Typography
                 variant="h5"
                 style={{ fontSize: "26px", fontWeight: "500" }}
@@ -221,7 +224,7 @@ export default function Login() {
                     textDecoration: "none",
                   }}
                 >
-                  ForgetPassword?
+                  Forgot Password?
                 </Link>
 
                 <Stack sx={{ my: 4 }} spacing={2} direction="row">
