@@ -16,4 +16,13 @@ export const EmailValidation = {
         'The password must include at least one lowercase letter, one uppercase letter, one digit, one special character, and be at least 6 characters long.',
     },
   };
+
+  export const ConfirmPasswordValidation = {
+    required: 'confirm Password Is Required',
+    pattern: {
+      value: PasswordRegEx,
+      message:
+        'The password must include at least one lowercase letter, one uppercase letter, one digit, one special character, and be at least 6 characters long.',
+    },
+  };
   
