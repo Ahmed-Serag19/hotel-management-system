@@ -1,44 +1,41 @@
+
+import ImgLogin from "../../../../assets/images/forgetpassword.png";
 import {
   Box,
-  Button,
   FormControl,
   FormHelperText,
-  Grid,
-  Stack,
+  Grid2,
   TextField,
   Typography,
 } from "@mui/material";
-import React from "react";
+import Stack from "@mui/material/Stack";
+import Button from "@mui/material/Button";
 import { Link, useNavigate } from "react-router-dom";
-import forgetpassword from "../../../../assets/images/forgetpassword.png";
 import { useForm } from "react-hook-form";
-import { EmailValidation } from "../../../../constants/Validations";
 import axios from "axios";
 import { User_URls } from "../../../../constants/End_Points";
 import { toast } from "react-toastify";
+import { EmailValidation } from "../../../../constants/Validations";
 
-interface dataForgetPassword {
+type DataForget = {
   email: string;
-}
+};
 
 export default function ForgetPassword() {
-  let navigate = useNavigate();
-  let {
+  const navigate = useNavigate();
+  const {
     register,
-    handleSubmit,
     formState: { errors, isSubmitting },
-  } = useForm<dataForgetPassword>({ defaultValues: { email: "" } });
+    handleSubmit,
+  } = useForm<DataForget>({ mode: "onChange" });
 
-  const onSubmit = async (data: dataForgetPassword) => {
+  const onSubmit = async (data: DataForget) => {    
     try {
       const response = await axios.post(User_URls.forgetPassword, data);
-      console.log(response);
-      setTimeout(() => {
-        navigate("/reset-password");
-      }, 500);
-      toast.success(response.data.message || "Email Sent Successfully");
+      toast.success(response.data.message);
+      navigate("/reset-password");
     } catch (error: any) {
-      console.error(error);
+
       toast.error(error.response.data.message || "An error occurred");
     }
   };
@@ -51,8 +48,14 @@ export default function ForgetPassword() {
           overflow: { xs: "auto", md: "hidden" },
         }}
       >
-        <Grid container>
-          <Grid width={{ xs: "85%", sm: "95%", md: "50%" }} xs={12} md={6}>
+
+        <Grid2 container>
+          {/* Left form */}
+          <Grid2
+            width={{ xs: "85%", sm: "95%", md: "50%" }}
+            size={{ xs: 12, md: 6 }}
+          >
+
             <Stack
               sx={{ marginLeft: "3%", marginTop: "20px" }}
               height={{ xs: "6%", sm: "13%" }}
@@ -76,10 +79,12 @@ export default function ForgetPassword() {
             >
               <Stack>
                 <Typography
-                  variant="h2"
+
+                  variant="h5"
                   style={{ fontSize: "30px", fontWeight: "500" }}
                 >
-                  ForgetPassword
+                  Forgot password
+
                 </Typography>
                 <Typography
                   component="p"
@@ -90,28 +95,36 @@ export default function ForgetPassword() {
                     marginY: 3,
                   }}
                 >
-                  <span>If you already have an account register you can</span>
+
+                  <span>If you don’t have an account register</span>
+
                   <br />
                   <span>
                     You can {""}
                     <Link
-                      to={"/login"}
+
+                      to={"/register"}
                       style={{
-                        color: "#d50000",
+                        color: "#152C5B",
+
                         textDecoration: "none",
                         fontWeight: "600",
                       }}
                     >
-                      Login here !
+                     Login here !
                     </Link>{" "}
                   </span>
                 </Typography>
               </Stack>
+
+
+
               <FormControl
                 onSubmit={handleSubmit(onSubmit)}
                 sx={{ display: "flex", flexDirection: "column" }}
                 component="form"
               >
+                {/* Email */}
                 <label
                   htmlFor="email"
                   style={{
@@ -120,7 +133,7 @@ export default function ForgetPassword() {
                     color: "#152C5B",
                   }}
                 >
-                  Email Address
+                  Email
                 </label>
                 <TextField
                   sx={{
@@ -140,24 +153,35 @@ export default function ForgetPassword() {
                     {errors.email?.message}
                   </FormHelperText>
                 )}
-                <Button
-                  disabled={isSubmitting}
-                  sx={{ mt: 6 }}
-                  type="submit"
-                  variant="contained"
-                >
-                  Send Email
-                </Button>
+                <Stack sx={{ my: 4 }} spacing={2} direction="row">
+                  <Button
+                    disabled={isSubmitting}
+                    type="submit"
+                    sx={{
+                      width: "100%",
+                      backgroundColor: "#3252DF",
+                      textTransform: "none",
+                      fontSize: "17px",
+                      fontWeight: 500,
+                    }}
+                    variant="contained"
+                  >
+                    Send mail
+                  </Button>
+                </Stack>
               </FormControl>
             </Stack>
-          </Grid>
-
-          {/* Grid for image */}
-          <Grid display={{ xs: "none", md: "inline" }} xs={12} md={6}>
+          </Grid2>
+          {/* right image */}
+          <Grid2
+            display={{ xs: "none", md: "inline" }}
+            size={{ xs: 12, md: 6 }}
+          >
             <Stack
               sx={{
                 height: "100vh",
-                backgroundImage: `url(${forgetpassword})`,
+                backgroundImage: `url(${ImgLogin})`,
+
                 backgroundSize: "cover",
                 backgroundPosition: "100% 100%",
                 backgroundRepeat: "no-repeat",
@@ -165,8 +189,8 @@ export default function ForgetPassword() {
                 borderRadius: "15px",
               }}
             ></Stack>
-          </Grid>
-        </Grid>
+          </Grid2>
+        </Grid2>
       </Box>
     </div>
   );
