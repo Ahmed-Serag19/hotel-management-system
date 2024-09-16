@@ -1,3 +1,4 @@
+
 import ImgLogin from "../../../../assets/images/forgetpassword.png";
 import {
   Box,
@@ -34,6 +35,7 @@ export default function ForgetPassword() {
       toast.success(response.data.message);
       navigate("/reset-password");
     } catch (error: any) {
+
       toast.error(error.response.data.message || "An error occurred");
     }
   };
@@ -46,12 +48,14 @@ export default function ForgetPassword() {
           overflow: { xs: "auto", md: "hidden" },
         }}
       >
+
         <Grid2 container>
           {/* Left form */}
           <Grid2
             width={{ xs: "85%", sm: "95%", md: "50%" }}
             size={{ xs: 12, md: 6 }}
           >
+
             <Stack
               sx={{ marginLeft: "3%", marginTop: "20px" }}
               height={{ xs: "6%", sm: "13%" }}
@@ -65,7 +69,6 @@ export default function ForgetPassword() {
                 <span style={{ color: "#152C5B" }}>cation.</span>
               </Typography>
             </Stack>
-
             <Stack
               sx={{
                 display: "flex",
@@ -76,10 +79,12 @@ export default function ForgetPassword() {
             >
               <Stack>
                 <Typography
+
                   variant="h5"
                   style={{ fontSize: "30px", fontWeight: "500" }}
                 >
                   Forgot password
+
                 </Typography>
                 <Typography
                   component="p"
@@ -90,14 +95,18 @@ export default function ForgetPassword() {
                     marginY: 3,
                   }}
                 >
+
                   <span>If you don’t have an account register</span>
+
                   <br />
                   <span>
                     You can {""}
                     <Link
+
                       to={"/register"}
                       style={{
                         color: "#152C5B",
+
                         textDecoration: "none",
                         fontWeight: "600",
                       }}
@@ -107,6 +116,8 @@ export default function ForgetPassword() {
                   </span>
                 </Typography>
               </Stack>
+
+
 
               <FormControl
                 onSubmit={handleSubmit(onSubmit)}
@@ -142,7 +153,6 @@ export default function ForgetPassword() {
                     {errors.email?.message}
                   </FormHelperText>
                 )}
-
                 <Stack sx={{ my: 4 }} spacing={2} direction="row">
                   <Button
                     disabled={isSubmitting}
@@ -171,6 +181,7 @@ export default function ForgetPassword() {
               sx={{
                 height: "100vh",
                 backgroundImage: `url(${ImgLogin})`,
+
                 backgroundSize: "cover",
                 backgroundPosition: "100% 100%",
                 backgroundRepeat: "no-repeat",
