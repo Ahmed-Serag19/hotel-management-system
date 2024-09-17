@@ -14,4 +14,5 @@ export const User_URls = {
 
 export const Ads_URls = {
   gitAds: `${Base_Ads}`,
+  deleteAds: (id: string): string => `${Base_Ads}/${id}`,
 };

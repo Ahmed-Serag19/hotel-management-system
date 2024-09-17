@@ -24,6 +24,7 @@ interface AdsTypes {
     price: number;
   };
   isActive: boolean;
+  _id: string;
 }
 
 const StyledTableRow = styled(TableRow)(() => ({
@@ -44,6 +45,18 @@ function AdsList() {
         headers: { Authorization: `${localStorage.getItem("token")}` },
       });
       setAds(res.data.data.ads);
+    } catch (error) {
+      console.error("Error fetching ads:", error);
+    }
+  };
+
+  const deleteAds = async (id:string) => {
+    try {
+       await axios.delete(Ads_URls.deleteAds(id), {
+        headers: { Authorization: `${localStorage.getItem("token")}` },
+      });
+      // TO DO: add toast delete
+      gitAdsList();
     } catch (error) {
       console.error("Error fetching ads:", error);
     }
@@ -116,7 +129,7 @@ function AdsList() {
                     >
                       Edit
                     </Button>
-                    <Button variant="outlined" color="error" size="small">
+                    <Button onClick={()=>deleteAds(ad._id)} variant="outlined" color="error" size="small">
                       Delete
                     </Button>
                   </TableCell>
@@ -124,8 +137,7 @@ function AdsList() {
               ))}
             </TableBody>
           </Table>
-        </TableContainer> : <h1>No Data</h1>}
-        
+        </TableContainer> : <h1>No Data</h1> } {/* TO DO: add component NoData  */}
       </Stack>
     </Box>
   );
