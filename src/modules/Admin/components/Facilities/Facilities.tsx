@@ -202,7 +202,7 @@ export default function Facilities() {
 
       <Box sx={{ mx: 3,mb:4}}>
 
-        {facility.length < 0 ? 
+        {facility.length  > 0 ? 
         
         
         <Table
