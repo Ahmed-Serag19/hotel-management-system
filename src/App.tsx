@@ -14,6 +14,7 @@ import {
 //  createHashRouter,
   RouterProvider,
 } from "react-router-dom";
+import AdsList from './modules/Ads/Components/AdsList/AdsList';
 
 function App() {
 
@@ -43,8 +44,7 @@ const routes = createBrowserRouter([
     errorElement: <NotFound />,
     children: [
       { index: true, element: <Home /> },
-      { path: "home", element: <Home /> },
-
+      { path: "Ads-list", element: <AdsList /> },
     ],
   },
 ])
