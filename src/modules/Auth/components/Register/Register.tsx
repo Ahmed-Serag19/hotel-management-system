@@ -9,7 +9,7 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import React, { useState } from "react";
+import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import axios from "axios";
@@ -63,7 +63,7 @@ export default function Register() {
       email: "",
       password: "",
       confirmPassword: "",
-      profileImage: null,
+      profileImage: undefined,
       role: "",
     },
   });
@@ -89,17 +89,19 @@ export default function Register() {
       <Box
         sx={{
           height: "100vh",
-          overflow: "auto", // Allow scrolling for overflow
-          display: "flex", // Use flexbox to layout children
-          flexDirection: { xs: "column", md: "row" }, // Stack items vertically on xs screens and horizontally on md and above
+          overflow: "auto",
+          display: "flex",
+          flexDirection: { xs: "column", md: "row" },
         }}
       >
         <Grid2 container sx={{ flex: 1 }}>
           <Grid2
-            width={{ xs: "90%", sm: "95%", md: "50%" }}
-            xs={12}
-            md={6}
-            sx={{ margin: "auto", padding: { xs: 2, md: 4 } }} // Center and add padding
+            sx={{
+              width: { xs: "90%", sm: "95%", md: "50%" },
+              margin: "auto",
+              padding: { xs: 2, md: 4 },
+              gridColumn: { xs: "span 12", md: "span 6" },
+            }}
           >
             <Stack
               sx={{ marginLeft: { xs: 0, md: "3%" }, marginTop: "20px" }}
