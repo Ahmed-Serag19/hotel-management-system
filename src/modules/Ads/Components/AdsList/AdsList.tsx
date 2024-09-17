@@ -81,7 +81,7 @@ function AdsList() {
         </Box>
       </Stack>
       <Stack sx={{ padding: 1.5 }}>
-        <TableContainer component={Paper}>
+        {ads.length > 0 ? <TableContainer component={Paper}>
           <Table sx={{ minWidth: 650 }} aria-label="simple table">
             <TableHead sx={{ backgroundColor: "#E2E5EB" }}>
               <TableRow>
@@ -124,7 +124,8 @@ function AdsList() {
               ))}
             </TableBody>
           </Table>
-        </TableContainer>
+        </TableContainer> : <h1>No Data</h1>}
+        
       </Stack>
     </Box>
   );
