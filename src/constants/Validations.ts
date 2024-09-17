@@ -6,7 +6,7 @@ export const EmailValidation = {
     },
   };
   export const PasswordRegEx =
-    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$ !%*?&])[A-Za-z\d@$!%*?&]{6,}$/;
+    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/;
   
   export const PasswordValidation = {
     required: 'Password Is Required',
