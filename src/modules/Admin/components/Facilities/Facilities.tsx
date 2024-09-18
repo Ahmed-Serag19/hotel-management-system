@@ -4,11 +4,17 @@ import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
+import { FaRegEdit } from "react-icons/fa";
+import { FaRegEye } from "react-icons/fa6";
+import { RiDeleteBin6Line } from "react-icons/ri";
+import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import {
   Box,
   Button,
   FormHelperText,
+  MenuItem,
   Modal,
+  Select,
   Stack,
   TextField,
   Typography,
@@ -21,11 +27,20 @@ import { toast } from "react-toastify";
 import styled from "@emotion/styled";
 import { tableCellClasses } from "@mui/material/TableCell"; // for border rows
 import NoData from "../../../Shared/components/NoData/NoData";
+import DeleteImg from "../../../../assets/images/delete.png";
 export default function Facilities() {
   const [facility, setFacility] = useState([]);
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+  const handleCloseDelete = () => setOpenDelete(false); //delete modal
+  const [openDelete, setOpenDelete] = useState(false); //delete modal
+  const [facId, setFacId] = useState<string>(""); //delete modal
+  const handleOpenDelete = (id: string) => {
+    //delete modal
+    setFacId(id);
+    setOpenDelete(true);
+  };
 
   //for modAl
   const style = {
@@ -71,6 +86,21 @@ export default function Facilities() {
       handleClose();
     } catch (error: any) {
       toast.error(error.response.data.message || "Failed Add");
+    }
+  };
+  //
+
+  //delete  facility
+  let deleteFacility = async () => {
+    try {
+      let response = await axios.delete(facility_Urls.delete(facId), {
+        headers: { Authorization: localStorage.getItem("token") },
+      });
+      toast.success(response.data.message || "Delete Successfully");
+      getFacility();
+      handleCloseDelete();
+    } catch (error: any) {
+      toast.error(error.response.data.message || "Failed Delete");
     }
   };
 
@@ -185,6 +215,92 @@ export default function Facilities() {
         </Box>
       </Modal>
 
+      {/* modAl delete */}
+      <Modal
+        open={openDelete}
+        onClose={handleCloseDelete}
+        aria-labelledby="parent-modal-title"
+        aria-describedby="parent-modal-description"
+        sx={{ fontFamily: "Poppins", padding: "60px" }}
+      >
+        <Box sx={style}>
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "end",
+              mb: "60px",
+            }}
+          >
+            <i
+              onClick={handleCloseDelete}
+              style={{
+                color: "#CC0000",
+                textAlign: "right",
+                cursor: "pointer",
+              }}
+              className="fa-regular fa-xl fa-circle-xmark"
+            ></i>
+          </Box>
+
+          <Box sx={{ textAlign: "center", mt: 5, mb: 2 }}>
+            <img src={DeleteImg} alt="" />
+          </Box>
+
+          <Typography
+            variant="h6"
+            sx={{
+              color: "#494949",
+              fontWeight: 700,
+              fontSize: "20px",
+              textAlign: "center",
+            }}
+          >
+            Delete This Facility ?
+          </Typography>
+          <Typography
+            sx={{
+              color: "#494949",
+              fontSize: "14.5px",
+              textAlign: "center",
+              opacity: "60%",
+              mt: 2,
+              mb: 5,
+            }}
+          >
+            are you sure you want to delete this item ? if you are sure just
+            click on delete it
+          </Typography>
+
+          <Stack
+            sx={{
+              mt: 5,
+              width: "100%",
+              display: "flex",
+              justifyContent: "end",
+              borderTop: "3px",
+            }}
+            spacing={2}
+            direction="row"
+          >
+            <Button
+              onClick={deleteFacility}
+              disabled={isSubmitting}
+              type="submit"
+              sx={{
+                backgroundColor: "#203FC7",
+                textTransform: "none",
+                fontSize: "17px",
+                fontWeight: 500,
+                mt: 3,
+              }}
+              variant="contained"
+            >
+              Delete
+            </Button>
+          </Stack>
+        </Box>
+      </Modal>
+
       {/* table */}
 
       <Box sx={{ mx: 3, mb: 4 }}>
@@ -229,7 +345,7 @@ export default function Facilities() {
                     fontFamily: "Poppins",
                   }}
                 >
-                  CreatedAt
+                  Created at
                 </TableCell>
 
                 <TableCell
@@ -241,7 +357,7 @@ export default function Facilities() {
                     borderBottomRightRadius: "1rem",
                   }}
                 >
-                  :
+                  Action
                 </TableCell>
               </TableRow>
             </TableHead>
@@ -250,7 +366,7 @@ export default function Facilities() {
             >
               {facility.map((facilityData: any) => (
                 <StyledTableRow
-                  key={facilityData.id}
+                  key={facilityData._id}
                   sx={{
                     "&:last-child td, &:last-child th": { border: 0 },
                     fontFamily: "Poppins",
@@ -260,7 +376,60 @@ export default function Facilities() {
                     {facilityData.name}
                   </TableCell>
                   <TableCell>{Numbers(facilityData.createdAt)}</TableCell>
-                  <TableCell>:</TableCell>
+                  <TableCell>
+                    {/* ----select----- */}
+                    <Select
+                      sx={{
+                        color: "#1F263E",
+                        fontFamily: "Poppins",
+                        fontSize: "14px",
+
+                        boxShadow: "none",
+                        ".MuiOutlinedInput-notchedOutline": { border: 0 },
+                        "&.MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline":
+                          {
+                            border: 0,
+                          },
+                        "&.MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline":
+                          {
+                            border: 0,
+                          },
+                      }}
+                      value=""
+                      displayEmpty
+                      inputProps={{ "aria-label": "Without label" }}
+                      IconComponent={MoreHorizIcon}
+                    >
+                      <MenuItem
+                        sx={{ color: "#1F263E", fontFamily: "Poppins" }}
+                        value={10}
+                      >
+                        <FaRegEye
+                          style={{ color: "#203FC7", marginRight: "10px" }}
+                        />{" "}
+                        View
+                      </MenuItem>
+                      <MenuItem
+                        sx={{ color: "#1F263E", fontFamily: "Poppins" }}
+                        value={20}
+                      >
+                        <FaRegEdit
+                          style={{ color: "#203FC7", marginRight: "10px" }}
+                        />{" "}
+                        Edit
+                      </MenuItem>
+                      <MenuItem
+                        sx={{ color: "#1F263E", fontFamily: "Poppins" }}
+                        onClick={() => handleOpenDelete(facilityData._id)}
+                        value={30}
+                      >
+                        <RiDeleteBin6Line
+                          style={{ color: "#203FC7", marginRight: "10px" }}
+                        />{" "}
+                        Delete
+                      </MenuItem>
+                    </Select>
+                  </TableCell>
                 </StyledTableRow>
               ))}
             </TableBody>
