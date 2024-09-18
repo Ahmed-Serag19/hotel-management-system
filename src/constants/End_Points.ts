@@ -10,9 +10,11 @@ export const User_URls = {
   resetPassword: `${Base_Users}/reset-password`,
   changePassword: `${Base_Users}/change-password`,
 };
-const Base_facilities=`${Base_Url}/admin`
+const Base_facilities=`${Base_Url}/admin/room-facilities`
 export const facility_Urls={
-getAllFacility:`${Base_facilities}/room-facilities`,
-createFacility:`${Base_facilities}/room-facilities`,
-
+getAllFacility:`${Base_facilities}`,
+createFacility:`${Base_facilities}`,
+delete: (id:string) =>  `${Base_facilities}/${id}`,
+update: (id:string) =>  `${Base_facilities}/${id}`,
+details: (id:string) =>  `${Base_facilities}/${id}`,
 }
