@@ -18,10 +18,9 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import styled from "@emotion/styled";
 import axios from "axios";
 import { roomsUrl } from "../../../../constants/End_Points";
-import TitleTables from "../../../Shared/TitleTables/TitleTables"; // Import your title component
+import TitleTables from "../../../Shared/TitleTables/TitleTables";
 import NoData from "../../../Shared/components/NoData/NoData";
 
-// Custom styled table rows
 const StyledTableRow = styled(TableRow)`
   &:nth-of-type(even) {
     background-color: #f8f9fb;
@@ -36,12 +35,10 @@ export default function Rooms() {
   const [totalCount, setTotalCount] = useState(0);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [selectedRoom, setSelectedRoom] = useState(null);
-  const [expandedRoom, setExpandedRoom] = useState<string | null>(null); // For expanding facilities
 
   const open = Boolean(anchorEl);
   const id = open ? "simple-popover" : undefined;
 
-  // Handle clicking the triple dot button
   const handleClick = (
     event: React.MouseEvent<HTMLButtonElement>,
     room: any
@@ -85,11 +82,6 @@ export default function Rooms() {
   ) => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
-  };
-
-  // Toggle facilities expansion
-  const handleExpandClick = (roomId: string) => {
-    setExpandedRoom(expandedRoom === roomId ? null : roomId);
   };
 
   return (
@@ -185,7 +177,6 @@ export default function Rooms() {
                     <TableCell>{room.price}</TableCell>
                     <TableCell>{room.discount}</TableCell>
                     <TableCell>{room.capacity}</TableCell>
-
                     <TableCell>
                       <Box p={1}>
                         {room.facilities.length > 0 ? (
@@ -197,7 +188,6 @@ export default function Rooms() {
                         )}
                       </Box>
                     </TableCell>
-
                     <TableCell>
                       {/* IconButton for the dropdown */}
                       <IconButton
@@ -258,7 +248,6 @@ export default function Rooms() {
                 ))}
               </TableBody>
             </Table>
-
             <TablePagination
               component="div"
               count={totalCount}
