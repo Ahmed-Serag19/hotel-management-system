@@ -18,3 +18,8 @@ delete: (id:string) =>  `${Base_facilities}/${id}`,
 update: (id:string) =>  `${Base_facilities}/${id}`,
 details: (id:string) =>  `${Base_facilities}/${id}`,
 }
+const Base_rooms = `${Base_Url}/admin/rooms`;
+export const roomsUrl = {
+  getAllRooms: `${Base_rooms}?page=1&size=10`,
+  createRoom: `${Base_rooms}/room-facilities`,
+};
