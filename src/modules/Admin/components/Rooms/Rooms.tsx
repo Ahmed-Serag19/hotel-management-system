@@ -60,7 +60,7 @@ export default function Rooms() {
 
   return (
     <>
-      <TitleTables titleTable="Rooms Table Details" />
+      <TitleTables titleTable="Rooms" btn="Room" />
       <Box sx={{ mx: 3, mb: 4 }}>
         {rooms.length > 0 ? (
           <>
@@ -76,6 +76,7 @@ export default function Rooms() {
             >
               <TableHead>
                 <TableRow
+                  style={{ fontWeight: "bold" }}
                   sx={{
                     bgcolor: "#E2E5EB",
                     "&:last-child td, &:last-child th": { border: 0 },
