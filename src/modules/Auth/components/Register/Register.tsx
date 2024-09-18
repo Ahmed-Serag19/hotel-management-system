@@ -85,7 +85,7 @@ export default function Register() {
   };
 
   return (
-    <div>
+    <>
       <Box
         sx={{
           height: "100vh",
@@ -103,24 +103,29 @@ export default function Register() {
               gridColumn: { xs: "span 12", md: "span 6" },
             }}
           >
+            <Typography
+              variant="h5"
+              style={{
+                fontSize: "26px",
+                fontWeight: "500",
+                padding: "",
+                position: "absolute",
+                top: "20px",
+              }}
+              component="p"
+            >
+              <span style={{ color: "#3252DF" }}>Stay</span>
+              <span style={{ color: "#152C5B" }}>cation.</span>
+            </Typography>
             <Stack
               sx={{ marginLeft: { xs: 0, md: "3%" }, marginTop: "20px" }}
               height={{ xs: "auto", sm: "auto" }}
-            >
-              <Typography
-                variant="h5"
-                style={{ fontSize: "26px", fontWeight: "500" }}
-                component="p"
-              >
-                <span style={{ color: "#3252DF" }}>Stay</span>
-                <span style={{ color: "#152C5B" }}>cation.</span>
-              </Typography>
-            </Stack>
+            ></Stack>
             <Stack
               sx={{
                 display: "flex",
                 flexDirection: "column",
-                width: "100%",
+                width: "80%",
                 margin: "auto",
               }}
             >
@@ -407,6 +412,6 @@ export default function Register() {
           ></Grid2>
         </Grid2>
       </Box>
-    </div>
+    </>
   );
 }
