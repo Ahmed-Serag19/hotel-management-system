@@ -30,17 +30,31 @@ import NoData from "../../../Shared/components/NoData/NoData";
 import DeleteImg from "../../../../assets/images/delete.png";
 export default function Facilities() {
   const [facility, setFacility] = useState([]);
-  const [open, setOpen] = useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const [modalOpen, setModalOpen] = useState(false); //add& update
+  const [isUpdate, setIsUpdate] = useState(false); //add& update
   const handleCloseDelete = () => setOpenDelete(false); //delete modal
   const [openDelete, setOpenDelete] = useState(false); //delete modal
-  const [facId, setFacId] = useState<string>(""); //delete modal
-  const handleOpenDelete = (id: string) => {
-    //delete modal
+  const [facId, setFacId] = useState<string>(""); 
+  const handleOpenDelete = (id: string) => {   //delete modal
     setFacId(id);
     setOpenDelete(true);
   };
+
+  //add& update
+  const openAddModal = () => {
+    setIsUpdate(false);
+    setModalOpen(true);
+    setFacId("");
+    reset();
+  };
+
+  const openUpdateModal = (facilityData: any) => {
+    setValue("name", facilityData.name);
+    setFacId(facilityData._id);
+    setIsUpdate(true);
+    setModalOpen(true);
+  };
+  const closeModal = () => setModalOpen(false);
 
   //for modAl
   const style = {
@@ -58,6 +72,7 @@ export default function Facilities() {
   let {
     register,
     handleSubmit,
+    setValue,
     formState: { errors, isSubmitting },
     reset,
   } = useForm({ mode: "onChange" });
@@ -74,21 +89,30 @@ export default function Facilities() {
     }
   };
 
-  //add  facility
-  let addFacility = async (data: object) => {
+  //add  and update facility
+
+  const saveOrUpdateFacility = async (data: object) => {
     try {
-      let response = await axios.post(facility_Urls.createFacility, data, {
+      const url = isUpdate
+        ? facility_Urls.update(facId)
+        : facility_Urls.createFacility;
+      const method = isUpdate ? "put" : "post";
+
+      const response = await axios({
+        method,
+        url,
+        data,
         headers: { Authorization: localStorage.getItem("token") },
       });
-      toast.success(response.data.message || "Add Successfully");
+
+      toast.success(response?.data?.message);
       getFacility();
       reset();
-      handleClose();
+      closeModal();
     } catch (error: any) {
-      toast.error(error.response.data.message || "Failed Add");
+      toast.error(error?.response?.data?.message);
     }
   };
-  //
 
   //delete  facility
   let deleteFacility = async () => {
@@ -122,18 +146,20 @@ export default function Facilities() {
   useEffect(() => {
     getFacility();
   }, []);
+
   return (
     <>
       <TitleTables
         titleTable="Facilities"
         btn="Facility"
-        onClick={handleOpen}
+        onClick={openAddModal}
       />
 
-      {/* modAl add */}
+      {/* modAl add && update*/}
+
       <Modal
-        open={open}
-        onClose={handleClose}
+        open={modalOpen}
+        onClose={closeModal}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
         sx={{ fontFamily: "Poppins" }}
@@ -151,11 +177,11 @@ export default function Facilities() {
               variant="h6"
               component="h2"
             >
-              Add Facility
+              {isUpdate ? "Update Facility" : "Add Facility"}
             </Typography>
 
             <i
-              onClick={handleClose}
+              onClick={closeModal}
               style={{
                 color: "#CC0000",
                 textAlign: "right",
@@ -164,7 +190,7 @@ export default function Facilities() {
               className="fa-regular fa-xl fa-circle-xmark"
             ></i>
           </Box>
-          <form onSubmit={handleSubmit(addFacility)}>
+          <form onSubmit={handleSubmit((data) => saveOrUpdateFacility(data))}>
             <TextField
               id="name"
               label="Name"
@@ -196,9 +222,8 @@ export default function Facilities() {
               direction="row"
             >
               <Button
-                onClick={addFacility}
+                onClick={saveOrUpdateFacility}
                 disabled={isSubmitting}
-                //  disabled={isSubmitting}
                 type="submit"
                 sx={{
                   backgroundColor: "#203FC7",
@@ -208,7 +233,7 @@ export default function Facilities() {
                 }}
                 variant="contained"
               >
-                Save
+                {isUpdate ? "Update" : "Save"}
               </Button>
             </Stack>
           </form>
@@ -400,7 +425,7 @@ export default function Facilities() {
                       inputProps={{ "aria-label": "Without label" }}
                       IconComponent={MoreHorizIcon}
                     >
-                      <MenuItem
+                      {/* <MenuItem
                         sx={{ color: "#1F263E", fontFamily: "Poppins" }}
                         value={10}
                       >
@@ -408,8 +433,9 @@ export default function Facilities() {
                           style={{ color: "#203FC7", marginRight: "10px" }}
                         />{" "}
                         View
-                      </MenuItem>
+                      </MenuItem> */}
                       <MenuItem
+                        onClick={() => openUpdateModal(facilityData)}
                         sx={{ color: "#1F263E", fontFamily: "Poppins" }}
                         value={20}
                       >
