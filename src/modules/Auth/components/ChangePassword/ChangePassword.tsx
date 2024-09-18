@@ -1,9 +1,9 @@
-import React from 'react'
+import React from "react";
 
 export default function ChangePassword() {
   return (
-    <div>
-      
-    </div>
-  )
+    <>
+      <h1>hna hn3ml chamge password</h1>
+    </>
+  );
 }
