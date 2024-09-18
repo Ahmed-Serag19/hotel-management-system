@@ -4,7 +4,6 @@ import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
 import {
   Box,
   Button,
@@ -47,7 +46,6 @@ export default function Facilities() {
     formState: { errors, isSubmitting },
     reset,
   } = useForm({ mode: "onChange" });
-
 
   //get all facility
   let getFacility = async () => {
@@ -96,8 +94,6 @@ export default function Facilities() {
   }, []);
   return (
     <>
-
-
       <TitleTables
         titleTable="Facilities"
         btn="Facility"
@@ -112,9 +108,6 @@ export default function Facilities() {
         aria-describedby="modal-modal-description"
         sx={{ fontFamily: "Poppins" }}
       >
-
-
-
         <Box sx={style}>
           <Box
             sx={{
@@ -192,97 +185,89 @@ export default function Facilities() {
         </Box>
       </Modal>
 
-
-
-
-
       {/* table */}
 
-
-
-      <Box sx={{ mx: 3,mb:4}}>
-
-        {facility.length  > 0 ? 
-        
-        
-        <Table
-        sx={{
-          minWidth: 350,
-          [`& .${tableCellClasses.root}`]: {
-            borderBottom: "none",
-          },
-          mt:"50px",
-        }}
-        aria-label="simple table"
-      >
-        <TableHead sx={{ hight: "50px" }}>
-          <TableRow
+      <Box sx={{ mx: 3, mb: 4 }}>
+        {facility.length > 0 ? (
+          <Table
             sx={{
-              bgcolor: "#E2E5EB",
-              m: 0,
-              "&:last-child td, &:last-child th": { border: 0 },
-              color: "#1F263E",
-              fontWeight: 500,
-              fontFamily: "Poppins",
+              minWidth: 350,
+              [`& .${tableCellClasses.root}`]: {
+                borderBottom: "none",
+              },
+              mt: "50px",
             }}
+            aria-label="simple table"
           >
-            <TableCell
-              sx={{
-                p: 3,
-                borderTopLeftRadius: "1rem",
-                borderBottomLeftRadius: "1rem",
-                color: "#1F263E",
-                fontWeight: 500,
-                fontFamily: "Poppins",
-              }}
-            >
-              Name
-            </TableCell>
-            <TableCell
-              sx={{
-                color: "#1F263E",
-                fontWeight: 500,
-                fontFamily: "Poppins",
-              }}
-            >
-              CreatedAt
-            </TableCell>
+            <TableHead sx={{ hight: "50px" }}>
+              <TableRow
+                sx={{
+                  bgcolor: "#E2E5EB",
+                  m: 0,
+                  "&:last-child td, &:last-child th": { border: 0 },
+                  color: "#1F263E",
+                  fontWeight: 500,
+                  fontFamily: "Poppins",
+                }}
+              >
+                <TableCell
+                  sx={{
+                    p: 3,
+                    borderTopLeftRadius: "1rem",
+                    borderBottomLeftRadius: "1rem",
+                    color: "#1F263E",
+                    fontWeight: 500,
+                    fontFamily: "Poppins",
+                  }}
+                >
+                  Name
+                </TableCell>
+                <TableCell
+                  sx={{
+                    color: "#1F263E",
+                    fontWeight: 500,
+                    fontFamily: "Poppins",
+                  }}
+                >
+                  CreatedAt
+                </TableCell>
 
-            <TableCell
-              sx={{
-                color: "#1F263E",
-                fontWeight: 500,
-                fontFamily: "Poppins",
-                borderTopRightRadius: "1rem",
-                borderBottomRightRadius: "1rem",
-              }}
+                <TableCell
+                  sx={{
+                    color: "#1F263E",
+                    fontWeight: 500,
+                    fontFamily: "Poppins",
+                    borderTopRightRadius: "1rem",
+                    borderBottomRightRadius: "1rem",
+                  }}
+                >
+                  :
+                </TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody
+              sx={{ border: "none", borderTop: "none", borderCollapse: "none" }}
             >
-              :
-            </TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody
-          sx={{ border: "none", borderTop: "none", borderCollapse: "none" }}
-        >
-          {facility.map((facilityData: any) => (
-            <StyledTableRow
-              key={facilityData.id}
-              sx={{
-                "&:last-child td, &:last-child th": { border: 0 },
-                fontFamily: "Poppins",
-              }}
-            >
-              <TableCell sx={{ color: "#3A3A3D", fontFamily: "Poppins" }}>
-                {facilityData.name}
-              </TableCell>
-              <TableCell>{Numbers(facilityData.createdAt)}</TableCell>
-              <TableCell>:</TableCell>
-            </StyledTableRow>
-          ))}
-        </TableBody>
-      </Table>
-        :<NoData/>}
-   
+              {facility.map((facilityData: any) => (
+                <StyledTableRow
+                  key={facilityData.id}
+                  sx={{
+                    "&:last-child td, &:last-child th": { border: 0 },
+                    fontFamily: "Poppins",
+                  }}
+                >
+                  <TableCell sx={{ color: "#3A3A3D", fontFamily: "Poppins" }}>
+                    {facilityData.name}
+                  </TableCell>
+                  <TableCell>{Numbers(facilityData.createdAt)}</TableCell>
+                  <TableCell>:</TableCell>
+                </StyledTableRow>
+              ))}
+            </TableBody>
+          </Table>
+        ) : (
+          <NoData />
+        )}
       </Box>
     </>
   );
