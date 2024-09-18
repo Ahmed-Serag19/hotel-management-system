@@ -18,6 +18,7 @@ import { toast } from "react-toastify";
 import RegisterImg from "../../../../assets/images/register.png";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
+// import { Grid2 } from '@mui/material/Unstable_Grid2';
 
 export default function Register() {
   const [showPassword, setShowPassword] = useState(false);
@@ -63,7 +64,11 @@ export default function Register() {
       email: "",
       password: "",
       confirmPassword: "",
+<<<<<<< Updated upstream
       profileImage: undefined,
+=======
+      profileImage: FileList,
+>>>>>>> Stashed changes
       role: "",
     },
   });
@@ -89,19 +94,33 @@ export default function Register() {
       <Box
         sx={{
           height: "100vh",
+<<<<<<< Updated upstream
           overflow: "auto",
           display: "flex",
           flexDirection: { xs: "column", md: "row" },
+=======
+          overflow: "hidden", // Prevent scrolling
+          display: "flex", // Flexbox to layout the image and form side by side
+          flexDirection: { xs: "column", md: "row" }, // Stack items vertically on xs screens and horizontally on md and above
+>>>>>>> Stashed changes
         }}
       >
-        <Grid2 container sx={{ flex: 1 }}>
+        <Grid2 container sx={{ flex: 10 }}>
+          {/* Form on the Right */}
           <Grid2
+<<<<<<< Updated upstream
             sx={{
               width: { xs: "90%", sm: "95%", md: "50%" },
               margin: "auto",
               padding: { xs: 2, md: 4 },
               gridColumn: { xs: "span 12", md: "span 6" },
             }}
+=======
+            width={{ xs: "70%", sm: "65%", md: "50%" }} // Increased the grid size to avoid scrolling
+            xs={12}
+            md={6}
+            sx={{ margin: "auto", padding: { xs: 2, md: 4 } }} // Center and add padding
+>>>>>>> Stashed changes
           >
             <Typography
               variant="h5"
@@ -118,9 +137,22 @@ export default function Register() {
               <span style={{ color: "#152C5B" }}>cation.</span>
             </Typography>
             <Stack
-              sx={{ marginLeft: { xs: 0, md: "3%" }, marginTop: "20px" }}
+              sx={{ marginLeft: { xs: 0, md: "3%" }, marginTop: "10px" }}
               height={{ xs: "auto", sm: "auto" }}
+<<<<<<< Updated upstream
             ></Stack>
+=======
+            >
+              <Typography
+                variant="h5"
+                style={{ fontSize: "22px", fontWeight: "500" }} // Reduced the font size
+                component="p"
+              >
+                <span style={{ color: "#3252DF" }}>Stay</span>
+                <span style={{ color: "#152C5B" }}>cation.</span>
+              </Typography>
+            </Stack>
+>>>>>>> Stashed changes
             <Stack
               sx={{
                 display: "flex",
@@ -132,7 +164,7 @@ export default function Register() {
               <Stack>
                 <Typography
                   variant="h2"
-                  style={{ fontSize: "30px", fontWeight: "500" }}
+                  style={{ fontSize: "20px", fontWeight: "500" }} // Reduced the font size
                 >
                   Sign Up
                 </Typography>
@@ -140,15 +172,14 @@ export default function Register() {
                   component="p"
                   sx={{
                     fontFamily: "Poppins",
-                    fontSize: "16px",
+                    fontSize: "12px", // Reduced the text size
                     fontWeight: "500",
-                    marginY: 3,
+                    marginY: 2,
                   }}
                 >
                   <span>If you already have an account, you can</span>
                   <br />
                   <span>
-                    You can {""}
                     <Link
                       to={"/login"}
                       style={{
@@ -171,8 +202,12 @@ export default function Register() {
                 <label
                   htmlFor="userName"
                   style={{
+<<<<<<< Updated upstream
                     paddingTop: "5px",
                     fontSize: "16px",
+=======
+                    fontSize: "10px", // Smaller label size
+>>>>>>> Stashed changes
                     fontWeight: 400,
                     color: "#152C5B",
                   }}
@@ -185,6 +220,8 @@ export default function Register() {
                     marginBottom: 1,
                     bgcolor: "#f5f6f8",
                     border: "none",
+                    width: "100%",
+                    fontSize: "10px", // Smaller input text size
                   }}
                   type="text"
                   placeholder="Please type here ..."
@@ -199,6 +236,7 @@ export default function Register() {
                 {/* Phone Number and Country */}
                 <Stack
                   direction={{ xs: "column", sm: "row" }}
+<<<<<<< Updated upstream
                   spacing={{ xs: 1, sm: 2, md: 3 }}
                 >
                   <Stack width="100%">
@@ -207,6 +245,15 @@ export default function Register() {
                       style={{
                         paddingTop: "5px",
                         fontSize: "16px",
+=======
+                  spacing={{ xs: 1, sm: 2, md: 2 }}
+                >
+                  <Stack spacing={1} width="100%">
+                    <label
+                      htmlFor="phoneNumber"
+                      style={{
+                        fontSize: "10px", // Smaller label size
+>>>>>>> Stashed changes
                         fontWeight: 400,
                         color: "#152C5B",
                       }}
@@ -218,6 +265,8 @@ export default function Register() {
                         marginBottom: 1,
                         bgcolor: "#f5f6f8",
                         border: "none",
+                        width: "100%",
+                        fontSize: "10px", // Smaller input size
                       }}
                       type="number"
                       placeholder="Please type here ..."
@@ -230,12 +279,20 @@ export default function Register() {
                     />
                   </Stack>
 
+<<<<<<< Updated upstream
                   <Stack width="100%">
                     <label
                       htmlFor="country"
                       style={{
                         paddingTop: "5px",
                         fontSize: "16px",
+=======
+                  <Stack spacing={1} width="100%">
+                    <label
+                      htmlFor="country"
+                      style={{
+                        fontSize: "10px", // Smaller label size
+>>>>>>> Stashed changes
                         fontWeight: 400,
                         color: "#152C5B",
                       }}
@@ -247,6 +304,8 @@ export default function Register() {
                         marginBottom: 1,
                         bgcolor: "#f5f6f8",
                         border: "none",
+                        width: "100%",
+                        fontSize: "10px", // Smaller input size
                       }}
                       type="text"
                       placeholder="Please type here ..."
@@ -264,8 +323,12 @@ export default function Register() {
                 <label
                   htmlFor="email"
                   style={{
+<<<<<<< Updated upstream
                     paddingTop: "5px",
                     fontSize: "16px",
+=======
+                    fontSize: "10px", // Smaller label size
+>>>>>>> Stashed changes
                     fontWeight: 400,
                     color: "#152C5B",
                   }}
@@ -277,6 +340,8 @@ export default function Register() {
                     marginBottom: 1,
                     bgcolor: "#f5f6f8",
                     border: "none",
+                    width: "100%",
+                    fontSize: "10px", // Smaller input size
                   }}
                   type="email"
                   placeholder="Please type here ..."
@@ -290,8 +355,12 @@ export default function Register() {
                 <label
                   htmlFor="password"
                   style={{
+<<<<<<< Updated upstream
                     paddingTop: "5px",
                     fontSize: "16px",
+=======
+                    fontSize: "10px", // Smaller label size
+>>>>>>> Stashed changes
                     fontWeight: 400,
                     color: "#152C5B",
                   }}
@@ -303,6 +372,8 @@ export default function Register() {
                     marginBottom: 1,
                     bgcolor: "#f5f6f8",
                     border: "none",
+                    width: "100%",
+                    fontSize: "10px", // Smaller input size
                   }}
                   type={showPassword ? "text" : "password"}
                   placeholder="Please type here ..."
@@ -330,8 +401,12 @@ export default function Register() {
                 <label
                   htmlFor="confirmPassword"
                   style={{
+<<<<<<< Updated upstream
                     paddingTop: "5px",
                     fontSize: "16px",
+=======
+                    fontSize: "10px", // Smaller label size
+>>>>>>> Stashed changes
                     fontWeight: 400,
                     color: "#152C5B",
                   }}
@@ -343,6 +418,8 @@ export default function Register() {
                     marginBottom: 1,
                     bgcolor: "#f5f6f8",
                     border: "none",
+                    width: "100%",
+                    fontSize: "10px", // Smaller input size
                   }}
                   type={showPassword ? "text" : "password"}
                   placeholder="Please type here ..."
@@ -365,13 +442,18 @@ export default function Register() {
                     ),
                   }}
                 />
+
                 {/* Profile Image */}
                 <label
                   htmlFor="profileImage"
                   style={{
+<<<<<<< Updated upstream
                     paddingTop: "5px",
                     paddingBottom: "10px",
                     fontSize: "16px",
+=======
+                    fontSize: "10px", // Smaller label size
+>>>>>>> Stashed changes
                     fontWeight: 400,
                     color: "#152C5B",
                   }}
@@ -381,13 +463,14 @@ export default function Register() {
                 <input
                   type="file"
                   id="profileImage"
+                  style={{ marginTop: "8px" }}
                   {...register("profileImage")}
                 />
 
                 {/* Submit Button */}
                 <Button
                   disabled={isSubmitting}
-                  sx={{ mt: 6 }}
+                  sx={{ mt: 3, width: "100%", fontSize: "12px" }} // Slightly larger button size for visibility
                   type="submit"
                   variant="contained"
                 >
@@ -399,13 +482,13 @@ export default function Register() {
 
           {/* Grid for Image */}
           <Grid2
-            display={{ xs: "none", md: "block" }}
+            display={{ xs: "none", md: "block" }} // Hide the image on small screens
             size={{ xs: 12, md: 6 }}
             sx={{
               position: "sticky",
               top: 0, // Stick to the top of the viewport
               height: "100vh",
-              backgroundImage: `url(${RegisterImg})`,
+              backgroundImage: `url(${RegisterImg})`, // Your image will show here
               backgroundSize: "cover",
               backgroundPosition: "center",
               backgroundRepeat: "no-repeat",
