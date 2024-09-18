@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { Outlet } from "react-router-dom";
-import Sidebar from "../Sidebar/Sidebarr";
+
 import { Box } from "@mui/material";
+import Sidebarr from "../Sidebar/Sidebarr";
 
 export default function MasterLayout() {
   const [collapsed, setCollapsed] = useState(false);
@@ -26,7 +27,7 @@ export default function MasterLayout() {
           overflowX: "hidden", // Prevent horizontal scroll when collapsed
         }}
       >
-        <Sidebar onToggle={toggleSidebar} collapsed={collapsed} />
+        <Sidebarr onToggle={toggleSidebar} collapsed={collapsed} />
       </Box>
 
       {/* Main Content (Outlet) */}
