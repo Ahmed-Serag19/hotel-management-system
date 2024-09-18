@@ -328,7 +328,7 @@ export default function Facilities() {
 
       {/* table */}
 
-      <Box sx={{ mx: 3, mb: 4 }}>
+      <Box sx={{ pb: 3 }}>
         {facility.length > 0 ? (
           <Table
             sx={{
@@ -337,7 +337,7 @@ export default function Facilities() {
                 borderBottom: "none",
               },
               mt: "50px",
-            }}
+                          }}
             aria-label="simple table"
           >
             <TableHead sx={{ hight: "50px" }}>
@@ -349,6 +349,7 @@ export default function Facilities() {
                   color: "#1F263E",
                   fontWeight: 500,
                   fontFamily: "Poppins",
+                 
                 }}
               >
                 <TableCell
@@ -394,10 +395,10 @@ export default function Facilities() {
                   key={facilityData._id}
                   sx={{
                     "&:last-child td, &:last-child th": { border: 0 },
-                    fontFamily: "Poppins",
+                    fontFamily: "Poppins", 
                   }}
                 >
-                  <TableCell sx={{ color: "#3A3A3D", fontFamily: "Poppins" }}>
+                  <TableCell sx={{ color: "#3A3A3D", fontFamily: "Poppins",  }}>
                     {facilityData.name}
                   </TableCell>
                   <TableCell>{Numbers(facilityData.createdAt)}</TableCell>
