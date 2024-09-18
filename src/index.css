@@ -18,3 +18,9 @@ body {
     margin: 0;
     box-sizing: border-box;
   }
+
+.MuiTableCell-root.MuiTableCell-body.MuiTableCell-sizeMedium {
+    color : #3A3A3D !important;
+    font-family: "Poppins"  !important;
+    padding-block: 20px ;
+}

@@ -21,10 +21,7 @@ import axios from "axios";
 import { User_URls } from "../../../../constants/End_Points";
 import { AuthContext } from "../../../../context/authcontext";
 import { toast } from "react-toastify";
-import {
-  EmailValidation,
-  PasswordValidation,
-} from "../../../../constants/Validations";
+import { EmailValidation } from "../../../../constants/Validations";
 
 type DataLogin = {
   email: string;

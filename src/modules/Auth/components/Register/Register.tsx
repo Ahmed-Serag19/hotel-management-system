@@ -9,7 +9,7 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import React, { useState } from "react";
+import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import axios from "axios";
@@ -63,7 +63,7 @@ export default function Register() {
       email: "",
       password: "",
       confirmPassword: "",
-      profileImage: null,
+      profileImage: undefined,
       role: "",
     },
   });
@@ -85,40 +85,47 @@ export default function Register() {
   };
 
   return (
-    <div>
+    <>
       <Box
         sx={{
           height: "100vh",
-          overflow: "auto", // Allow scrolling for overflow
-          display: "flex", // Use flexbox to layout children
-          flexDirection: { xs: "column", md: "row" }, // Stack items vertically on xs screens and horizontally on md and above
+          overflow: "auto",
+          display: "flex",
+          flexDirection: { xs: "column", md: "row" },
         }}
       >
         <Grid2 container sx={{ flex: 1 }}>
           <Grid2
-            width={{ xs: "90%", sm: "95%", md: "50%" }}
-            xs={12}
-            md={6}
-            sx={{ margin: "auto", padding: { xs: 2, md: 4 } }} // Center and add padding
+            sx={{
+              width: { xs: "90%", sm: "95%", md: "50%" },
+              margin: "auto",
+              padding: { xs: 2, md: 4 },
+              gridColumn: { xs: "span 12", md: "span 6" },
+            }}
           >
+            <Typography
+              variant="h5"
+              style={{
+                fontSize: "26px",
+                fontWeight: "500",
+                padding: "",
+                position: "absolute",
+                top: "20px",
+              }}
+              component="p"
+            >
+              <span style={{ color: "#3252DF" }}>Stay</span>
+              <span style={{ color: "#152C5B" }}>cation.</span>
+            </Typography>
             <Stack
               sx={{ marginLeft: { xs: 0, md: "3%" }, marginTop: "20px" }}
               height={{ xs: "auto", sm: "auto" }}
-            >
-              <Typography
-                variant="h5"
-                style={{ fontSize: "26px", fontWeight: "500" }}
-                component="p"
-              >
-                <span style={{ color: "#3252DF" }}>Stay</span>
-                <span style={{ color: "#152C5B" }}>cation.</span>
-              </Typography>
-            </Stack>
+            ></Stack>
             <Stack
               sx={{
                 display: "flex",
                 flexDirection: "column",
-                width: "100%",
+                width: "80%",
                 margin: "auto",
               }}
             >
@@ -164,6 +171,7 @@ export default function Register() {
                 <label
                   htmlFor="userName"
                   style={{
+                    paddingTop: "5px",
                     fontSize: "16px",
                     fontWeight: 400,
                     color: "#152C5B",
@@ -173,7 +181,7 @@ export default function Register() {
                 </label>
                 <TextField
                   sx={{
-                    marginTop: 1,
+                    //
                     marginBottom: 1,
                     bgcolor: "#f5f6f8",
                     border: "none",
@@ -191,12 +199,13 @@ export default function Register() {
                 {/* Phone Number and Country */}
                 <Stack
                   direction={{ xs: "column", sm: "row" }}
-                  spacing={{ xs: 1, sm: 2, md: 4 }}
+                  spacing={{ xs: 1, sm: 2, md: 3 }}
                 >
-                  <Stack spacing={2} width="100%">
+                  <Stack width="100%">
                     <label
                       htmlFor="phoneNumber"
                       style={{
+                        paddingTop: "5px",
                         fontSize: "16px",
                         fontWeight: 400,
                         color: "#152C5B",
@@ -206,7 +215,6 @@ export default function Register() {
                     </label>
                     <TextField
                       sx={{
-                        marginTop: 1,
                         marginBottom: 1,
                         bgcolor: "#f5f6f8",
                         border: "none",
@@ -222,10 +230,11 @@ export default function Register() {
                     />
                   </Stack>
 
-                  <Stack spacing={2} width="100%">
+                  <Stack width="100%">
                     <label
                       htmlFor="country"
                       style={{
+                        paddingTop: "5px",
                         fontSize: "16px",
                         fontWeight: 400,
                         color: "#152C5B",
@@ -235,7 +244,6 @@ export default function Register() {
                     </label>
                     <TextField
                       sx={{
-                        marginTop: 1,
                         marginBottom: 1,
                         bgcolor: "#f5f6f8",
                         border: "none",
@@ -256,6 +264,7 @@ export default function Register() {
                 <label
                   htmlFor="email"
                   style={{
+                    paddingTop: "5px",
                     fontSize: "16px",
                     fontWeight: 400,
                     color: "#152C5B",
@@ -265,7 +274,6 @@ export default function Register() {
                 </label>
                 <TextField
                   sx={{
-                    marginTop: 1,
                     marginBottom: 1,
                     bgcolor: "#f5f6f8",
                     border: "none",
@@ -282,6 +290,7 @@ export default function Register() {
                 <label
                   htmlFor="password"
                   style={{
+                    paddingTop: "5px",
                     fontSize: "16px",
                     fontWeight: 400,
                     color: "#152C5B",
@@ -291,7 +300,6 @@ export default function Register() {
                 </label>
                 <TextField
                   sx={{
-                    marginTop: 1,
                     marginBottom: 1,
                     bgcolor: "#f5f6f8",
                     border: "none",
@@ -322,6 +330,7 @@ export default function Register() {
                 <label
                   htmlFor="confirmPassword"
                   style={{
+                    paddingTop: "5px",
                     fontSize: "16px",
                     fontWeight: 400,
                     color: "#152C5B",
@@ -331,7 +340,6 @@ export default function Register() {
                 </label>
                 <TextField
                   sx={{
-                    marginTop: 1,
                     marginBottom: 1,
                     bgcolor: "#f5f6f8",
                     border: "none",
@@ -361,6 +369,8 @@ export default function Register() {
                 <label
                   htmlFor="profileImage"
                   style={{
+                    paddingTop: "5px",
+                    paddingBottom: "10px",
                     fontSize: "16px",
                     fontWeight: 400,
                     color: "#152C5B",
@@ -405,6 +415,6 @@ export default function Register() {
           ></Grid2>
         </Grid2>
       </Box>
-    </div>
+    </>
   );
 }
