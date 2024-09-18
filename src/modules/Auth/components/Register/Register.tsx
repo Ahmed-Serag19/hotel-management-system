@@ -171,6 +171,7 @@ export default function Register() {
                 <label
                   htmlFor="userName"
                   style={{
+                    paddingTop: "5px",
                     fontSize: "16px",
                     fontWeight: 400,
                     color: "#152C5B",
@@ -180,7 +181,7 @@ export default function Register() {
                 </label>
                 <TextField
                   sx={{
-                    marginTop: 1,
+                    //
                     marginBottom: 1,
                     bgcolor: "#f5f6f8",
                     border: "none",
@@ -198,12 +199,13 @@ export default function Register() {
                 {/* Phone Number and Country */}
                 <Stack
                   direction={{ xs: "column", sm: "row" }}
-                  spacing={{ xs: 1, sm: 2, md: 4 }}
+                  spacing={{ xs: 1, sm: 2, md: 3 }}
                 >
-                  <Stack spacing={2} width="100%">
+                  <Stack width="100%">
                     <label
                       htmlFor="phoneNumber"
                       style={{
+                        paddingTop: "5px",
                         fontSize: "16px",
                         fontWeight: 400,
                         color: "#152C5B",
@@ -213,7 +215,6 @@ export default function Register() {
                     </label>
                     <TextField
                       sx={{
-                        marginTop: 1,
                         marginBottom: 1,
                         bgcolor: "#f5f6f8",
                         border: "none",
@@ -229,10 +230,11 @@ export default function Register() {
                     />
                   </Stack>
 
-                  <Stack spacing={2} width="100%">
+                  <Stack width="100%">
                     <label
                       htmlFor="country"
                       style={{
+                        paddingTop: "5px",
                         fontSize: "16px",
                         fontWeight: 400,
                         color: "#152C5B",
@@ -242,7 +244,6 @@ export default function Register() {
                     </label>
                     <TextField
                       sx={{
-                        marginTop: 1,
                         marginBottom: 1,
                         bgcolor: "#f5f6f8",
                         border: "none",
@@ -263,6 +264,7 @@ export default function Register() {
                 <label
                   htmlFor="email"
                   style={{
+                    paddingTop: "5px",
                     fontSize: "16px",
                     fontWeight: 400,
                     color: "#152C5B",
@@ -272,7 +274,6 @@ export default function Register() {
                 </label>
                 <TextField
                   sx={{
-                    marginTop: 1,
                     marginBottom: 1,
                     bgcolor: "#f5f6f8",
                     border: "none",
@@ -289,6 +290,7 @@ export default function Register() {
                 <label
                   htmlFor="password"
                   style={{
+                    paddingTop: "5px",
                     fontSize: "16px",
                     fontWeight: 400,
                     color: "#152C5B",
@@ -298,7 +300,6 @@ export default function Register() {
                 </label>
                 <TextField
                   sx={{
-                    marginTop: 1,
                     marginBottom: 1,
                     bgcolor: "#f5f6f8",
                     border: "none",
@@ -329,6 +330,7 @@ export default function Register() {
                 <label
                   htmlFor="confirmPassword"
                   style={{
+                    paddingTop: "5px",
                     fontSize: "16px",
                     fontWeight: 400,
                     color: "#152C5B",
@@ -338,7 +340,6 @@ export default function Register() {
                 </label>
                 <TextField
                   sx={{
-                    marginTop: 1,
                     marginBottom: 1,
                     bgcolor: "#f5f6f8",
                     border: "none",
@@ -368,6 +369,8 @@ export default function Register() {
                 <label
                   htmlFor="profileImage"
                   style={{
+                    paddingTop: "5px",
+                    paddingBottom: "10px",
                     fontSize: "16px",
                     fontWeight: 400,
                     color: "#152C5B",
