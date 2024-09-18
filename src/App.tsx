@@ -16,9 +16,6 @@ import {
 } from "react-router-dom";
 <<<<<<< Updated upstream
 import Facilities from "./modules/Admin/components/Facilities/Facilities";
-=======
-import ListBokking from "./modules/ListBooking/ListBokking";
->>>>>>> Stashed changes
 
 function App() {
   const routes = createBrowserRouter([
@@ -48,9 +45,6 @@ function App() {
         { path: "home", element: <Home /> },
 <<<<<<< Updated upstream
         { path: "facilities", element: <Facilities /> },
-=======
-        { path: "list-booking", element: <ListBokking /> },
->>>>>>> Stashed changes
       ],
     },
   ]);
