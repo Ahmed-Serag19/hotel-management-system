@@ -42,7 +42,7 @@ export default function Sidebarr({ onToggle, collapsed }) {
           </Box>
         </MenuItem>
 
-        <MenuItem component={<Link to="/dashboard" />}>
+        <MenuItem component={<Link to="/dashboard/users" />}>
           <Box
             sx={{
               display: "flex",
@@ -93,7 +93,7 @@ export default function Sidebarr({ onToggle, collapsed }) {
           </Box>
         </MenuItem>
 
-        <MenuItem component={<Link to="/dashboard" />}>
+        <MenuItem component={<Link to="/dashboard/List-booking" />}>
           <Box
             sx={{
               display: "flex",

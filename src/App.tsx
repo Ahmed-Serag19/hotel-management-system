@@ -14,8 +14,10 @@ import {
   //  createHashRouter,
   RouterProvider,
 } from "react-router-dom";
+
 import Facilities from "./modules/Admin/components/Facilities/Facilities";
-import Rooms from "./modules/Admin/components/Rooms/Rooms";
+import ListBooking from "./modules/Admin/components/ListBooking/ListBooking";
+import Users from "./modules/Admin/components/Users/Users";
 
 function App() {
   const routes = createBrowserRouter([
@@ -44,7 +46,9 @@ function App() {
         { index: true, element: <Home /> },
         { path: "home", element: <Home /> },
         { path: "facilities", element: <Facilities /> },
-        { path: "rooms", element: <Rooms /> },
+        { path: "List-booking", element: <ListBooking /> },
+        { path: "users", element: <Users /> },
+
       ],
     },
   ]);

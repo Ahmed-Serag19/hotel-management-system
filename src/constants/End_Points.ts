@@ -9,6 +9,8 @@ export const User_URls = {
   forgetPassword: `${Base_Users}/forgot-password`,
   resetPassword: `${Base_Users}/reset-password`,
   changePassword: `${Base_Users}/change-password`,
+  getAllUsers:`${Base_Users}/?page=1&size=10`,
+  getUserProfile:(id:string)=> `${User_URls}/${id}`,
 };
 const Base_facilities = `${Base_Url}/admin/room-facilities`;
 export const facility_Urls = {
@@ -24,3 +26,11 @@ export const roomsUrl = {
   createRoom: `${Base_rooms}/room-facilities`,
   deleteRoom: (id: string) => `${Base_rooms}/${id}`,
 };
+
+
+ const Base_booking = `${Base_Url}/admin/booking`;
+export const bookingUrl = {
+  getAllBooking:`${Base_booking}?page=1&size=10`,
+  delete:(id:string) =>`${Base_booking}/${id}`,
+  details: (id:string) =>  `${Base_booking}/${id}`,
+}
