@@ -27,6 +27,7 @@ import NoData from "../../../Shared/components/NoData/NoData";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import { FaRegEdit } from "react-icons/fa";
+import DeleteImg from '../../../../assets/images/delete.png'
 
 interface AdsTypes {
   room: {
@@ -61,6 +62,21 @@ const style = {
   p: 4,
 };
 
+const modalStyle = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: 600,
+  bgcolor: "background.paper",
+  border: "none",
+  boxShadow: 24,
+  borderRadius: 2,
+  p: 4,
+  maxHeight: "90vh",
+  overflowY: "auto",
+};
+
 function AdsList() {
   const [ads, setAds] = useState<AdsTypes[]>([]);
   const [rooms, setRooms] = useState<RoomsTypes[]>([]);
@@ -73,7 +89,8 @@ function AdsList() {
   } = useForm();
   const [open, setOpen] = useState(false);
   const [isUpdate, setIsUpdate] = useState(false);
-  const [idUpdate, setidUpdate] = useState("");
+  const [OpenConfirmDelete, setOpenConfirmDelete] = useState(false);
+  const [adsId, setAdsId] = useState("");
 
   const handleOpenAdd = () => {
     setOpen(true);
@@ -82,11 +99,20 @@ function AdsList() {
 
   const handleOpenUpdate = (id: string) => {
     setIsUpdate(true);
-    setidUpdate(id);
+    setAdsId(id);
     setOpen(true);
   };
 
   const handleClose = () => setOpen(false);
+
+  const handleOpenDelete = (id: string) => {
+    setAdsId(id);
+    setOpenConfirmDelete(true);
+  };
+
+  const handleCloseDelete = () => {
+    setOpenConfirmDelete(false);
+  };
 
   const gitAdsList = async () => {
     try {
@@ -110,13 +136,14 @@ function AdsList() {
     }
   };
 
-  const deleteAds = async (id: string) => {
+  const deleteAds = async () => {
     try {
-      const response = await axios.delete(Ads_URls.deleteAds(id), {
+      const response = await axios.delete(Ads_URls.deleteAds(adsId), {
         headers: { Authorization: `${localStorage.getItem("token")}` },
       });
       toast.success(response.data.message || "deleted successfully");
       gitAdsList();
+      handleCloseDelete()
     } catch (error) {
       if (axios.isAxiosError(error)) {
         toast.error(error?.response?.data.message);
@@ -134,7 +161,7 @@ function AdsList() {
     try {
       const response = await axios({
         method: isUpdate ? "PUT" : "POST",
-        url: isUpdate ? Ads_URls.updateAds(idUpdate) : Ads_URls.addAds,
+        url: isUpdate ? Ads_URls.updateAds(adsId) : Ads_URls.addAds,
         data,
         headers: { Authorization: localStorage.getItem("token") },
       });
@@ -239,7 +266,7 @@ function AdsList() {
                           />
                           Edit
                         </MenuItem>
-                        <MenuItem onClick={() => deleteAds(ad._id)}>
+                        <MenuItem onClick={() => handleOpenDelete(ad._id)}>
                           <RiDeleteBin6Line
                             style={{ color: "#203FC7", marginRight: "10px" }}
                           />
@@ -332,6 +359,89 @@ function AdsList() {
           <Button type="submit" size="large" variant="contained">
             Save
           </Button>
+        </Box>
+      </Modal>
+      {/* Modal comfirm delete */}
+      <Modal
+        open={OpenConfirmDelete}
+        onClose={handleCloseDelete}
+        aria-labelledby="parent-modal-title"
+        aria-describedby="parent-modal-description"
+        sx={{ fontFamily: "Poppins", padding: "60px" }}
+      >
+        <Box sx={modalStyle}>
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "end",
+              mb: "60px",
+            }}
+          >
+            <i
+              onClick={handleCloseDelete}
+              style={{
+                color: "#CC0000",
+                textAlign: "right",
+                cursor: "pointer",
+              }}
+              className="fa-regular fa-xl fa-circle-xmark"
+            ></i>
+          </Box>
+          <Box sx={{ textAlign: "center", mt: 5, mb: 2 }}>
+            <img src={DeleteImg} alt="" />
+          </Box>
+
+          <Typography
+            variant="h6"
+            sx={{
+              color: "#494949",
+              fontWeight: 700,
+              fontSize: "20px",
+              textAlign: "center",
+            }}
+          >
+            Delete This Room?
+          </Typography>
+          <Typography
+            sx={{
+              color: "#494949",
+              fontSize: "14.5px",
+              textAlign: "center",
+              opacity: "60%",
+              mt: 2,
+              mb: 5,
+            }}
+          >
+            Are you sure you want to delete this Ads Room? If you are sure, just
+            click on delete it.
+          </Typography>
+
+          <Stack
+            sx={{
+              mt: 5,
+              width: "100%",
+              display: "flex",
+              justifyContent: "end",
+            }}
+            spacing={2}
+            direction="row"
+          >
+            <Button
+              onClick={deleteAds}
+              // disabled={isSubmitting}
+              type="submit"
+              sx={{
+                backgroundColor: "#203FC7",
+                textTransform: "none",
+                fontSize: "17px",
+                fontWeight: 500,
+                mt: 3,
+              }}
+              variant="contained"
+            >
+              Delete
+            </Button>
+          </Stack>
         </Box>
       </Modal>
     </Box>
