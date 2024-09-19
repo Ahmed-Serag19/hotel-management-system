@@ -1,12 +1,11 @@
+import React, { useState, useEffect } from "react";
 import {
   Box,
-  Button,
-  IconButton,
-  Popover,
   Table,
   TableBody,
   TableCell,
   TableHead,
+  TableRow,
   TablePagination,
   Button,
   Modal,
@@ -14,21 +13,24 @@ import {
   Stack,
   Select,
   MenuItem,
+  ImageList,
+  ImageListItem,
+  IconButton,
 } from "@mui/material";
 import { FaRegEye } from "react-icons/fa6";
 import { FaRegEdit } from "react-icons/fa";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
+import CloseIcon from "@mui/icons-material/Close";
 import styled from "@emotion/styled";
 import axios from "axios";
 import { roomsUrl } from "../../../../constants/End_Points";
 import TitleTables from "../../../Shared/TitleTables/TitleTables";
 import NoData from "../../../Shared/components/NoData/NoData";
-import DeleteImg from "../../../../assets/images/delete.png"; // Ensure this path is correct
+import DeleteImg from "../../../../assets/images/delete.png";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
-
-// Custom styled table rows
 const StyledTableRow = styled(TableRow)`
   &:nth-of-type(even) {
     background-color: #f8f9fb;
@@ -36,20 +38,21 @@ const StyledTableRow = styled(TableRow)`
   font-family: "Poppins" !important;
 `;
 
-const style = {
+const modalStyle = {
   position: "absolute" as "absolute",
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: 500,
+  width: 600,
   bgcolor: "background.paper",
   border: "none",
   boxShadow: 24,
   borderRadius: 2,
   p: 4,
+  maxHeight: "90vh",
+  overflowY: "auto",
 };
 
-// Define the Room type
 type Room = {
   _id: string;
   roomNumber: string;
@@ -60,6 +63,94 @@ type Room = {
   facilities: { _id: string; name: string }[];
 };
 
+const RoomDetailsModal = ({
+  room,
+  open,
+  handleClose,
+}: {
+  room: Room | null;
+  open: boolean;
+  handleClose: () => void;
+}) => {
+  if (!room) return null;
+
+  return (
+    <Modal
+      open={open}
+      onClose={handleClose}
+      aria-labelledby="room-details-title"
+      aria-describedby="room-details-description"
+    >
+      <Box sx={modalStyle}>
+        <Box
+          display="flex"
+          justifyContent="space-between"
+          alignItems="center"
+          mb={2}
+        >
+          <Typography id="room-details-title" variant="h6" component="h2">
+            Room Details - {room.roomNumber}
+          </Typography>
+          <IconButton onClick={handleClose}>
+            <CloseIcon />
+          </IconButton>
+        </Box>
+
+        <Typography variant="subtitle1">
+          <strong>Room Number:</strong> {room.roomNumber}
+        </Typography>
+        <Typography variant="subtitle1">
+          <strong>Price:</strong> ${room.price}
+        </Typography>
+        <Typography variant="subtitle1">
+          <strong>Discount:</strong> ${room.discount}
+        </Typography>
+        <Typography variant="subtitle1">
+          <strong>Capacity:</strong> {room.capacity} persons
+        </Typography>
+
+        <Typography variant="subtitle1" mt={2}>
+          <strong>Facilities:</strong>
+        </Typography>
+        <Box pl={2}>
+          {room.facilities.length > 0 ? (
+            room.facilities.map((facility) => (
+              <Typography key={facility._id}>- {facility.name}</Typography>
+            ))
+          ) : (
+            <Typography>No facilities</Typography>
+          )}
+        </Box>
+
+        <Typography variant="subtitle1" mt={2}>
+          <strong>Images:</strong>
+        </Typography>
+        {room.images.length > 0 ? (
+          <ImageList cols={3} rowHeight={160}>
+            {room.images.map((image, index) => (
+              <ImageListItem key={index}>
+                <img
+                  src={image}
+                  alt={`Room ${index}`}
+                  style={{ objectFit: "cover" }}
+                />
+              </ImageListItem>
+            ))}
+          </ImageList>
+        ) : (
+          <Typography>No images available</Typography>
+        )}
+
+        <Box mt={3} display="flex" justifyContent="flex-end">
+          <Button onClick={handleClose} sx={{ textTransform: "none" }}>
+            Close
+          </Button>
+        </Box>
+      </Box>
+    </Modal>
+  );
+};
+
 export default function Rooms() {
   const [rooms, setRooms] = useState<Room[]>([]);
   const [page, setPage] = useState(0);
@@ -67,7 +158,11 @@ export default function Rooms() {
   const [totalCount, setTotalCount] = useState(0);
   const [openDelete, setOpenDelete] = useState(false);
   const [selectedRoomId, setSelectedRoomId] = useState<string | null>(null);
+  const [selectedRoom, setSelectedRoom] = useState<Room | null>(null); // For viewing room details
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [viewOpen, setViewOpen] = useState(false); // State to control view modal
+
+  const navigate = useNavigate();
 
   const getRooms = async () => {
     try {
@@ -86,32 +181,27 @@ export default function Rooms() {
     getRooms();
   }, [page, rowsPerPage]);
 
-  // Open delete modal and set the selected room ID
   const handleOpenDelete = (roomId: string) => {
     setSelectedRoomId(roomId);
-    setOpenDelete(true); // Open delete modal
+    setOpenDelete(true);
   };
 
-  // Close delete modal and reset selected room ID
   const handleCloseDelete = () => {
     setOpenDelete(false);
-    setSelectedRoomId(null); // Reset selected room ID after closing the modal
+    setSelectedRoomId(null);
   };
 
-  // Handle pagination page change
   const handleChangePage = (_event: unknown, newPage: number) => {
     setPage(newPage);
   };
 
-  // Handle rows per page change
   const handleChangeRowsPerPage = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
     setRowsPerPage(parseInt(event.target.value, 10));
-    setPage(0); // Reset page to 0 when rows per page changes
+    setPage(0);
   };
 
-  // Handle delete room using roomId
   const deleteRoom = async () => {
     if (!selectedRoomId) return;
 
@@ -122,20 +212,36 @@ export default function Rooms() {
       });
       toast.success("Room Deleted Successfully");
 
-      // Reset states and refresh room list
       setIsSubmitting(false);
       setOpenDelete(false);
-      setSelectedRoomId(null); // Reset roomId after deletion
-      getRooms(); // Refresh the room list after deletion
+      setSelectedRoomId(null);
+      getRooms();
     } catch (error: any) {
       toast.error(error.response.data.message || "Failed Delete");
       setIsSubmitting(false);
     }
   };
 
+  const handleAddRoomRoute = () => {
+    navigate("/dashboard/add-room");
+  };
+
+  const handleViewClick = (room: Room) => {
+    setSelectedRoom(room); // Set the room to be viewed
+    setViewOpen(true); // Open the view modal
+  };
+
+  const handleEditClick = (room: Room) => {
+    navigate("/dashboard/add-room", { state: { room } });
+  };
+
+  const handleCloseView = () => {
+    setViewOpen(false); // Close the view modal
+  };
+
   return (
     <>
-      <TitleTables titleTable="Rooms" btn="Room" />
+      <TitleTables titleTable="Rooms" btn="Room" onClick={handleAddRoomRoute} />
 
       <Box sx={{ mx: 3, mb: 4 }}>
         {rooms.length > 0 ? (
@@ -178,7 +284,6 @@ export default function Rooms() {
                   <TableCell sx={{ fontWeight: "bold", fontFamily: "Poppins" }}>
                     Action
                   </TableCell>
-
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -211,7 +316,6 @@ export default function Rooms() {
                       </Box>
                     </TableCell>
                     <TableCell>
-                      {/* ----select dropdown with actions----- */}
                       <Select
                         sx={{
                           color: "#1F263E",
@@ -236,6 +340,7 @@ export default function Rooms() {
                         <MenuItem
                           sx={{ color: "#1F263E", fontFamily: "Poppins" }}
                           value="view"
+                          onClick={() => handleViewClick(room)}
                         >
                           <FaRegEye
                             style={{ color: "#203FC7", marginRight: "10px" }}
@@ -245,6 +350,7 @@ export default function Rooms() {
                         <MenuItem
                           sx={{ color: "#1F263E", fontFamily: "Poppins" }}
                           value="edit"
+                          onClick={() => handleEditClick(room)}
                         >
                           <FaRegEdit
                             style={{ color: "#203FC7", marginRight: "10px" }}
@@ -281,6 +387,13 @@ export default function Rooms() {
         )}
       </Box>
 
+      {/* View Room Modal */}
+      <RoomDetailsModal
+        room={selectedRoom}
+        open={viewOpen}
+        handleClose={handleCloseView}
+      />
+
       {/* Delete Confirmation Modal */}
       <Modal
         open={openDelete}
@@ -289,7 +402,7 @@ export default function Rooms() {
         aria-describedby="parent-modal-description"
         sx={{ fontFamily: "Poppins", padding: "60px" }}
       >
-        <Box sx={style}>
+        <Box sx={modalStyle}>
           <Box
             sx={{
               display: "flex",

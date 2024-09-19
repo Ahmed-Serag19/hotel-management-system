@@ -32,8 +32,10 @@ export const facility_Urls = {
 const Base_rooms = `${Base_Url}/admin/rooms`;
 export const roomsUrl = {
   getAllRooms: `${Base_rooms}?page=1&size=10`,
-  createRoom: `${Base_rooms}/room-facilities`,
+  createRoom: `${Base_rooms}`,
   deleteRoom: (id: string) => `${Base_rooms}/${id}`,
+  updateRoom: (id: string) => `${Base_rooms}/${id}`,
+  roomDetails: (id: string) => `${Base_rooms}/${id}`,
 };
 
 const Base_booking = `${Base_Url}/admin/booking`;
