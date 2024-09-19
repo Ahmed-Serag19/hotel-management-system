@@ -1,6 +1,7 @@
 import {
   Box,
   Divider,
+  FormHelperText,
   MenuItem,
   Paper,
   Stack,
@@ -16,9 +17,11 @@ import {
 } from "@mui/material";
 import Button from "@mui/material/Button";
 import axios from "axios";
-import { Ads_URls } from "../../../../constants/End_Points";
+import { Ads_URls, Rooms_URls } from "../../../../constants/End_Points";
 import { useEffect, useState } from "react";
 import Modal from '@mui/material/Modal';
+import { useForm } from "react-hook-form";
+import { toast } from "react-toastify";
 
 interface AdsTypes {
   room: {
@@ -30,6 +33,10 @@ interface AdsTypes {
   isActive: boolean;
   _id: string;
 }
+interface RoomsTypes {
+  roomNumber: number;
+  _id: string;
+}
 
 const StyledTableRow = styled(TableRow)(() => ({
   "&:nth-of-type(odd)": {
@@ -39,25 +46,6 @@ const StyledTableRow = styled(TableRow)(() => ({
     backgroundColor: "#F8F9FB",
   },
 }));
-
-const currencies = [
-  {
-    value: 'USD',
-    label: '$',
-  },
-  {
-    value: 'EUR',
-    label: '€',
-  },
-  {
-    value: 'BTC',
-    label: '฿',
-  },
-  {
-    value: 'JPY',
-    label: '¥',
-  },
-];
 
 const style = {
   position: 'absolute',
@@ -73,6 +61,8 @@ const style = {
 
 function AdsList() {
   const [ads, setAds] = useState<AdsTypes[]>([]);
+  const [rooms, setRooms] = useState<RoomsTypes[]>([]);
+  const { register, handleSubmit, reset, formState:{errors}} = useForm()
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -88,21 +78,51 @@ function AdsList() {
     }
   };
 
-  const deleteAds = async (id:string) => {
+  const gitRoomsList = async () => {
     try {
-       await axios.delete(Ads_URls.deleteAds(id), {
+      const res = await axios.get(Rooms_URls.gitRooms, {
         headers: { Authorization: `${localStorage.getItem("token")}` },
       });
-      // TO DO: add toast delete
-      gitAdsList();
+      setRooms(res.data.data.rooms);
     } catch (error) {
       console.error("Error fetching ads:", error);
     }
   };
 
+  const deleteAds = async (id:string) => {
+    try {
+       const response = await axios.delete(Ads_URls.deleteAds(id), {
+        headers: { Authorization: `${localStorage.getItem("token")}` },
+      });
+      toast.success(response.data.message || "deleted successfully");
+      gitAdsList();
+    } catch (error) {
+      if(axios.isAxiosError(error)){
+        toast.error(error?.response?.data.message);
+      }
+    }
+  };
+
   useEffect(() => {
     gitAdsList();
+    gitRoomsList()
   }, []);
+
+  const onSubmit = async(data: object)=>{ // TO DO
+    try {
+      const response = await axios.post(Ads_URls.addAds, data, {
+        headers: { Authorization: localStorage.getItem("token") },
+      });
+      toast.success(response.data.message || "created successfully");
+      gitAdsList();
+      reset();
+      handleClose();
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        toast.success(error?.response?.data.message || "you have already ads with the same room");
+      }
+    }
+  }
 
   return (
     <Box component="section">
@@ -185,6 +205,7 @@ function AdsList() {
         aria-describedby="modal-modal-description"
       >
         <Box 
+          onSubmit={handleSubmit(onSubmit)}
           component="form"
           sx={style}
         >
@@ -195,43 +216,61 @@ function AdsList() {
           select
           fullWidth
           label="Room Number"
-          defaultValue="EUR"
-          sx={{marginTop: 3}}
+          margin="normal"
           variant="filled"
+          {...register("room", {
+            required: 'Room Number is Required',
+          })}
         >
-          {currencies.map((option) => (
-            <MenuItem key={option.value} value={option.value}>
-              {option.label}
+          {rooms.map((option) => (
+            <MenuItem key={option._id} value={option._id}>
+              {option.roomNumber}
             </MenuItem>
           ))}
         </TextField>
+        {errors.room && typeof errors.room.message === 'string' && (
+            <FormHelperText sx={{ color: "#d32f2f" }} id="component-error-text">
+                {errors.room.message}
+            </FormHelperText>
+        )}
         {/* text field for Discount */}
         <TextField
           fullWidth
           id="filled-basic"
           label="Discount"
           variant="filled"
-          sx={{marginTop: 3}}
+          margin="normal"
+          {...register('discount', {
+            required: 'Discount is Required',
+          })}
         />
+        {errors.discount && typeof errors.discount.message === 'string' && (
+            <FormHelperText sx={{ color: "#d32f2f" }} id="component-error-text">
+                {errors.discount.message}
+            </FormHelperText>
+        )}
         {/* text field for isActive */}
         <TextField
           id="outlined-select-active"
           select
           fullWidth
           label="Active"
-          defaultValue={'true'}
-          sx={{ marginTop: 3 }}
+          margin="normal"
           variant="filled"
-          onChange={(e) => {
-            const value = e.target.value === 'true' ? true : false;
-            console.log(value);
-          }}
+          {...register("isActive",{
+            required: 'isActive is Required',
+          })}
         >
           <MenuItem value={'true'}>Yes</MenuItem>
           <MenuItem value={'false'}>No</MenuItem>
         </TextField>
+        {errors.isActive && typeof errors.isActive.message === 'string' && (
+            <FormHelperText sx={{ color: "#d32f2f" }} id="component-error-text">
+               {errors.isActive.message}
+            </FormHelperText>
+        )}
         <Divider sx={{marginY: 2}} />
-        <Button size="large" variant="contained">Save</Button>
+        <Button type="submit" size="large" variant="contained">Save</Button>
         </Box>
       </Modal>
     </Box>
