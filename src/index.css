@@ -29,3 +29,9 @@ body {
 .ps-menu-button:hover {
     background-color: rgba(26, 27, 30, 0.17) !important;
 }
+
+@media (max-width: 992px) {
+    .changePassword {
+        display: none !important;
+    }
+}

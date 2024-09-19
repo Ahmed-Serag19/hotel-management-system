@@ -129,7 +129,7 @@ export default function Sidebarr({ onToggle, collapsed }) {
           </Box>
         </MenuItem>
 
-        <MenuItem component={<Link to="/change-password" />}>
+        <MenuItem component={<Link to="/dashboard/change-password" />}>
           <Box
             sx={{
               display: "flex",
