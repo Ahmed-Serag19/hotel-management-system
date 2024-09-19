@@ -20,3 +20,9 @@ export const roomsUrl = {
   getAllRooms: `${Base_rooms}?page=1&size=10`,
   createRoom: `${Base_rooms}/room-facilities`,
 };
+ const Base_booking = `${Base_Url}/admin/booking`;
+export const bookingUrl = {
+  getAllBooking:`${Base_booking}?page=1&size=10`,
+  deleteBooking:`${Base_booking}`,
+  getBookingDetails:`${Base_booking}/6591734ad50e86bcce294b08`
+}
