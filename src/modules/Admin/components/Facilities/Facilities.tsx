@@ -153,7 +153,6 @@ export default function Facilities() {
             >
               Add Facility
             </Typography>
-
             <i
               onClick={handleClose}
               style={{
@@ -183,7 +182,6 @@ export default function Facilities() {
                   : ""}
               </FormHelperText>
             )}
-
             <Stack
               sx={{
                 mt: 5,
@@ -241,7 +239,6 @@ export default function Facilities() {
               className="fa-regular fa-xl fa-circle-xmark"
             ></i>
           </Box>
-
           <Box sx={{ textAlign: "center", mt: 5, mb: 2 }}>
             <img src={DeleteImg} alt="" />
           </Box>
@@ -300,9 +297,7 @@ export default function Facilities() {
           </Stack>
         </Box>
       </Modal>
-
       {/* table */}
-
       <Box sx={{ mx: 3, mb: 4 }}>
         {facility.length > 0 ? (
           <Table
