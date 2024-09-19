@@ -17,7 +17,7 @@ import {
 } from "@mui/material";
 import Button from "@mui/material/Button";
 import axios from "axios";
-import { Ads_URls, Rooms_URls } from "../../../../constants/End_Points";
+import { Ads_URls, roomsUrl } from "../../../../constants/End_Points";
 import { useEffect, useState } from "react";
 import Modal from '@mui/material/Modal';
 import { useForm } from "react-hook-form";
@@ -80,7 +80,7 @@ function AdsList() {
 
   const gitRoomsList = async () => {
     try {
-      const res = await axios.get(Rooms_URls.gitRooms, {
+      const res = await axios.get(roomsUrl.getAllRooms, {
         headers: { Authorization: `${localStorage.getItem("token")}` },
       });
       setRooms(res.data.data.rooms);
