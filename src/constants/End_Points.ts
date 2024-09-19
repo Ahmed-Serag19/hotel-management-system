@@ -20,15 +20,7 @@ export const facility_Urls = {
   update: (id: string) => `${Base_facilities}/${id}`,
   details: (id: string) => `${Base_facilities}/${id}`,
 };
-const Base_facilities = `${Base_Url}/admin/room-facilities`;
 
-export const facility_Urls = {
-  getAllFacility: `${Base_facilities}`,
-  createFacility: `${Base_facilities}`,
-  delete: (id: string) => `${Base_facilities}/${id}`,
-  update: (id: string) => `${Base_facilities}/${id}`,
-  details: (id: string) => `${Base_facilities}/${id}`,
-};
 const Base_rooms = `${Base_Url}/admin/rooms`;
 export const roomsUrl = {
   getAllRooms: `${Base_rooms}?page=1&size=10`,
