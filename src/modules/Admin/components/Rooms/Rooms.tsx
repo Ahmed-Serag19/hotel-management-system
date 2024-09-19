@@ -1,25 +1,26 @@
-import React, { useState, useEffect } from "react";
 import {
   Box,
+  Button,
+  IconButton,
+  Popover,
   Table,
   TableBody,
   TableCell,
   TableHead,
-  TableRow,
   TablePagination,
-  IconButton,
-  Popover,
-  Button,
+  TableRow,
 } from "@mui/material";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
-import VisibilityIcon from "@mui/icons-material/Visibility";
-import EditIcon from "@mui/icons-material/Edit";
+import React, { useEffect, useState } from "react";
+
 import DeleteIcon from "@mui/icons-material/Delete";
-import styled from "@emotion/styled";
+import EditIcon from "@mui/icons-material/Edit";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
+import NoData from "../../../Shared/components/NoData/NoData";
+import TitleTables from "../../../Shared/TitleTables/TitleTables";
+import VisibilityIcon from "@mui/icons-material/Visibility";
 import axios from "axios";
 import { roomsUrl } from "../../../../constants/End_Points";
-import TitleTables from "../../../Shared/TitleTables/TitleTables";
-import NoData from "../../../Shared/components/NoData/NoData";
+import styled from "@emotion/styled";
 
 const StyledTableRow = styled(TableRow)`
   &:nth-of-type(even) {
@@ -111,7 +112,12 @@ export default function Rooms() {
                   <TableCell
                     sx={{
                       fontWeight: "bold",
+                      p: 3,
+                      borderTopLeftRadius: "1rem",
+                      borderBottomLeftRadius: "1rem",
+                      color: "#1F263E",
                       fontFamily: "Poppins",
+                      
                     }}
                   >
                     Name
@@ -156,7 +162,13 @@ export default function Rooms() {
                   >
                     Facilities
                   </TableCell>
-                  <TableCell></TableCell> {/* For the 3 dots dropdown */}
+                  <TableCell   sx={{
+                    color: "#1F263E",
+                    fontWeight: 500,
+                    fontFamily: "Poppins",
+                    borderTopRightRadius: "1rem",
+                    borderBottomRightRadius: "1rem",
+                  }}></TableCell> {/* For the 3 dots dropdown */}
                 </TableRow>
               </TableHead>
               <TableBody>
