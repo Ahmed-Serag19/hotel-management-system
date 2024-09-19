@@ -29,7 +29,6 @@ function App() {
         { index: true, element: <Login /> },
         { path: "login", element: <Login /> },
         { path: "register", element: <Register /> },
-        { path: "change-password", element: <ChangePassword /> },
         { path: "forget-password", element: <ForgetPassword /> },
         { path: "reset-password", element: <ResetPassword /> },
       ],
@@ -46,9 +45,8 @@ function App() {
         { index: true, element: <Home /> },
         { path: "home", element: <Home /> },
         { path: "facilities", element: <Facilities /> },
-        { path: "List-booking", element: <ListBooking /> },
-        { path: "users", element: <Users /> },
-
+        { path: "rooms", element: <Rooms /> },
+        { path: "change-password", element: <ChangePassword /> },
       ],
     },
   ]);

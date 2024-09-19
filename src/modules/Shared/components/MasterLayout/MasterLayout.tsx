@@ -3,6 +3,7 @@ import { Outlet } from "react-router-dom";
 
 import { Box } from "@mui/material";
 import Sidebarr from "../Sidebar/Sidebarr";
+import Navbar from "../Navbar/Navbar";
 
 export default function MasterLayout() {
   const [collapsed, setCollapsed] = useState(false);
@@ -38,6 +39,7 @@ export default function MasterLayout() {
           padding: 2,
         }}
       >
+        <Navbar />
         <Outlet />
       </Box>
     </Box>
