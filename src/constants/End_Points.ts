@@ -11,6 +11,7 @@ export const User_URls = {
   getAllUsers:`${Base_Users}/?page=1&size=10`,
   getUserProfile:(id:string)=> `${User_URls}/${id}`,
 };
+
 const Base_facilities = `${Base_Url}/admin/room-facilities`;
 export const facility_Urls = {
   getAllFacility: `${Base_facilities}`,
@@ -19,6 +20,7 @@ export const facility_Urls = {
   update: (id: string) => `${Base_facilities}/${id}`,
   details: (id: string) => `${Base_facilities}/${id}`,
 };
+
 const Base_rooms = `${Base_Url}/admin/rooms`;
 export const roomsUrl = {
   getAllRooms: `${Base_rooms}?page=1&size=10`,
@@ -30,12 +32,11 @@ const Base_Ads = `${Base_Url}/admin/ads`;
 export const Ads_URls = {
   gitAds: `${Base_Ads}`,
   addAds: `${Base_Ads}`,
+  updateAds: (id: string): string => `${Base_Ads}/${id}`,
   deleteAds: (id: string): string => `${Base_Ads}/${id}`,
 };
 
-
-
- const Base_booking = `${Base_Url}/admin/booking`;
+const Base_booking = `${Base_Url}/admin/booking`;
 export const bookingUrl = {
   getAllBooking:`${Base_booking}?page=1&size=10`,
   delete:(id:string) =>`${Base_booking}/${id}`,
