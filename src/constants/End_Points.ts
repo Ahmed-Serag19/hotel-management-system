@@ -9,20 +9,27 @@ export const User_URls = {
   forgetPassword: `${Base_Users}/forgot-password`,
   resetPassword: `${Base_Users}/reset-password`,
   changePassword: `${Base_Users}/change-password`,
+  getAllUsers:`${Base_Users}/?page=1&size=10`,
+  getUserProfile:(id:string)=> `${User_URls}/${id}`,
 };
-const Base_facilities = `${Base_Url}/admin`;
-export const facility_Urls = {
-  getAllFacility: `${Base_facilities}/room-facilities`,
-  createFacility: `${Base_facilities}/room-facilities`,
-};
+const Base_facilities=`${Base_Url}/admin/room-facilities`
+export const facility_Urls={
+getAllFacility:`${Base_facilities}`,
+createFacility:`${Base_facilities}`,
+delete: (id:string) =>  `${Base_facilities}/${id}`,
+update: (id:string) =>  `${Base_facilities}/${id}`,
+details: (id:string) =>  `${Base_facilities}/${id}`,
+}
 const Base_rooms = `${Base_Url}/admin/rooms`;
 export const roomsUrl = {
   getAllRooms: `${Base_rooms}?page=1&size=10`,
   createRoom: `${Base_rooms}/room-facilities`,
 };
+
+
  const Base_booking = `${Base_Url}/admin/booking`;
 export const bookingUrl = {
   getAllBooking:`${Base_booking}?page=1&size=10`,
-  deleteBooking:`${Base_booking}`,
-  getBookingDetails:`${Base_booking}/6591734ad50e86bcce294b08`
+  delete:(id:string) =>`${Base_booking}/${id}`,
+  details: (id:string) =>  `${Base_booking}/${id}`,
 }

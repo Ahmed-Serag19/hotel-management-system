@@ -17,33 +17,33 @@ import {
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { bookingUrl } from "../../../../constants/End_Points";
+import { bookingUrl, User_URls } from "../../../../constants/End_Points";
 import { toast } from "react-toastify";
 import styled from "@emotion/styled";
 import { tableCellClasses } from "@mui/material/TableCell"; // for border rows
 import NoData from "../../../Shared/components/NoData/NoData";
 import DeleteImg from "../../../../assets/images/delete.png";
 
-// Type for bookingData
-interface BookingData {
+// Type for usersData
+interface UsersData {
   _id: string;
   userName: string;
-  price: number;
-  startDate: string;
-  endDate: string;
-  createdAt: string;
-  user: string;
+  email: string;
+  phoneNumber: number;
+  country: string;
+  role: string;
+  profileImage: FileList;
 }
 
 export default function Facilities() {
-  const [booking, setBooking] = useState<BookingData[]>([]);
-  const [openDelete, setOpenDelete] = useState(false); //delete modal
-  const [bookingId, setBookingId] = useState<string>("");
+  const [users, setUsers] = useState<UsersData[]>([]);
+  const [openView, setOpenView] = useState(false); //view modal
+  const [usersId, setUsersId] = useState<string>("");
 
-  const handleCloseDelete = () => setOpenDelete(false);
-  const handleOpenDelete = (id: string) => {
-    setBookingId(id);
-    setOpenDelete(true);
+  const handleCloseView = () => setOpenView(false);
+  const handleOpenView = (id: string) => {
+    setUsersId(id);
+    setOpenView(true);
   };
 
   // Modal styling
@@ -60,29 +60,32 @@ export default function Facilities() {
     p: 4,
   };
 
-  // Get all bookings
-  const getBooking = async () => {
+  // Get all users
+  const getUsers = async () => {
     try {
-      const response = await axios.get(bookingUrl.getAllBooking, {
+      const response = await axios.get(User_URls.getAllUsers, {
         headers: { Authorization: localStorage.getItem("token") || "" },
       });
-      setBooking(response.data.data.booking);
+      setUsers(response.data.data.users);
     } catch (error: any) {
-      toast.error(error.response?.data?.message || "Failed to fetch bookings");
+      toast.error(error.response?.data?.message || "Failed to fetch users");
     }
   };
 
-  // Delete booking
-  const deleteBooking = async () => {
+  // Get user by ID with GET request
+  const getUserById = async () => {
     try {
-      const response = await axios.delete(bookingUrl.delete(bookingId), {
-        headers: { Authorization: localStorage.getItem("token") || "" },
+      const response = await axios.get(User_URls.getUserProfile(usersId), {
+        headers: {
+          Authorization: localStorage.getItem("token") || "",
+        },
       });
-      toast.success(response.data.message || "Deleted Successfully");
-      getBooking();
-      handleCloseDelete();
+
+      toast.success("User data fetched successfully");
+      handleCloseView();
+      console.log("Fetched user:", response.data);
     } catch (error: any) {
-      toast.error(error.response?.data?.message || "Failed to delete booking");
+      toast.error(error.response?.data?.message || "Failed to fetch user");
     }
   };
 
@@ -95,25 +98,25 @@ export default function Facilities() {
   `;
 
   useEffect(() => {
-    getBooking();
+    getUsers();
   }, []);
 
   return (
     <>
-      <TitleTables titleTable="Bookings" btn="Add Booking" />
+      <TitleTables titleTable="Users" btn="Add User" />
 
-      {/* Delete Modal */}
+      {/* View Modal */}
       <Modal
-        open={openDelete}
-        onClose={handleCloseDelete}
-        aria-labelledby="delete-modal-title"
-        aria-describedby="delete-modal-description"
+        open={openView}
+        onClose={handleCloseView}
+        aria-labelledby="view-modal-title"
+        aria-describedby="view-modal-description"
         sx={{ fontFamily: "Poppins", padding: "60px" }}
       >
         <Box sx={style}>
           <Box sx={{ display: "flex", justifyContent: "end", mb: "60px" }}>
             <i
-              onClick={handleCloseDelete}
+              onClick={handleCloseView}
               style={{ color: "#CC0000", cursor: "pointer" }}
               className="fa-regular fa-xl fa-circle-xmark"
             ></i>
@@ -127,7 +130,7 @@ export default function Facilities() {
             variant="h6"
             sx={{ color: "#494949", fontWeight: 700, textAlign: "center" }}
           >
-            Delete This Booking?
+            View User?
           </Typography>
           <Typography
             sx={{
@@ -139,13 +142,13 @@ export default function Facilities() {
               mb: 5,
             }}
           >
-            Are you sure you want to delete this booking? If so, click on
-            "Delete".
+            Are you sure you want to view this user profile? If so, click on
+            "View".
           </Typography>
 
           <Stack direction="row" spacing={2} sx={{ justifyContent: "end" }}>
             <Button
-              onClick={deleteBooking}
+              onClick={getUserById}
               sx={{
                 backgroundColor: "#203FC7",
                 fontSize: "17px",
@@ -153,25 +156,23 @@ export default function Facilities() {
               }}
               variant="contained"
             >
-              Delete
+              View
             </Button>
           </Stack>
         </Box>
       </Modal>
 
-      {/* Booking Table */}
+      {/* Users Table */}
       <Box sx={{ pb: 3, overflowX: "auto" }}>
-        {" "}
-        {/* Removed overflow and set it to auto */}
-        {booking.length > 0 ? (
+        {users.length > 0 ? (
           <Table
             sx={{
               minWidth: 350,
               [`& .${tableCellClasses.root}`]: { borderBottom: "none" },
               mt: "50px",
-              tableLayout: "auto", // Ensures the table takes up the available space
+              tableLayout: "auto",
             }}
-            aria-label="booking table"
+            aria-label="users table"
           >
             <TableHead>
               <TableRow
@@ -185,12 +186,13 @@ export default function Facilities() {
                     fontWeight: 500,
                   }}
                 >
-                  Room Status
+                  Users Status
                 </TableCell>
-                <TableCell sx={{ fontWeight: 500 }}>Price</TableCell>
-                <TableCell sx={{ fontWeight: 500 }}>Start Date</TableCell>
-                <TableCell sx={{ fontWeight: 500 }}>End Date</TableCell>
-                <TableCell sx={{ fontWeight: 500 }}>Created At</TableCell>
+                <TableCell sx={{ fontWeight: 500 }}>User Name</TableCell>
+                <TableCell sx={{ fontWeight: 500 }}>Email</TableCell>
+                <TableCell sx={{ fontWeight: 500 }}>Phone Number</TableCell>
+                <TableCell sx={{ fontWeight: 500 }}>Country</TableCell>
+                <TableCell sx={{ fontWeight: 500 }}>Role</TableCell>
                 <TableCell
                   sx={{
                     fontWeight: 500,
@@ -198,28 +200,23 @@ export default function Facilities() {
                     borderBottomRightRadius: "1rem",
                   }}
                 >
-                  User
+                  Profile Image
                 </TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {booking.map((bookingData) => (
-                <StyledTableRow key={bookingData._id}>
+              {users.map((userData) => (
+                <StyledTableRow key={userData._id}>
                   <TableCell sx={{ color: "#3A3A3D" }}>
-                    {bookingData.status}
+                    {userData.userName}
                   </TableCell>
-                  <TableCell>{bookingData.totalPrice}</TableCell>
+                  <TableCell>{userData.email}</TableCell>
+                  <TableCell>{userData.phoneNumber}</TableCell>
+                  <TableCell>{userData.country}</TableCell>
+                  <TableCell>{userData.role}</TableCell>
                   <TableCell>
-                    {new Date(bookingData.startDate).toLocaleDateString()}
+                    {userData.profileImage?.[0]?.name || "No Image"}
                   </TableCell>
-                  <TableCell>
-                    {new Date(bookingData.endDate).toLocaleDateString()}
-                  </TableCell>
-                  <TableCell>
-                    {new Date(bookingData.createdAt).toLocaleDateString()}
-                  </TableCell>
-                  {/* Access a specific property of the user object */}
-                  <TableCell>{bookingData.user?.userName}</TableCell>
                   <TableCell>
                     <Select
                       sx={{
@@ -235,12 +232,12 @@ export default function Facilities() {
                     >
                       <MenuItem
                         sx={{ color: "#1F263E", fontFamily: "Poppins" }}
-                        onClick={() => handleOpenDelete(bookingData._id)}
+                        onClick={() => handleOpenView(userData._id)}
                       >
                         <RiDeleteBin6Line
                           style={{ color: "#203FC7", marginRight: "10px" }}
                         />
-                        Delete
+                        View
                       </MenuItem>
                     </Select>
                   </TableCell>
