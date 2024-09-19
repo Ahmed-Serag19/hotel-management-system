@@ -14,18 +14,17 @@ export default function TitleTables({ titleTable, onClick, btn }: TitleData) {
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center",
-          mx:3,
           mt:2,
           mb:5,
-          height:{xs:"30px",sm:"120px"},
+          height:{xs:"30px",sm:"100px"},
         }}
       >
-        <Stack sx={{ color: "#1F263E" }}>
-          <Typography variant="h6" sx={{ fontFamily: "Poppins" }}>
+        <Stack sx={{ color: "#1F263E" , }} >
+          <Typography variant="h6" sx={{ fontFamily: "Poppins" ,fontSize:{xs:"16px",md:"20px"} }}>
             {titleTable} Table Details
           </Typography>
           <Typography
-            sx={{ fontSize: "14px",  lineHeight: "2px" }}
+            sx={{fontSize:{xs:"12px",md:"14px"},  lineHeight: "2px" }}
           >
             You can check all details
           </Typography>
@@ -39,9 +38,9 @@ export default function TitleTables({ titleTable, onClick, btn }: TitleData) {
               width: "100%",
               backgroundColor: "#203FC7",
               textTransform: "none",
-              fontSize: "16px",
+              fontSize: {xs:"12px",md:"16px"},
               fontWeight: 700,
-              px: { xs: 3, sm: "50px" },
+              px: { xs:2, sm: "50px" },
               py: 1,
             }}
             variant="contained"

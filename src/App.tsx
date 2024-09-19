@@ -14,8 +14,15 @@ import {
   //  createHashRouter,
   RouterProvider,
 } from "react-router-dom";
+
 import Facilities from "./modules/Admin/components/Facilities/Facilities";
+
 import AdsList from "./modules/Admin/components/AdsList/AdsList";
+import ListBooking from "./modules/Admin/components/ListBooking/ListBooking";
+import Users from "./modules/Admin/components/Users/Users";
+import Rooms from "./modules/Admin/components/Rooms/Rooms";
+import AddRoom from "./modules/Admin/components/Rooms/AddRoom";
+
 
 function App() {
   const routes = createBrowserRouter([
@@ -27,7 +34,6 @@ function App() {
         { index: true, element: <Login /> },
         { path: "login", element: <Login /> },
         { path: "register", element: <Register /> },
-        { path: "change-password", element: <ChangePassword /> },
         { path: "forget-password", element: <ForgetPassword /> },
         { path: "reset-password", element: <ResetPassword /> },
       ],
@@ -45,6 +51,12 @@ function App() {
         { path: "home", element: <Home /> },
         { path: "facilities", element: <Facilities /> },
         { path: "Ads-list", element: <AdsList /> },
+        { path: "List-booking", element: <ListBooking /> },
+        { path: "users", element: <Users /> },
+        { path: "rooms", element: <Rooms /> },
+        { path: "add-room", element: <AddRoom /> },
+        { path: "change-password", element: <ChangePassword /> },
+
       ],
     },
   ]);
