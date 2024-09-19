@@ -76,7 +76,7 @@ export default function Sidebarr({ onToggle, collapsed }) {
           </Box>
         </MenuItem>
 
-        <MenuItem component={<Link to="/dashboard" />}>
+        <MenuItem component={<Link to="/dashboard/Ads-list" />}>
           <Box
             sx={{
               display: "flex",
