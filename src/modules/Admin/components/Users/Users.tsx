@@ -14,10 +14,11 @@ import {
   Select,
   Stack,
   Typography,
+  TablePagination,
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { bookingUrl, User_URls } from "../../../../constants/End_Points";
+import { get_user } from "../../../../constants/End_Points";
 import { toast } from "react-toastify";
 import styled from "@emotion/styled";
 import { tableCellClasses } from "@mui/material/TableCell"; // for border rows
@@ -35,14 +36,17 @@ interface UsersData {
   profileImage: FileList;
 }
 
-export default function Facilities() {
+export default function UsersTable() {
   const [users, setUsers] = useState<UsersData[]>([]);
-  const [openView, setOpenView] = useState(false); //view modal
-  const [usersId, setUsersId] = useState<string>("");
+  const [openView, setOpenView] = useState(false); // View modal
+  const [selectedUserId, setSelectedUserId] = useState<string>("");
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [totalCount, setTotalCount] = useState(0); // Total users count
 
   const handleCloseView = () => setOpenView(false);
   const handleOpenView = (id: string) => {
-    setUsersId(id);
+    setSelectedUserId(id);
     setOpenView(true);
   };
 
@@ -63,27 +67,38 @@ export default function Facilities() {
   // Get all users
   const getUsers = async () => {
     try {
-      const response = await axios.get(User_URls.getAllUsers, {
-        headers: { Authorization: localStorage.getItem("token") || "" },
-      });
+      const response = await axios.get(
+        `${get_user.getAllUsers}?page=${page}&limit=${rowsPerPage}`,
+        {
+          headers: { Authorization: localStorage.getItem("token") || "" },
+        }
+      );
+
       setUsers(response.data.data.users);
+      setTotalCount(response.data.data.totalCount);
+      toast.success("Users data fetched successfully");
     } catch (error: any) {
       toast.error(error.response?.data?.message || "Failed to fetch users");
     }
   };
 
-  // Get user by ID with GET request
+  // Get user by ID
   const getUserById = async () => {
     try {
-      const response = await axios.get(User_URls.getUserProfile(usersId), {
-        headers: {
-          Authorization: localStorage.getItem("token") || "",
-        },
-      });
+      const response = await axios.get(
+        get_user.getUserProfile(selectedUserId),
+        {
+          headers: {
+            Authorization: localStorage.getItem("token") || "",
+          },
+        }
+      );
+
+      const user = response.data.data;
+      console.log("Fetched user:", user);
 
       toast.success("User data fetched successfully");
       handleCloseView();
-      console.log("Fetched user:", response.data);
     } catch (error: any) {
       toast.error(error.response?.data?.message || "Failed to fetch user");
     }
@@ -99,7 +114,19 @@ export default function Facilities() {
 
   useEffect(() => {
     getUsers();
-  }, []);
+  }, [page, rowsPerPage]);
+
+  // Pagination handlers
+  const handleChangePage = (_event: unknown, newPage: number) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0); // Reset to the first page
+  };
 
   return (
     <>
@@ -249,6 +276,16 @@ export default function Facilities() {
           <NoData />
         )}
       </Box>
+
+      {/* Table Pagination */}
+      <TablePagination
+        component="div"
+        count={totalCount}
+        page={page}
+        onPageChange={handleChangePage}
+        rowsPerPage={rowsPerPage}
+        onRowsPerPageChange={handleChangeRowsPerPage}
+      />
     </>
   );
 }
