@@ -16,10 +16,13 @@ import {
 } from "react-router-dom";
 
 import Facilities from "./modules/Admin/components/Facilities/Facilities";
+
+import AdsList from "./modules/Admin/components/AdsList/AdsList";
 import ListBooking from "./modules/Admin/components/ListBooking/ListBooking";
 import Users from "./modules/Admin/components/Users/Users";
 import Rooms from "./modules/Admin/components/Rooms/Rooms";
 import AddRoom from "./modules/Admin/components/Rooms/AddRoom";
+
 
 function App() {
   const routes = createBrowserRouter([
@@ -47,7 +50,7 @@ function App() {
         { index: true, element: <Home /> },
         { path: "home", element: <Home /> },
         { path: "facilities", element: <Facilities /> },
-
+        { path: "Ads-list", element: <AdsList /> },
         { path: "List-booking", element: <ListBooking /> },
         { path: "users", element: <Users /> },
         { path: "rooms", element: <Rooms /> },

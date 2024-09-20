@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import {
   Box,
   TextField,
@@ -18,6 +18,7 @@ import axios from "axios";
 import { facility_Urls, roomsUrl } from "../../../../constants/End_Points";
 import styled from "@emotion/styled";
 import { useLocation, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 // Styled container for the form
 const FormContainer = styled(Box)`
@@ -164,12 +165,13 @@ export default function AddRoomForm() {
         await axios.put(roomsUrl.updateRoom(roomToEdit._id), formData, {
           headers: { Authorization: localStorage.getItem("token") },
         });
-        console.log("Room updated successfully");
+        toast.success("Room Edited Successfully");
       } else {
         // Create a new room
         await axios.post(roomsUrl.createRoom, formData, {
           headers: { Authorization: localStorage.getItem("token") },
         });
+        toast.success("Room Added Successfully");
       }
       reset();
       setSelectedFiles([]); // Clear the file list
