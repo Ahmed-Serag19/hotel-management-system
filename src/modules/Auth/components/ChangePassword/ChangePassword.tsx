@@ -15,24 +15,18 @@ import axios from "axios";
 import { User_URls } from "../../../../constants/End_Points";
 import { toast } from "react-toastify";
 
-interface UserData {
-  oldPassword: string;
-  newPassword: string;
-  confirmPassword: string;
-}
 export default function ChangePassword() {
+  interface UserData {
+    oldPassword: string;
+    newPassword: string;
+    confirmPassword: string;
+  }
   const {
     register,
     handleSubmit,
     formState: { errors },
     reset,
   } = useForm<UserData>();
-
-  interface UserData {
-    oldPassword: string;
-    newPassword: string;
-    confirmPassword: string;
-  }
 
   const changePasswordSubmation = async (data: UserData) => {
     try {
