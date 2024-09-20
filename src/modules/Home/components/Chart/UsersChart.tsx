@@ -6,17 +6,25 @@ import { Box, Typography } from "@mui/material";
 // Register Chart.js components
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-const UsersChart: React.FC = ({ users }) => {
+// Define the types for the users prop
+interface UsersChartProps {
+  users: {
+    admin: number;
+    user: number;
+  };
+}
+
+const UsersChart: React.FC<UsersChartProps> = ({ users }) => {
   const data = {
-    labels: ["Admin", "User"], // Admin and User labels
+    labels: ["Admin", "User"],
     datasets: [
       {
         label: "Users",
         data: [users.admin, users.user],
-        backgroundColor: ["#35C2FD", "#54D14D"], // Colors for Admin and User
-        borderColor: ["#35C2FD", "#54D14D"], // Border colors for Admin and User
+        backgroundColor: ["#35C2FD", "#54D14D"],
+        borderColor: ["#35C2FD", "#54D14D"],
         borderWidth: 5,
-        cutout: "70%", // This will create space in the middle for the text
+        cutout: "70%",
       },
     ],
   };
@@ -26,7 +34,7 @@ const UsersChart: React.FC = ({ users }) => {
     maintainAspectRatio: false,
     plugins: {
       legend: {
-        display: false, // Hide default legend
+        display: false,
       },
       tooltip: {
         enabled: true,
@@ -45,12 +53,13 @@ const UsersChart: React.FC = ({ users }) => {
     >
       {/* Description below the chart */}
       <Box sx={{ display: "flex", mb: "5px" }}>
-        <Typography sx={{ marginInline: "10px" }}>Admins: 131</Typography>
-        <Typography>Users: 300</Typography>
+        <Typography sx={{ marginInline: "10px" }}>
+          Admins: {users.admin}
+        </Typography>
+        <Typography>Users: {users.user}</Typography>
       </Box>
 
       <Box sx={{ position: "relative", width: "200px", height: "200px" }}>
-        {/* The Doughnut Chart */}
         <Doughnut data={data} options={options} />
 
         {/* The word 'Users' in the middle */}
