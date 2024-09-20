@@ -8,9 +8,13 @@ export const User_URls = {
   forgetPassword: `${Base_Users}/forgot-password`,
   resetPassword: `${Base_Users}/reset-password`,
   changePassword: `${Base_Users}/change-password`,
-  getAllUsers: `${Base_Users}/?page=1&size=10`,
-  getUserProfile: (id: string) => `${User_URls}/${id}`,
 };
+
+const Base_get_users =`${Base_Url}/admin/users`;
+export const get_user ={
+  getAllUsers: `${Base_get_users}/?page=1&size=10`,
+  getUserProfile: (id: string) => `${Base_get_users}/${id}`,
+}; 
 
 const Base_Ads = `${Base_Url}/admin/ads`;
 export const Ads_URls = {

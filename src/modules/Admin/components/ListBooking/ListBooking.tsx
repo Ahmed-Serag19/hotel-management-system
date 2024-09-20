@@ -14,6 +14,7 @@ import {
   Select,
   Stack,
   Typography,
+  TablePagination,
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import axios from "axios";
@@ -28,17 +29,23 @@ import DeleteImg from "../../../../assets/images/delete.png";
 interface BookingData {
   _id: string;
   userName: string;
-  price: number;
+  status: string;
+  totalPrice: number;
   startDate: string;
   endDate: string;
   createdAt: string;
-  user: string;
+  user: {
+    userName: string;
+  };
 }
 
 export default function Facilities() {
   const [booking, setBooking] = useState<BookingData[]>([]);
   const [openDelete, setOpenDelete] = useState(false); //delete modal
   const [bookingId, setBookingId] = useState<string>("");
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [totalCount, setTotalCount] = useState(0); // Total bookings count
 
   const handleCloseDelete = () => setOpenDelete(false);
   const handleOpenDelete = (id: string) => {
@@ -63,10 +70,14 @@ export default function Facilities() {
   // Get all bookings
   const getBooking = async () => {
     try {
-      const response = await axios.get(bookingUrl.getAllBooking, {
-        headers: { Authorization: localStorage.getItem("token") || "" },
-      });
+      const response = await axios.get(
+        `${bookingUrl.getAllBooking}?page=${page}&limit=${rowsPerPage}`,
+        {
+          headers: { Authorization: localStorage.getItem("token") || "" },
+        }
+      );
       setBooking(response.data.data.booking);
+      setTotalCount(response.data.data.totalCount); // Set total count
     } catch (error: any) {
       toast.error(error.response?.data?.message || "Failed to fetch bookings");
     }
@@ -94,9 +105,21 @@ export default function Facilities() {
     font-family: "Poppins" !important;
   `;
 
+  // Pagination handlers
+  const handleChangePage = (_event: unknown, newPage: number) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
+  };
+
   useEffect(() => {
     getBooking();
-  }, []);
+  }, [page, rowsPerPage]);
 
   return (
     <>
@@ -161,93 +184,101 @@ export default function Facilities() {
 
       {/* Booking Table */}
       <Box sx={{ pb: 3, overflowX: "auto" }}>
-        {" "}
-        {/* Removed overflow and set it to auto */}
         {booking.length > 0 ? (
-          <Table
-            sx={{
-              minWidth: 350,
-              [`& .${tableCellClasses.root}`]: { borderBottom: "none" },
-              mt: "50px",
-              tableLayout: "auto", // Ensures the table takes up the available space
-            }}
-            aria-label="booking table"
-          >
-            <TableHead>
-              <TableRow
-                sx={{ bgcolor: "#E2E5EB", color: "#1F263E", fontWeight: 500 }}
-              >
-                <TableCell
-                  sx={{
-                    p: 3,
-                    borderTopLeftRadius: "1rem",
-                    borderBottomLeftRadius: "1rem",
-                    fontWeight: 500,
-                  }}
+          <>
+            <Table
+              sx={{
+                minWidth: 350,
+                [`& .${tableCellClasses.root}`]: { borderBottom: "none" },
+                mt: "50px",
+                tableLayout: "auto", // Ensures the table takes up the available space
+              }}
+              aria-label="booking table"
+            >
+              <TableHead>
+                <TableRow
+                  sx={{ bgcolor: "#E2E5EB", color: "#1F263E", fontWeight: 500 }}
                 >
-                  Room Status
-                </TableCell>
-                <TableCell sx={{ fontWeight: 500 }}>Price</TableCell>
-                <TableCell sx={{ fontWeight: 500 }}>Start Date</TableCell>
-                <TableCell sx={{ fontWeight: 500 }}>End Date</TableCell>
-                <TableCell sx={{ fontWeight: 500 }}>Created At</TableCell>
-                <TableCell
-                  sx={{
-                    fontWeight: 500,
-                    borderTopRightRadius: "1rem",
-                    borderBottomRightRadius: "1rem",
-                  }}
-                >
-                  User
-                </TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {booking.map((bookingData) => (
-                <StyledTableRow key={bookingData._id}>
-                  <TableCell sx={{ color: "#3A3A3D" }}>
-                    {bookingData.status}
+                  <TableCell
+                    sx={{
+                      p: 3,
+                      borderTopLeftRadius: "1rem",
+                      borderBottomLeftRadius: "1rem",
+                      fontWeight: 500,
+                    }}
+                  >
+                    Room Status
                   </TableCell>
-                  <TableCell>{bookingData.totalPrice}</TableCell>
-                  <TableCell>
-                    {new Date(bookingData.startDate).toLocaleDateString()}
+                  <TableCell sx={{ fontWeight: 500 }}>Price</TableCell>
+                  <TableCell sx={{ fontWeight: 500 }}>Start Date</TableCell>
+                  <TableCell sx={{ fontWeight: 500 }}>End Date</TableCell>
+                  <TableCell sx={{ fontWeight: 500 }}>Created At</TableCell>
+                  <TableCell sx={{ fontWeight: 500 }}>Users</TableCell>
+                  <TableCell
+                    sx={{
+                      fontWeight: 500,
+                      borderTopRightRadius: "1rem",
+                      borderBottomRightRadius: "1rem",
+                    }}
+                  >
+                    Action
                   </TableCell>
-                  <TableCell>
-                    {new Date(bookingData.endDate).toLocaleDateString()}
-                  </TableCell>
-                  <TableCell>
-                    {new Date(bookingData.createdAt).toLocaleDateString()}
-                  </TableCell>
-                  {/* Access a specific property of the user object */}
-                  <TableCell>{bookingData.user?.userName}</TableCell>
-                  <TableCell>
-                    <Select
-                      sx={{
-                        color: "#1F263E",
-                        fontFamily: "Poppins",
-                        fontSize: "14px",
-                        boxShadow: "none",
-                        ".MuiOutlinedInput-notchedOutline": { border: 0 },
-                      }}
-                      value=""
-                      displayEmpty
-                      IconComponent={MoreHorizIcon}
-                    >
-                      <MenuItem
-                        sx={{ color: "#1F263E", fontFamily: "Poppins" }}
-                        onClick={() => handleOpenDelete(bookingData._id)}
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {booking.map((bookingData) => (
+                  <StyledTableRow key={bookingData._id}>
+                    <TableCell sx={{ color: "#3A3A3D" }}>
+                      {bookingData.status}
+                    </TableCell>
+                    <TableCell>{bookingData.totalPrice}</TableCell>
+                    <TableCell>
+                      {new Date(bookingData.startDate).toLocaleDateString()}
+                    </TableCell>
+                    <TableCell>
+                      {new Date(bookingData.endDate).toLocaleDateString()}
+                    </TableCell>
+                    <TableCell>
+                      {new Date(bookingData.createdAt).toLocaleDateString()}
+                    </TableCell>
+                    <TableCell>{bookingData.user?.userName}</TableCell>
+                    <TableCell>
+                      <Select
+                        sx={{
+                          color: "#1F263E",
+                          fontFamily: "Poppins",
+                          fontSize: "14px",
+                          boxShadow: "none",
+                          ".MuiOutlinedInput-notchedOutline": { border: 0 },
+                        }}
+                        value=""
+                        displayEmpty
+                        IconComponent={MoreHorizIcon}
                       >
-                        <RiDeleteBin6Line
-                          style={{ color: "#203FC7", marginRight: "10px" }}
-                        />
-                        Delete
-                      </MenuItem>
-                    </Select>
-                  </TableCell>
-                </StyledTableRow>
-              ))}
-            </TableBody>
-          </Table>
+                        <MenuItem
+                          sx={{ color: "#1F263E", fontFamily: "Poppins" }}
+                          onClick={() => handleOpenDelete(bookingData._id)}
+                        >
+                          <RiDeleteBin6Line
+                            style={{ color: "#203FC7", marginRight: "10px" }}
+                          />
+                          Delete
+                        </MenuItem>
+                      </Select>
+                    </TableCell>
+                  </StyledTableRow>
+                ))}
+              </TableBody>
+            </Table>
+            <TablePagination
+              component="div"
+              count={totalCount}
+              page={page}
+              onPageChange={handleChangePage}
+              rowsPerPage={rowsPerPage}
+              onRowsPerPageChange={handleChangeRowsPerPage}
+            />
+          </>
         ) : (
           <NoData />
         )}
