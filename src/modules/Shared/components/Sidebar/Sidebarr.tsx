@@ -8,16 +8,27 @@ import BookOnlineTwoToneIcon from "@mui/icons-material/BookOnlineTwoTone";
 import PrecisionManufacturingTwoToneIcon from "@mui/icons-material/PrecisionManufacturingTwoTone";
 import LockOpenTwoToneIcon from "@mui/icons-material/LockOpenTwoTone";
 import LogoutTwoToneIcon from "@mui/icons-material/LogoutTwoTone";
-import { Box } from "@mui/material";
+import DoubleArrowIcon from "@mui/icons-material/DoubleArrow";
+import { Box, IconButton } from "@mui/material";
 
 export default function Sidebarr({ onToggle, collapsed }) {
   return (
     <Sidebar
-      onClick={onToggle}
       rootStyles={{
-        height: "100%",
+        height: "100vh",
       }}
     >
+      <IconButton
+        onClick={onToggle} // Toggle sidebar collapse
+        sx={{
+          transform: collapsed ? "rotate(180deg)" : "rotate(0deg)", // Rotate the arrow when collapsed
+          transition: "all 0.3s",
+          position: "absolute",
+          right: collapsed ? "146px" : "5px",
+        }}
+      >
+        <DoubleArrowIcon />
+      </IconButton>
       <Menu
         rootStyles={{
           paddingTop: "4rem",
