@@ -1,27 +1,28 @@
 import React from "react";
 import { Doughnut } from "react-chartjs-2";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
+import { Box, Typography } from "@mui/material";
 
 // Register Chart.js components
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-const CircleChart: React.FC = ({ booking }) => {
-  console.log(booking);
+// Define the types for the booking prop
+interface CircleChartProps {
+  booking: {
+    completed: number;
+    pending: number;
+  };
+}
 
+const CircleChart: React.FC<CircleChartProps> = ({ booking }) => {
   const data = {
-    labels: ["Completed", "Pending"], // Labels for each section of the chart
+    labels: ["Completed", "Pending"],
     datasets: [
       {
         label: "Bookings",
-        data: [booking.completed, booking.pending], // Completed and Pending bookings
-        backgroundColor: [
-          "rgba(33, 150, 243, 0.8)", // Primary color for Completed (blueish color)
-          "#9D57D5", // Custom color for Pending (purple)
-        ],
-        borderColor: [
-          "rgba(33, 150, 243, 1)", // Border for Completed
-          "#9D57D5", // Border for Pending
-        ],
+        data: [booking.completed, booking.pending],
+        backgroundColor: ["rgba(33, 150, 243, 0.8)", "#9D57D5"],
+        borderColor: ["rgba(33, 150, 243, 1)", "#9D57D5"],
         borderWidth: 1,
       },
     ],
@@ -39,7 +40,17 @@ const CircleChart: React.FC = ({ booking }) => {
     },
   };
 
-  return <Doughnut data={data} options={options} />;
+  return (
+    <>
+      <Box sx={{ display: "flex", mb: "5px", justifyContent: "center" }}>
+        <Typography sx={{ marginInline: "10px" }}>
+          Completed: {data?.datasets[0].data[0]}
+        </Typography>
+        <Typography>Pending: {data?.datasets[0].data[1]}</Typography>
+      </Box>
+      <Doughnut data={data} options={options} />
+    </>
+  );
 };
 
 export default CircleChart;
