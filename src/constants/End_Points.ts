@@ -12,14 +12,16 @@ export const User_URls = {
   getAllUsers: `${Base_Users}/?page=1&size=10`,
   getUserProfile: (id: string) => `${User_URls}/${id}`,
 };
-const Base_facilities = `${Base_Url}/admin/room-facilities`;
-export const facility_Urls = {
-  getAllFacility: `${Base_facilities}`,
-  createFacility: `${Base_facilities}`,
-  delete: (id: string) => `${Base_facilities}/${id}`,
-  update: (id: string) => `${Base_facilities}/${id}`,
-  details: (id: string) => `${Base_facilities}/${id}`,
-};
+
+// const Base_facilities = `${Base_Url}/admin/room-facilities`;
+// export const facility_Urls = {
+//   getAllFacility: `${Base_facilities}`,
+//   createFacility: `${Base_facilities}`,
+//   delete: (id: string) => `${Base_facilities}/${id}`,
+//   update: (id: string) => `${Base_facilities}/${id}`,
+//   details: (id: string) => `${Base_facilities}/${id}`,
+// };
+
 const Base_facilities = `${Base_Url}/admin/room-facilities`;
 
 export const facility_Urls = {
@@ -29,6 +31,7 @@ export const facility_Urls = {
   update: (id: string) => `${Base_facilities}/${id}`,
   details: (id: string) => `${Base_facilities}/${id}`,
 };
+
 const Base_rooms = `${Base_Url}/admin/rooms`;
 export const roomsUrl = {
   getAllRooms: `${Base_rooms}?page=1&size=10`,
@@ -42,3 +45,5 @@ export const bookingUrl = {
   delete: (id: string) => `${Base_booking}/${id}`,
   details: (id: string) => `${Base_booking}/${id}`,
 };
+
+export const getDashboard = `${Base_Url}/admin/dashboard`;

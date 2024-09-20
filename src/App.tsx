@@ -18,6 +18,7 @@ import {
 import Facilities from "./modules/Admin/components/Facilities/Facilities";
 import ListBooking from "./modules/Admin/components/ListBooking/ListBooking";
 import Users from "./modules/Admin/components/Users/Users";
+import Rooms from "./modules/Admin/components/Rooms/Rooms";
 
 function App() {
   const routes = createBrowserRouter([

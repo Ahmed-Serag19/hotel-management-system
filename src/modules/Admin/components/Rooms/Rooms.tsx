@@ -8,12 +8,12 @@ import {
   TableCell,
   TableHead,
   TablePagination,
-  Button,
   Modal,
   Typography,
   Stack,
   Select,
   MenuItem,
+  TableRow,
 } from "@mui/material";
 import { FaRegEye } from "react-icons/fa6";
 import { FaRegEdit } from "react-icons/fa";
@@ -26,7 +26,6 @@ import TitleTables from "../../../Shared/TitleTables/TitleTables";
 import NoData from "../../../Shared/components/NoData/NoData";
 import DeleteImg from "../../../../assets/images/delete.png"; // Ensure this path is correct
 import { toast } from "react-toastify";
-
 
 // Custom styled table rows
 const StyledTableRow = styled(TableRow)`
@@ -178,7 +177,6 @@ export default function Rooms() {
                   <TableCell sx={{ fontWeight: "bold", fontFamily: "Poppins" }}>
                     Action
                   </TableCell>
-
                 </TableRow>
               </TableHead>
               <TableBody>
