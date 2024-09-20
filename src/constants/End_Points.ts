@@ -44,3 +44,4 @@ export const bookingUrl = {
   details: (id: string) => `${Base_booking}/${id}`,
 };
 
+export const getDashboard = `${Base_Url}/admin/dashboard`;
