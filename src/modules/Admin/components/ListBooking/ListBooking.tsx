@@ -123,8 +123,6 @@ export default function Facilities() {
 
   return (
     <>
-      <TitleTables titleTable="Bookings" btn="Add Booking" />
-
       {/* Delete Modal */}
       <Modal
         open={openDelete}

@@ -21,11 +21,10 @@ import axios from "axios";
 import { get_user } from "../../../../constants/End_Points";
 import { toast } from "react-toastify";
 import styled from "@emotion/styled";
-import { tableCellClasses } from "@mui/material/TableCell"; // for border rows
+import { tableCellClasses } from "@mui/material/TableCell";
 import NoData from "../../../Shared/components/NoData/NoData";
 import DeleteImg from "../../../../assets/images/delete.png";
 
-// Type for usersData
 interface UsersData {
   _id: string;
   userName: string;
@@ -76,7 +75,6 @@ export default function UsersTable() {
 
       setUsers(response.data.data.users);
       setTotalCount(response.data.data.totalCount);
-      toast.success("Users data fetched successfully");
     } catch (error: any) {
       toast.error(error.response?.data?.message || "Failed to fetch users");
     }
@@ -130,8 +128,6 @@ export default function UsersTable() {
 
   return (
     <>
-      <TitleTables titleTable="Users" btn="Add User" />
-
       {/* View Modal */}
       <Modal
         open={openView}
@@ -213,13 +209,13 @@ export default function UsersTable() {
                     fontWeight: 500,
                   }}
                 >
-                  Users Status
+                  Username
                 </TableCell>
-                <TableCell sx={{ fontWeight: 500 }}>User Name</TableCell>
                 <TableCell sx={{ fontWeight: 500 }}>Email</TableCell>
-                <TableCell sx={{ fontWeight: 500 }}>Phone Number</TableCell>
+                <TableCell sx={{ fontWeight: 500 }}>Phone</TableCell>
                 <TableCell sx={{ fontWeight: 500 }}>Country</TableCell>
                 <TableCell sx={{ fontWeight: 500 }}>Role</TableCell>
+                <TableCell sx={{ fontWeight: 500 }}>Image</TableCell>
                 <TableCell
                   sx={{
                     fontWeight: 500,
@@ -227,7 +223,7 @@ export default function UsersTable() {
                     borderBottomRightRadius: "1rem",
                   }}
                 >
-                  Profile Image
+                  Action
                 </TableCell>
               </TableRow>
             </TableHead>
