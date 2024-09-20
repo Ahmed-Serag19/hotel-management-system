@@ -11,7 +11,11 @@ import LogoutTwoToneIcon from "@mui/icons-material/LogoutTwoTone";
 import DoubleArrowIcon from "@mui/icons-material/DoubleArrow";
 import { Box, IconButton } from "@mui/material";
 
-export default function Sidebarr({ onToggle, collapsed }) {
+interface SidebarProps {
+  onToggle: () => void; // Function type for onToggle
+  collapsed: boolean; // Boolean type for collapsed
+}
+export default function Sidebarr({ onToggle, collapsed }: SidebarProps) {
   return (
     <Sidebar
       rootStyles={{
