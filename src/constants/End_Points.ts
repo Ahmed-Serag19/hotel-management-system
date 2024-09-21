@@ -49,3 +49,9 @@ export const bookingUrl = {
 };
 
 export const getDashboard = `${Base_Url}/admin/dashboard`;
+
+
+const Base_Portal= `${Base_Url}/portal`;
+export const RoomsUrl ={
+  getAllRoom:`${Base_Portal}/rooms/available?page=1&size=10&startDate=2023-01-20&endDate=2023-01-30`
+}
