@@ -8,9 +8,22 @@ export const User_URls = {
   forgetPassword: `${Base_Users}/forgot-password`,
   resetPassword: `${Base_Users}/reset-password`,
   changePassword: `${Base_Users}/change-password`,
-  getAllUsers: `${Base_Users}/?page=1&size=10`,
-  getUserProfile: (id: string) => `${User_URls}/${id}`,
 };
+
+
+const Base_get_users =`${Base_Url}/admin/users`;
+export const get_user ={
+  getAllUsers: `${Base_get_users}/?page=1&size=10`,
+  getUserProfile: (id: string) => `${Base_get_users}/${id}`,
+}; 
+
+const Base_Ads = `${Base_Url}/admin/ads`;
+export const Ads_URls = {
+  gitAds: `${Base_Ads}`,
+  addAds: `${Base_Ads}`,
+  deleteAds: (id: string): string => `${Base_Ads}/${id}`,
+};
+
 const Base_facilities = `${Base_Url}/admin/room-facilities`;
 export const facility_Urls = {
   getAllFacility: `${Base_facilities}`,
@@ -41,4 +54,11 @@ export const bookingUrl = {
   getAllBooking:`${Base_booking}?page=1&size=10`,
   delete:(id:string) =>`${Base_booking}/${id}`,
   details: (id:string) =>  `${Base_booking}/${id}`,
+}
+
+export const getDashboard = `${Base_Url}/admin/dashboard`;
+
+const Base_Portal= `${Base_Url}/portal`;
+export const RoomsUrl ={
+  getAllRoom:`${Base_Portal}/rooms/available?page=1&size=10&startDate=2023-01-20&endDate=2023-01-30`
 }

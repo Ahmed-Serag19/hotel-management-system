@@ -1,26 +1,38 @@
 import "./App.css";
-import AuthLayout from "./modules/Shared/components/AuthLayout/AuthLayout";
-import Login from "./modules/Auth/components/Login/Login";
-import Register from "./modules/Auth/components/Register/Register";
-import ResetPassword from "./modules/Auth/components/ResetPassword/ResetPassword";
-import ForgetPassword from "./modules/Auth/components/ForgetPassword/ForgetPassword";
-import ChangePassword from "./modules/Auth/components/ChangePassword/ChangePassword";
-import NotFound from "./modules/Shared/components/NotFound/NotFound";
-import MasterLayout from "./modules/Shared/components/MasterLayout/MasterLayout";
-import Home from "./modules/Home/components/Home/Home";
-//import ProtectedRoute from "./modules/Shared/components/ProtectedRoute/ProtectedRoute";
+
 import {
-  createBrowserRouter,
-  //  createHashRouter,
   RouterProvider,
+  createBrowserRouter,
 } from "react-router-dom";
 
-import Facilities from "./modules/Admin/components/Facilities/Facilities";
-import AdsList from "./modules/Admin/components/AdsList/AdsList";
-import ListBooking from "./modules/Admin/components/ListBooking/ListBooking";
-import Users from "./modules/Admin/components/Users/Users";
-import Rooms from "./modules/Admin/components/Rooms/Rooms";
+
 import AddRoom from "./modules/Admin/components/Rooms/AddRoom";
+import AdsList from "./modules/Admin/components/AdsList/AdsList";
+import AllRooms from "./modules/User/components/AllRooms/AllRooms";
+import AuthLayout from "./modules/Shared/components/AuthLayout/AuthLayout";
+import ChangePassword from "./modules/Auth/components/ChangePassword/ChangePassword";
+import Facilities from "./modules/Admin/components/Facilities/Facilities";
+import ForgetPassword from "./modules/Auth/components/ForgetPassword/ForgetPassword";
+import Home from "./modules/Home/components/Home/Home";
+import ListBooking from "./modules/Admin/components/ListBooking/ListBooking";
+import Login from "./modules/Auth/components/Login/Login";
+import MasterLayout from "./modules/Shared/components/MasterLayout/MasterLayout";
+import NotFound from "./modules/Shared/components/NotFound/NotFound";
+import Register from "./modules/Auth/components/Register/Register";
+import ResetPassword from "./modules/Auth/components/ResetPassword/ResetPassword";
+import Rooms from "./modules/Admin/components/Rooms/Rooms";
+import Users from "./modules/Admin/components/Users/Users";
+
+//import ProtectedRoute from "./modules/Shared/components/ProtectedRoute/ProtectedRoute";
+
+
+
+
+
+
+
+
+
 
 
 function App() {
@@ -55,6 +67,7 @@ function App() {
         { path: "rooms", element: <Rooms /> },
         { path: "add-room", element: <AddRoom /> },
         { path: "change-password", element: <ChangePassword /> },
+        { path: "all-rooms", element: <AllRooms /> },
 
       ],
     },

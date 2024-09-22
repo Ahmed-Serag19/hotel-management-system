@@ -16,18 +16,17 @@ import { User_URls } from "../../../../constants/End_Points";
 import { toast } from "react-toastify";
 
 export default function ChangePassword() {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    reset,
-  } = useForm();
-
   interface UserData {
     oldPassword: string;
     newPassword: string;
     confirmPassword: string;
   }
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset,
+  } = useForm<UserData>();
 
   const changePasswordSubmation = async (data: UserData) => {
     try {
@@ -37,7 +36,7 @@ export default function ChangePassword() {
       console.log(response.data.message);
       reset();
       toast.success(response.data.message || "Password changed successfully");
-    } catch (error) {
+    } catch (error: any) {
       toast.error(error?.response?.data?.message || "An error occurred");
     }
   };
@@ -80,7 +79,7 @@ export default function ChangePassword() {
             />
             {errors.oldPassword && (
               <FormHelperText style={{ color: "#d32f2f" }}>
-                {errors?.oldPassword?.message}
+                {errors?.oldPassword?.message as string}
               </FormHelperText>
             )}
 
@@ -98,7 +97,7 @@ export default function ChangePassword() {
             />
             {errors.newPassword && (
               <FormHelperText style={{ color: "#d32f2f" }}>
-                {errors?.newPassword?.message}
+                {errors?.newPassword?.message as string}
               </FormHelperText>
             )}
 
@@ -116,7 +115,7 @@ export default function ChangePassword() {
             />
             {errors.confirmPassword && (
               <FormHelperText style={{ color: "#d32f2f" }}>
-                {errors?.confirmPassword?.message}
+                {errors?.confirmPassword?.message as string}
               </FormHelperText>
             )}
 

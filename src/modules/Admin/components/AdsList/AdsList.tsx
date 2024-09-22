@@ -70,6 +70,7 @@ const modalStyle = {
   width: 600,
   bgcolor: "background.paper",
   border: "none",
+
   boxShadow: 24,
   borderRadius: 2,
   p: 4,
@@ -83,6 +84,7 @@ function AdsList() {
   const {
     register,
     unregister,
+
     handleSubmit,
     reset,
     formState: { errors },
@@ -139,6 +141,7 @@ function AdsList() {
   const deleteAds = async () => {
     try {
       const response = await axios.delete(Ads_URls.deleteAds(adsId), {
+
         headers: { Authorization: `${localStorage.getItem("token")}` },
       });
       toast.success(response.data.message || "deleted successfully");
@@ -184,6 +187,7 @@ function AdsList() {
       unregister("room");
     }
   }, [isUpdate, unregister]);
+
 
   return (
     <Box component="section">
@@ -282,6 +286,7 @@ function AdsList() {
         ) : (
           <NoData />
         )}
+
       </Stack>
       <Modal
         open={open}
@@ -313,6 +318,7 @@ function AdsList() {
               ))}
             </TextField>
           )}
+
 
           {errors.room && typeof errors.room.message === "string" && (
             <FormHelperText sx={{ color: "#d32f2f" }} id="component-error-text">
