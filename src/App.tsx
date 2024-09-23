@@ -22,6 +22,7 @@ import ListBooking from "./modules/Admin/components/ListBooking/ListBooking";
 import Users from "./modules/Admin/components/Users/Users";
 import Rooms from "./modules/Admin/components/Rooms/Rooms";
 import AddRoom from "./modules/Admin/components/Rooms/AddRoom";
+import RoomDetail from "./modules/Pages/RoomDetails/RoomDetail";
 
 
 function App() {
@@ -36,6 +37,7 @@ function App() {
         { path: "register", element: <Register /> },
         { path: "forget-password", element: <ForgetPassword /> },
         { path: "reset-password", element: <ResetPassword /> },
+        { path: "room-details", element: <RoomDetail /> },
       ],
     },
     {
