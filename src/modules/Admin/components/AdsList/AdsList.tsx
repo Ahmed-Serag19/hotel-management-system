@@ -116,7 +116,7 @@ function AdsList() {
     setOpenConfirmDelete(false);
   };
 
-  const gitAdsList = async () => {
+  const getAdsList = async () => {
     try {
       const res = await axios.get(Ads_URls.gitAds, {
         headers: { Authorization: `${localStorage.getItem("token")}` },
