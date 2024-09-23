@@ -17,13 +17,6 @@ export const get_user ={
   getUserProfile: (id: string) => `${Base_get_users}/${id}`,
 }; 
 
-const Base_Ads = `${Base_Url}/admin/ads`;
-export const Ads_URls = {
-  gitAds: `${Base_Ads}`,
-  addAds: `${Base_Ads}`,
-  deleteAds: (id: string): string => `${Base_Ads}/${id}`,
-};
-
 const Base_facilities = `${Base_Url}/admin/room-facilities`;
 export const facility_Urls = {
   getAllFacility: `${Base_facilities}`,

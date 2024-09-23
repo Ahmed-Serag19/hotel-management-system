@@ -145,7 +145,7 @@ function AdsList() {
         headers: { Authorization: `${localStorage.getItem("token")}` },
       });
       toast.success(response.data.message || "deleted successfully");
-      gitAdsList();
+      getAdsList();
       handleCloseDelete()
     } catch (error) {
       if (axios.isAxiosError(error)) {
@@ -155,7 +155,7 @@ function AdsList() {
   };
 
   useEffect(() => {
-    gitAdsList();
+    getAdsList();
     gitRoomsList();
   }, []);
 
@@ -169,7 +169,7 @@ function AdsList() {
         headers: { Authorization: localStorage.getItem("token") },
       });
       toast.success(response.data.message);
-      gitAdsList();
+      getAdsList();
       reset();
       handleClose();
     } catch (error) {
