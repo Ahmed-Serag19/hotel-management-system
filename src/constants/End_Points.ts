@@ -10,18 +10,12 @@ export const User_URls = {
   changePassword: `${Base_Users}/change-password`,
 };
 
+
 const Base_get_users =`${Base_Url}/admin/users`;
 export const get_user ={
   getAllUsers: `${Base_get_users}/?page=1&size=10`,
   getUserProfile: (id: string) => `${Base_get_users}/${id}`,
 }; 
-
-const Base_Ads = `${Base_Url}/admin/ads`;
-export const Ads_URls = {
-  gitAds: `${Base_Ads}`,
-  addAds: `${Base_Ads}`,
-  deleteAds: (id: string): string => `${Base_Ads}/${id}`,
-};
 
 const Base_facilities = `${Base_Url}/admin/room-facilities`;
 export const facility_Urls = {
@@ -31,7 +25,6 @@ export const facility_Urls = {
   update: (id: string) => `${Base_facilities}/${id}`,
   details: (id: string) => `${Base_facilities}/${id}`,
 };
-
 const Base_rooms = `${Base_Url}/admin/rooms`;
 export const roomsUrl = {
   getAllRooms: `${Base_rooms}?page=1&size=10`,
@@ -41,11 +34,24 @@ export const roomsUrl = {
   roomDetails: (id: string) => `${Base_rooms}/${id}`,
 };
 
-const Base_booking = `${Base_Url}/admin/booking`;
-export const bookingUrl = {
-  getAllBooking: `${Base_booking}?page=1&size=10`,
-  delete: (id: string) => `${Base_booking}/${id}`,
-  details: (id: string) => `${Base_booking}/${id}`,
+const Base_Ads = `${Base_Url}/admin/ads`;
+export const Ads_URls = {
+  gitAds: `${Base_Ads}`,
+  addAds: `${Base_Ads}`,
+  updateAds: (id: string): string => `${Base_Ads}/${id}`,
+  deleteAds: (id: string): string => `${Base_Ads}/${id}`,
 };
 
+ const Base_booking = `${Base_Url}/admin/booking`;
+export const bookingUrl = {
+  getAllBooking:`${Base_booking}?page=1&size=10`,
+  delete:(id:string) =>`${Base_booking}/${id}`,
+  details: (id:string) =>  `${Base_booking}/${id}`,
+}
+
 export const getDashboard = `${Base_Url}/admin/dashboard`;
+
+const Base_Portal= `${Base_Url}/portal`;
+export const RoomsUrl ={
+  getAllRoom:`${Base_Portal}/rooms/available?page=1&size=10&startDate=2023-01-20&endDate=2023-01-30`
+}
