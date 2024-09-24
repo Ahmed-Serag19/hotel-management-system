@@ -1,10 +1,6 @@
 import "./App.css";
 
-import {
-  RouterProvider,
-  createBrowserRouter,
-} from "react-router-dom";
-
+import { RouterProvider, createBrowserRouter } from "react-router-dom";
 
 import AddRoom from "./modules/Admin/components/Rooms/AddRoom";
 import AdsList from "./modules/Admin/components/AdsList/AdsList";
@@ -24,16 +20,6 @@ import Rooms from "./modules/Admin/components/Rooms/Rooms";
 import Users from "./modules/Admin/components/Users/Users";
 
 //import ProtectedRoute from "./modules/Shared/components/ProtectedRoute/ProtectedRoute";
-
-
-
-
-
-
-
-
-
-
 
 function App() {
   const routes = createBrowserRouter([
@@ -68,7 +54,6 @@ function App() {
         { path: "add-room", element: <AddRoom /> },
         { path: "change-password", element: <ChangePassword /> },
         { path: "all-rooms", element: <AllRooms /> },
-
       ],
     },
   ]);

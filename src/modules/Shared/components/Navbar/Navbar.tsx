@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import {
   AppBar,
   Toolbar,
@@ -13,16 +13,22 @@ import {
 import SearchIcon from "@mui/icons-material/Search";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import NotificationsIcon from "@mui/icons-material/Notifications";
+import { AuthContext } from "../../../../context/authcontext";
+import { useNavigate } from "react-router-dom";
 
 const Navbar: React.FC = () => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-
+  const { logout }: any = useContext(AuthContext);
+  const navigate = useNavigate();
   const handleMenuClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
-
   const handleMenuClose = () => {
     setAnchorEl(null);
+  };
+  const handleLogout = () => {
+    logout();
+    navigate("/login");
   };
 
   return (
@@ -70,7 +76,7 @@ const Navbar: React.FC = () => {
           anchorOrigin={{ vertical: "top", horizontal: "right" }}
           transformOrigin={{ vertical: "top", horizontal: "right" }}
         >
-          <MenuItem onClick={handleMenuClose}>Logout</MenuItem>
+          <MenuItem onClick={handleLogout}>Logout</MenuItem>
         </Menu>
 
         {/* Notifications Icon */}
