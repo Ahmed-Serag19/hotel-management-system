@@ -190,9 +190,23 @@ function RoomDetail() {
           </Grid>
           {/* Start booking */}
           <Grid size={5} sx={{ border: "1px solid #ddd", borderRadius: 3 }}>
+          <Stack spacing={2}>
+              <Typography variant="h4">Start Booking</Typography>
+              <Typography variant="h4">
+                <span style={{ color: "#1ABC9C" }}>$280</span> per night
+              </Typography>
+              <Typography variant="h4" color="red">
+                Discount 20% Off
+              </Typography>
+            </Stack>
+            <Stack>
+            
+            </Stack>
           </Grid>
         </Grid>
       </Box>
+      {/* Add Rate or comment */}
+      
     </>
   );
 }
