@@ -22,7 +22,7 @@ import Register from "./modules/Auth/components/Register/Register";
 import ResetPassword from "./modules/Auth/components/ResetPassword/ResetPassword";
 import Rooms from "./modules/Admin/components/Rooms/Rooms";
 import Users from "./modules/Admin/components/Users/Users";
-import RoomDetail from "./modules/Pages/RoomDetails/RoomDetail";
+import RoomDetail from "./modules/User/components/RoomDetails/RoomDetail";
 
 //import ProtectedRoute from "./modules/Shared/components/ProtectedRoute/ProtectedRoute";
 
