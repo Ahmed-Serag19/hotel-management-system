@@ -10,12 +10,11 @@ export const User_URls = {
   changePassword: `${Base_Users}/change-password`,
 };
 
-
-const Base_get_users =`${Base_Url}/admin/users`;
-export const get_user ={
+const Base_get_users = `${Base_Url}/admin/users`;
+export const get_user = {
   getAllUsers: `${Base_get_users}/?page=1&size=10`,
   getUserProfile: (id: string) => `${Base_get_users}/${id}`,
-}; 
+};
 
 const Base_facilities = `${Base_Url}/admin/room-facilities`;
 export const facility_Urls = {
@@ -42,16 +41,16 @@ export const Ads_URls = {
   deleteAds: (id: string): string => `${Base_Ads}/${id}`,
 };
 
- const Base_booking = `${Base_Url}/admin/booking`;
+const Base_booking = `${Base_Url}/admin/booking`;
 export const bookingUrl = {
-  getAllBooking:`${Base_booking}?page=1&size=10`,
-  delete:(id:string) =>`${Base_booking}/${id}`,
-  details: (id:string) =>  `${Base_booking}/${id}`,
-}
+  getAllBooking: `${Base_booking}?page=1&size=10`,
+  delete: (id: string) => `${Base_booking}/${id}`,
+  details: (id: string) => `${Base_booking}/${id}`,
+};
 
 export const getDashboard = `${Base_Url}/admin/dashboard`;
 
-const Base_Portal= `${Base_Url}/portal`;
-export const RoomsUrl ={
-  getAllRoom:`${Base_Portal}/rooms/available?page=1&size=10&startDate=2023-01-20&endDate=2023-01-30`
-}
+const Base_Portal = `${Base_Url}/portal`;
+export const RoomsUrl = {
+  getAllRoom: `${Base_Portal}/rooms/available?page=1&size=10&startDate=2023-01-20&endDate=2023-01-30`,
+};

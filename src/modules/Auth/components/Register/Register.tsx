@@ -26,7 +26,7 @@ export default function Register() {
   const navigate = useNavigate();
   interface FormValue {
     userName: string;
-    phoneNumber: number;
+    phoneNumber: string;
     country: string;
     email: string;
     password: string;
@@ -41,12 +41,13 @@ export default function Register() {
     inputFormData.append("userName", data.userName);
     inputFormData.append("email", data.email);
     inputFormData.append("country", data.country);
-    inputFormData.append("phoneNumber", data.phoneNumber.toString()); // Convert number to string
+    inputFormData.append("phoneNumber", data.phoneNumber);
     if (data.profileImage.length > 0) {
       inputFormData.append("profileImage", data.profileImage[0]);
     }
     inputFormData.append("password", data.password);
     inputFormData.append("confirmPassword", data.confirmPassword);
+    inputFormData.append("role", data.role || "user");
 
     return inputFormData;
   };
@@ -58,19 +59,20 @@ export default function Register() {
   } = useForm<FormValue>({
     defaultValues: {
       userName: "",
-      phoneNumber: 0,
+      phoneNumber: "",
       country: "",
       email: "",
       password: "",
       confirmPassword: "",
       profileImage: undefined,
-      role: "",
+      role: "user",
     },
   });
 
   const onSubmit = async (data: FormValue) => {
     try {
       const formData = convertToFormData(data);
+      console.log(formData);
       await axios.post(User_URls.register, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
@@ -83,7 +85,6 @@ export default function Register() {
       toast.error("Registration failed. Please try again.");
     }
   };
-
   return (
     <div>
       <Box
@@ -99,17 +100,22 @@ export default function Register() {
             sx={{
               width: { xs: "90%", sm: "95%", md: "50%" },
               margin: "auto",
-              padding: { xs: 2, md: 4 },
+              padding: { xs: 2, md: 2 },
               gridColumn: { xs: "span 12", md: "span 6" },
             }}
           >
             <Stack
-              sx={{ marginLeft: { xs: 0, md: "3%" }, marginTop: "20px" }}
+              sx={{
+                marginLeft: { xs: 0, md: "3%" },
+                position: "absolute",
+                top: "19px",
+                left: "-20px",
+              }}
               height={{ xs: "auto", sm: "auto" }}
             >
               <Typography
                 variant="h5"
-                style={{ fontSize: "26px", fontWeight: "500" }}
+                style={{ fontSize: "27px", fontWeight: "500" }}
                 component="p"
               >
                 <span style={{ color: "#3252DF" }}>Stay</span>
@@ -122,6 +128,8 @@ export default function Register() {
                 flexDirection: "column",
                 width: "100%",
                 margin: "auto",
+                paddingX: "100px",
+                paddingTop: "50px",
               }}
             >
               <Stack>
@@ -175,7 +183,6 @@ export default function Register() {
                 </label>
                 <TextField
                   sx={{
-                    marginTop: 1,
                     marginBottom: 1,
                     bgcolor: "#f5f6f8",
                     border: "none",
@@ -195,7 +202,7 @@ export default function Register() {
                   direction={{ xs: "column", sm: "row" }}
                   spacing={{ xs: 1, sm: 2, md: 4 }}
                 >
-                  <Stack spacing={2} width="100%">
+                  <Stack width="100%">
                     <label
                       htmlFor="phoneNumber"
                       style={{
@@ -208,12 +215,11 @@ export default function Register() {
                     </label>
                     <TextField
                       sx={{
-                        marginTop: 1,
                         marginBottom: 1,
                         bgcolor: "#f5f6f8",
                         border: "none",
                       }}
-                      type="number"
+                      type="tel"
                       placeholder="Please type here ..."
                       id="phoneNumber"
                       error={!!errors.phoneNumber}
@@ -224,7 +230,7 @@ export default function Register() {
                     />
                   </Stack>
 
-                  <Stack spacing={2} width="100%">
+                  <Stack width="100%">
                     <label
                       htmlFor="country"
                       style={{
@@ -237,7 +243,6 @@ export default function Register() {
                     </label>
                     <TextField
                       sx={{
-                        marginTop: 1,
                         marginBottom: 1,
                         bgcolor: "#f5f6f8",
                         border: "none",
@@ -267,7 +272,6 @@ export default function Register() {
                 </label>
                 <TextField
                   sx={{
-                    marginTop: 1,
                     marginBottom: 1,
                     bgcolor: "#f5f6f8",
                     border: "none",
@@ -293,7 +297,6 @@ export default function Register() {
                 </label>
                 <TextField
                   sx={{
-                    marginTop: 1,
                     marginBottom: 1,
                     bgcolor: "#f5f6f8",
                     border: "none",
@@ -333,7 +336,6 @@ export default function Register() {
                 </label>
                 <TextField
                   sx={{
-                    marginTop: 1,
                     marginBottom: 1,
                     bgcolor: "#f5f6f8",
                     border: "none",
