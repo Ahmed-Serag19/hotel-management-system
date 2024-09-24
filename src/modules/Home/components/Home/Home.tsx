@@ -5,6 +5,7 @@ import axios from "axios";
 import { getDashboard } from "../../../../constants/End_Points";
 import CircleChart from "../Chart/Chart";
 import UsersChart from "../Chart/UsersChart";
+import { toast } from "react-toastify";
 
 interface BookingData {
   completed: number;
@@ -31,7 +32,6 @@ export default function Home() {
       const response = await axios.get(getDashboard, {
         headers: { Authorization: localStorage.getItem("token") },
       });
-      console.log(response?.data?.data);
       setRooms(response?.data?.data.rooms);
       setFacilities(response?.data?.data.facilities);
       setAds(response?.data?.data.ads);
@@ -44,7 +44,7 @@ export default function Home() {
         user: response?.data?.data.users.user,
       });
     } catch (error) {
-      console.log(error);
+      toast.error(error as string);
     }
   };
 
