@@ -11,14 +11,17 @@ import {
   List,
   ListItem,
   ListItemText,
+  IconButton,
+  Chip,
 } from "@mui/material";
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import Dropzone from "react-dropzone";
 import axios from "axios";
 import { facility_Urls, roomsUrl } from "../../../../constants/End_Points";
 import styled from "@emotion/styled";
 import { useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 // Styled container for the form
 const FormContainer = styled(Box)`
@@ -29,33 +32,19 @@ const FormContainer = styled(Box)`
   margin: auto;
 `;
 
-// Common styles for input fields with max height
+// InputField styling
 const InputField = styled(TextField)`
   background-color: #f7f7f7;
   border-radius: 8px;
   width: 100%;
   margin-bottom: 16px;
-  max-height: 60px;
+
   & .MuiInputBase-root {
-    padding: 0px; /* Keep padding small */
-    height: 60px; /* Set input height */
+    padding: 8px;
   }
 `;
 
-// Select style with smaller height
-const CustomSelect = styled(Select)`
-  background-color: #f7f7f7;
-  border-radius: 8px;
-  width: 100%;
-  margin-bottom: 16px;
-  max-height: 60px; /* Set max height */
-  & .MuiSelect-root {
-    padding: 8px 12px; /* Set smaller padding */
-    height: 60px; /* Set select height */
-  }
-`;
-
-// Styled dropzone area
+// Styled DropzoneArea
 const DropzoneArea = styled(Box)`
   background-color: #f0fdf4;
   border: 1px dashed #22c55e;
@@ -64,14 +53,15 @@ const DropzoneArea = styled(Box)`
   text-align: center;
   color: #22c55e;
   cursor: pointer;
+  margin-bottom: 16px;
 `;
 
-// Styled save button
+// Styled Save and Cancel buttons
 const SaveButton = styled(Button)`
   background-color: #203fc7;
   color: white;
   font-size: 16px;
-  padding: 8px 20px; /* Reduced padding */
+  padding: 8px 20px;
   border-radius: 8px;
   text-transform: none;
   &:hover {
@@ -79,26 +69,36 @@ const SaveButton = styled(Button)`
   }
 `;
 
-// Styled cancel button
 const CancelButton = styled(Button)`
   border: 1px solid #7c3aed;
   color: #7c3aed;
   font-size: 16px;
-  padding: 8px 20px; /* Reduced padding */
+  padding: 8px 20px;
   border-radius: 8px;
   text-transform: none;
 `;
 
-// Facility type
+// Type definitions
 type Facility = {
   _id: string;
   name: string;
+};
+
+type Room = {
+  _id: string;
+  roomNumber: string;
+  price: number;
+  discount: number;
+  capacity: number;
+  images: string[];
+  facilities: Facility[];
 };
 
 export default function AddRoomForm() {
   const {
     register,
     handleSubmit,
+    control,
     formState: { errors },
     reset,
     setValue,
@@ -106,29 +106,27 @@ export default function AddRoomForm() {
     mode: "onChange",
   });
 
-  // State for facilities and selected items
   const [facilities, setFacilities] = useState<Facility[]>([]);
-  const [selectedFiles, setSelectedFiles] = useState<File[]>([]); // Uploaded files
-  const [selectedFacilities, setSelectedFacilities] = useState<string[]>([]); // Multiple selection
+  const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
+  const [existingImages, setExistingImages] = useState<string[]>([]);
+  const [selectedFacilities, setSelectedFacilities] = useState<string[]>([]);
 
-  // Get the room data from the state if in edit mode
   const location = useLocation();
   const navigate = useNavigate();
-  const roomToEdit = location.state?.room;
+  const roomToEdit: Room | undefined = location.state?.room;
 
   useEffect(() => {
     fetchFacilities();
     if (roomToEdit) {
-      // Prepopulate form with room data if editing
       setValue("roomNumber", roomToEdit.roomNumber);
       setValue("price", roomToEdit.price);
       setValue("capacity", roomToEdit.capacity);
       setValue("discount", roomToEdit.discount);
-      setSelectedFacilities(roomToEdit.facilities.map((f: any) => f._id));
+      setSelectedFacilities(roomToEdit.facilities.map((f) => f._id));
+      setExistingImages(roomToEdit.images);
     }
-  }, [roomToEdit]);
+  }, [roomToEdit, setValue]);
 
-  // Fetch the available facilities
   const fetchFacilities = async () => {
     try {
       const response = await axios.get(facility_Urls.getAllFacility, {
@@ -137,15 +135,26 @@ export default function AddRoomForm() {
       setFacilities(response.data.data.facilities);
     } catch (error) {
       console.error("Failed to fetch facilities", error);
+      toast.error("Failed to fetch facilities");
     }
   };
 
   // Handle file drop
   const onDrop = (acceptedFiles: File[]) => {
-    setSelectedFiles(acceptedFiles);
+    setSelectedFiles((prev) => [...prev, ...acceptedFiles]);
   };
 
-  // Handle form submit
+  // Handle deletion of existing images
+  const handleDeleteExistingImage = (image: string) => {
+    setExistingImages((prev) => prev.filter((img) => img !== image));
+  };
+
+  // Handle deletion of newly uploaded files before submission
+  const handleDeleteSelectedFile = (file: File) => {
+    setSelectedFiles((prev) => prev.filter((f) => f !== file));
+  };
+
+  // Handle form submission
   const onSubmit = async (data: any) => {
     const formData = new FormData();
     formData.append("roomNumber", data.roomNumber);
@@ -155,8 +164,15 @@ export default function AddRoomForm() {
     selectedFacilities.forEach((facilityId) => {
       formData.append("facilities", facilityId); // Append multiple facilities
     });
+
+    // Append existing images URLs
+    existingImages.forEach((image) => {
+      formData.append("existingImages", image); // Assuming backend can handle existing images separately
+    });
+
+    // Append new uploaded images
     selectedFiles.forEach((file) => {
-      formData.append("imgs", file);
+      formData.append("newImages", file);
     });
 
     try {
@@ -174,10 +190,14 @@ export default function AddRoomForm() {
         toast.success("Room Added Successfully");
       }
       reset();
-      setSelectedFiles([]); // Clear the file list
+      setSelectedFiles([]);
+      setExistingImages([]);
       navigate("/dashboard/rooms"); // Navigate back to rooms list after saving
-    } catch (error) {
+    } catch (error: any) {
       console.error("Failed to create/update room", error);
+      toast.error(
+        error.response?.data?.message || "Failed to create/update room"
+      );
     }
   };
 
@@ -187,6 +207,7 @@ export default function AddRoomForm() {
         {roomToEdit ? "Edit Room" : "Add a New Room"}
       </Typography>
       <form onSubmit={handleSubmit(onSubmit)}>
+        {/* Room Number */}
         <InputField
           label="Room Number"
           variant="outlined"
@@ -194,65 +215,141 @@ export default function AddRoomForm() {
           error={!!errors.roomNumber}
           helperText={errors.roomNumber?.message as string}
         />
-        <Box display="flex" gap={2}>
+
+        {/* Price and Capacity */}
+        <Box display="flex" gap={2} mb={2}>
           <InputField
-            label="Price"
+            label="Price ($)"
             variant="outlined"
-            {...register("price", { required: "Price is required" })}
+            type="number"
+            {...register("price", {
+              required: "Price is required",
+              min: { value: 0, message: "Price cannot be negative" },
+            })}
             error={!!errors.price}
             helperText={errors.price?.message as string}
           />
           <InputField
-            label="Capacity"
+            label="Capacity (persons)"
             variant="outlined"
-            {...register("capacity", { required: "Capacity is required" })}
+            type="number"
+            {...register("capacity", {
+              required: "Capacity is required",
+              min: { value: 1, message: "At least 1 person" },
+            })}
             error={!!errors.capacity}
             helperText={errors.capacity?.message as string}
           />
         </Box>
-        <Box display="flex" gap={2}>
-          <InputField
-            label="Discount"
-            variant="outlined"
-            {...register("discount", { required: "Discount is required" })}
-            error={!!errors.discount}
-            helperText={errors.discount?.message as string}
-          />
-          <CustomSelect
-            fullWidth
-            variant="outlined"
-            multiple
-            value={selectedFacilities}
-            onChange={(e) => setSelectedFacilities(e.target.value as string[])}
-            displayEmpty
-            renderValue={(value) => {
-              const selected = value as string[];
-              if (selected.length === 0) {
-                return "Select Facilities";
-              }
-              return facilities
-                .filter((facility) => selected.includes(facility._id))
-                .map((facility) => facility.name)
-                .join(", ");
-            }}
-            error={!!errors.facilities}
-          >
-            <MenuItem value="" disabled>
-              Select Facilities
-            </MenuItem>
-            {facilities.map((facility) => (
-              <MenuItem key={facility._id} value={facility._id}>
-                {facility.name}
-              </MenuItem>
-            ))}
-          </CustomSelect>
-          {errors.facilities && (
-            <FormHelperText error>
-              {errors.facilities?.message as string}
-            </FormHelperText>
-          )}
-        </Box>
 
+        {/* Discount */}
+        <InputField
+          label="Discount ($)"
+          variant="outlined"
+          type="number"
+          {...register("discount", {
+            required: "Discount is required",
+            min: { value: 0, message: "Discount cannot be negative" },
+          })}
+          error={!!errors.discount}
+          helperText={errors.discount?.message as string}
+        />
+
+        {/* Facilities */}
+        <Controller
+          control={control}
+          name="facilities"
+          rules={{ required: "At least one facility is required" }}
+          render={({ field }) => (
+            <Select
+              {...field}
+              multiple
+              displayEmpty
+              value={selectedFacilities}
+              onChange={(e) =>
+                setSelectedFacilities(e.target.value as string[])
+              }
+              renderValue={(selected) => {
+                if (selected.length === 0) {
+                  return <em>Select Facilities</em>;
+                }
+
+                return (
+                  <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
+                    {selected.map((value) => {
+                      const facility = facilities.find((f) => f._id === value);
+                      return facility ? (
+                        <Chip key={value} label={facility.name} />
+                      ) : null;
+                    })}
+                  </Box>
+                );
+              }}
+              sx={{
+                backgroundColor: "#f7f7f7",
+                borderRadius: "8px",
+                width: "100%",
+                marginBottom: "16px",
+              }}
+            >
+              {facilities.map((facility) => (
+                <MenuItem key={facility._id} value={facility._id}>
+                  {facility.name}
+                </MenuItem>
+              ))}
+            </Select>
+          )}
+        />
+        {errors.facilities && (
+          <FormHelperText error>
+            {errors.facilities.message as string}
+          </FormHelperText>
+        )}
+
+        {/* Existing Images */}
+        {roomToEdit && (
+          <>
+            <Typography variant="subtitle1" gutterBottom>
+              Existing Images:
+            </Typography>
+            {existingImages.length > 0 ? (
+              <Box display="flex" gap={2} flexWrap="wrap" mb={2}>
+                {existingImages.map((image, index) => (
+                  <Box key={index} position="relative">
+                    <img
+                      src={image}
+                      alt={`Existing room ${index}`}
+                      style={{
+                        width: "100px",
+                        height: "100px",
+                        objectFit: "cover",
+                        borderRadius: "8px",
+                      }}
+                    />
+                    <IconButton
+                      size="small"
+                      onClick={() => handleDeleteExistingImage(image)}
+                      sx={{
+                        position: "absolute",
+                        top: -10,
+                        right: -10,
+                        backgroundColor: "#fff",
+                        color: "#f44336",
+                        "&:hover": { backgroundColor: "#fff" },
+                      }}
+                    >
+                      <DeleteIcon fontSize="small" />
+                    </IconButton>
+                  </Box>
+                ))}
+              </Box>
+            ) : (
+              <Typography>No existing images</Typography>
+            )}
+          </>
+        )}
+
+        {/* Dropzone for new images */}
         <Dropzone onDrop={onDrop} accept={{ "image/*": [] }} multiple>
           {({ getRootProps, getInputProps }) => (
             <DropzoneArea {...getRootProps()}>
@@ -261,7 +358,11 @@ export default function AddRoomForm() {
                 Drag & Drop or{" "}
                 <Box
                   component="span"
-                  sx={{ color: "#22C55E", cursor: "pointer" }}
+                  sx={{
+                    color: "#22C55E",
+                    cursor: "pointer",
+                    textDecoration: "underline",
+                  }}
                 >
                   Choose Room Images
                 </Box>{" "}
@@ -271,23 +372,29 @@ export default function AddRoomForm() {
           )}
         </Dropzone>
 
-        {/* List to show uploaded files */}
+        {/* List of newly uploaded files */}
         {selectedFiles.length > 0 && (
           <List>
-            {selectedFiles.map((file) => (
-              <ListItem key={file.name}>
+            {selectedFiles.map((file, index) => (
+              <ListItem
+                key={index}
+                secondaryAction={
+                  <IconButton
+                    edge="end"
+                    onClick={() => handleDeleteSelectedFile(file)}
+                  >
+                    <DeleteIcon />
+                  </IconButton>
+                }
+              >
                 <ListItemText primary={file.name} />
               </ListItem>
             ))}
           </List>
         )}
 
-        <Stack
-          direction="row"
-          sx={{ display: "flex", justifyContent: "flex-end" }}
-          spacing={2}
-          mt={4}
-        >
+        {/* Form Actions */}
+        <Stack direction="row" justifyContent="flex-end" spacing={2} mt={4}>
           <CancelButton onClick={() => navigate("/dashboard/rooms")}>
             Cancel
           </CancelButton>

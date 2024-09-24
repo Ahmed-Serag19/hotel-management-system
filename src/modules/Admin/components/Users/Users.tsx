@@ -3,15 +3,13 @@ import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import { RiDeleteBin6Line } from "react-icons/ri";
-import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
+import { MoreHoriz } from "@mui/icons-material";
 import {
   Box,
   Button,
   MenuItem,
   Modal,
   Select,
-  Stack,
   Typography,
   TablePagination,
 } from "@mui/material";
@@ -22,7 +20,6 @@ import { toast } from "react-toastify";
 import styled from "@emotion/styled";
 import { tableCellClasses } from "@mui/material/TableCell";
 import NoData from "../../../Shared/components/NoData/NoData";
-import DeleteImg from "../../../../assets/images/delete.png";
 
 interface UsersData {
   _id: string;
@@ -37,14 +34,14 @@ interface UsersData {
 export default function UsersTable() {
   const [users, setUsers] = useState<UsersData[]>([]);
   const [openView, setOpenView] = useState(false); // View modal
-  const [selectedUserId, setSelectedUserId] = useState<string>("");
+  const [selectedUser, setSelectedUser] = useState<UsersData | null>(null); // Store the selected user's data
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [totalCount, setTotalCount] = useState(0); // Total users count
 
   const handleCloseView = () => setOpenView(false);
-  const handleOpenView = (id: string) => {
-    setSelectedUserId(id);
+  const handleOpenView = (user: UsersData) => {
+    setSelectedUser(user); // Set the selected user data
     setOpenView(true);
   };
 
@@ -71,7 +68,6 @@ export default function UsersTable() {
           headers: { Authorization: localStorage.getItem("token") || "" },
         }
       );
-
       setUsers(response.data.data.users);
       setTotalCount(response.data.data.totalCount);
     } catch (error: any) {
@@ -79,27 +75,9 @@ export default function UsersTable() {
     }
   };
 
-  // Get user by ID
-  const getUserById = async () => {
-    try {
-      const response = await axios.get(
-        get_user.getUserProfile(selectedUserId),
-        {
-          headers: {
-            Authorization: localStorage.getItem("token") || "",
-          },
-        }
-      );
-
-      const user = response.data.data;
-      console.log("Fetched user:", user);
-
-      toast.success("User data fetched successfully");
-      handleCloseView();
-    } catch (error: any) {
-      toast.error(error.response?.data?.message || "Failed to fetch user");
-    }
-  };
+  useEffect(() => {
+    getUsers();
+  }, [page, rowsPerPage]);
 
   // Style rows (color alternation)
   const StyledTableRow = styled(TableRow)`
@@ -108,10 +86,6 @@ export default function UsersTable() {
     }
     font-family: "Poppins" !important;
   `;
-
-  useEffect(() => {
-    getUsers();
-  }, [page, rowsPerPage]);
 
   // Pagination handlers
   const handleChangePage = (_event: unknown, newPage: number) => {
@@ -133,54 +107,42 @@ export default function UsersTable() {
         onClose={handleCloseView}
         aria-labelledby="view-modal-title"
         aria-describedby="view-modal-description"
-        sx={{ fontFamily: "Poppins", padding: "60px" }}
+        sx={{ fontFamily: "Poppins" }}
       >
         <Box sx={style}>
-          <Box sx={{ display: "flex", justifyContent: "end", mb: "60px" }}>
-            <i
-              onClick={handleCloseView}
-              style={{ color: "#CC0000", cursor: "pointer" }}
-              className="fa-regular fa-xl fa-circle-xmark"
-            ></i>
-          </Box>
-
-          <Box sx={{ textAlign: "center", mt: 5, mb: 2 }}>
-            <img src={DeleteImg} alt="Delete" />
-          </Box>
-
           <Typography
+            id="view-modal-title"
             variant="h6"
-            sx={{ color: "#494949", fontWeight: 700, textAlign: "center" }}
+            component="h2"
+            sx={{ mb: 2, textAlign: "center" }}
           >
-            View User?
+            User Details
           </Typography>
-          <Typography
-            sx={{
-              color: "#494949",
-              fontSize: "14.5px",
-              textAlign: "center",
-              opacity: "60%",
-              mt: 2,
-              mb: 5,
-            }}
-          >
-            Are you sure you want to view this user profile? If so, click on
-            "View".
-          </Typography>
+          {selectedUser && (
+            <>
+              <Typography variant="subtitle1">
+                <strong>Username:</strong> {selectedUser.userName}
+              </Typography>
+              <Typography variant="subtitle1">
+                <strong>Email:</strong> {selectedUser.email}
+              </Typography>
+              <Typography variant="subtitle1">
+                <strong>Phone Number:</strong> {selectedUser.phoneNumber}
+              </Typography>
+              <Typography variant="subtitle1">
+                <strong>Country:</strong> {selectedUser.country}
+              </Typography>
+              <Typography variant="subtitle1">
+                <strong>Role:</strong> {selectedUser.role}
+              </Typography>
 
-          <Stack direction="row" spacing={2} sx={{ justifyContent: "end" }}>
-            <Button
-              onClick={getUserById}
-              sx={{
-                backgroundColor: "#203FC7",
-                fontSize: "17px",
-                fontWeight: 500,
-              }}
-              variant="contained"
-            >
-              View
-            </Button>
-          </Stack>
+              <Box mt={4} display="flex" justifyContent="center">
+                <Button variant="contained" onClick={handleCloseView}>
+                  Close
+                </Button>
+              </Box>
+            </>
+          )}
         </Box>
       </Modal>
 
@@ -250,15 +212,12 @@ export default function UsersTable() {
                       }}
                       value=""
                       displayEmpty
-                      IconComponent={MoreHorizIcon}
+                      IconComponent={MoreHoriz}
                     >
                       <MenuItem
                         sx={{ color: "#1F263E", fontFamily: "Poppins" }}
-                        onClick={() => handleOpenView(userData._id)}
+                        onClick={() => handleOpenView(userData)}
                       >
-                        <RiDeleteBin6Line
-                          style={{ color: "#203FC7", marginRight: "10px" }}
-                        />
                         View
                       </MenuItem>
                     </Select>

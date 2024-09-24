@@ -18,12 +18,14 @@ import { toast } from "react-toastify";
 import RegisterImg from "../../../../assets/images/register.png";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
+// import defaultUserImage from "../../../../assets/images/default-user.jpg";
 
 export default function Register() {
   const [showPassword, setShowPassword] = useState(false);
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
   const navigate = useNavigate();
+
   interface FormValue {
     userName: string;
     phoneNumber: string;
@@ -37,14 +39,22 @@ export default function Register() {
 
   const convertToFormData = (data: FormValue): FormData => {
     const inputFormData = new FormData();
-
     inputFormData.append("userName", data.userName);
     inputFormData.append("email", data.email);
     inputFormData.append("country", data.country);
     inputFormData.append("phoneNumber", data.phoneNumber);
-    if (data.profileImage.length > 0) {
+
+    // If user uploaded a profile image, use it; otherwise, use a default image URL
+    if (data.profileImage && data.profileImage.length > 0) {
       inputFormData.append("profileImage", data.profileImage[0]);
+    } else {
+      // Use the default image URL
+      inputFormData.append(
+        "profileImage",
+        "http://localhost:5173/assets/images/default-user.jpg"
+      );
     }
+
     inputFormData.append("password", data.password);
     inputFormData.append("confirmPassword", data.confirmPassword);
     inputFormData.append("role", data.role || "user");
@@ -72,7 +82,6 @@ export default function Register() {
   const onSubmit = async (data: FormValue) => {
     try {
       const formData = convertToFormData(data);
-      console.log(formData);
       await axios.post(User_URls.register, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
@@ -82,9 +91,10 @@ export default function Register() {
       navigate("/login");
     } catch (error: any) {
       console.error(error.response.data.message);
-      toast.error("Registration failed. Please try again.");
+      toast.error(error.response.data.message || "Failed to Register!");
     }
   };
+
   return (
     <div>
       <Box
@@ -101,7 +111,7 @@ export default function Register() {
               width: { xs: "90%", sm: "95%", md: "50%" },
               margin: "auto",
               padding: { xs: 2, md: 2 },
-              gridColumn: { xs: "span 12", md: "span 6" },
+              Grid2Column: { xs: "span 12", md: "span 6" },
             }}
           >
             <Stack
@@ -361,6 +371,7 @@ export default function Register() {
                     ),
                   }}
                 />
+
                 {/* Profile Image */}
                 <label
                   htmlFor="profileImage"
@@ -391,7 +402,7 @@ export default function Register() {
             </Stack>
           </Grid2>
 
-          {/* Grid for Image */}
+          {/* Grid2 for Image */}
           <Grid2
             display={{ xs: "none", md: "block" }}
             size={{ xs: 12, md: 6 }}
