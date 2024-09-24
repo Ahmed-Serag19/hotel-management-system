@@ -27,7 +27,7 @@ import NoData from "../../../Shared/components/NoData/NoData";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import { FaRegEdit } from "react-icons/fa";
-import DeleteImg from '../../../../assets/images/delete.png'
+import DeleteImg from "../../../../assets/images/delete.png";
 
 interface AdsTypes {
   room: {
@@ -141,12 +141,11 @@ function AdsList() {
   const deleteAds = async () => {
     try {
       const response = await axios.delete(Ads_URls.deleteAds(adsId), {
-
         headers: { Authorization: `${localStorage.getItem("token")}` },
       });
       toast.success(response.data.message || "deleted successfully");
       getAdsList();
-      handleCloseDelete()
+      handleCloseDelete();
     } catch (error) {
       if (axios.isAxiosError(error)) {
         toast.error(error?.response?.data.message);
@@ -187,7 +186,6 @@ function AdsList() {
       unregister("room");
     }
   }, [isUpdate, unregister]);
-
 
   return (
     <Box component="section">
@@ -286,7 +284,6 @@ function AdsList() {
         ) : (
           <NoData />
         )}
-
       </Stack>
       <Modal
         open={open}
@@ -318,7 +315,6 @@ function AdsList() {
               ))}
             </TextField>
           )}
-
 
           {errors.room && typeof errors.room.message === "string" && (
             <FormHelperText sx={{ color: "#d32f2f" }} id="component-error-text">
@@ -406,7 +402,7 @@ function AdsList() {
               textAlign: "center",
             }}
           >
-            Delete This Room?
+            Delete This AD?
           </Typography>
           <Typography
             sx={{
