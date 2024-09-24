@@ -31,7 +31,6 @@ export default function ChangePassword() {
       const response = await axios.post(User_URls.changePassword, data, {
         headers: { Authorization: localStorage.getItem("token") },
       });
-      console.log(response.data.message);
       reset();
       toast.success(response.data.message || "Password changed successfully");
     } catch (error: any) {

@@ -52,7 +52,6 @@ export default function Login() {
   const onSubmit = async (data: DataLogin) => {
     try {
       let response = await axios.post(User_URls.login, data);
-      console.log(response);
       localStorage.setItem("token", response.data.data.token);
       saveLoginData();
       toast.success(response.data.message || "Login Successfully");
