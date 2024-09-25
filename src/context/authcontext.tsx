@@ -6,7 +6,7 @@ interface AuthData {
   loginData: any;
   logout: () => void;
 }
-export let AuthContext = createContext<AuthData | null>(null);
+export const AuthContext = createContext<AuthData | null>(null);
 
 export default function AuthContextProvider(props: any) {
   const [loginData, setLoginData] = useState(null);
