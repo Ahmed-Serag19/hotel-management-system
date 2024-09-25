@@ -118,7 +118,7 @@ function AdsList() {
 
   const getAdsList = async () => {
     try {
-      const res = await axios.get(Ads_URls.gitAds, {
+      const res = await axios.get(Ads_URls.getAds, {
         headers: { Authorization: `${localStorage.getItem("token")}` },
       });
       setAds(res.data.data.ads);
