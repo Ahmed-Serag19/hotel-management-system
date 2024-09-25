@@ -1,4 +1,12 @@
-import { Breadcrumbs, Link, Stack, Typography } from "@mui/material";
+import {
+  Breadcrumbs,
+  Button,
+  Divider,
+  Link,
+  Stack,
+  TextField,
+  Typography,
+} from "@mui/material";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid2";
 import RoomImg1 from "../../../../assets/images/room big.png";
@@ -12,6 +20,7 @@ import ic_wifi from "../../../../assets/images/ic_wifi.png";
 import ic_ac from "../../../../assets/images/ic_ac.png";
 import ic_kulkas from "../../../../assets/images/ic_kulkas.png";
 import ic_tv from "../../../../assets/images/ic_tv.png";
+import { FaStar } from "react-icons/fa";
 
 function handleClick(event: React.MouseEvent<HTMLDivElement, MouseEvent>) {
   event.preventDefault();
@@ -190,7 +199,7 @@ function RoomDetail() {
           </Grid>
           {/* Start booking */}
           <Grid size={5} sx={{ border: "1px solid #ddd", borderRadius: 3 }}>
-          <Stack spacing={2}>
+            <Stack spacing={2}>
               <Typography variant="h4">Start Booking</Typography>
               <Typography variant="h4">
                 <span style={{ color: "#1ABC9C" }}>$280</span> per night
@@ -199,14 +208,69 @@ function RoomDetail() {
                 Discount 20% Off
               </Typography>
             </Stack>
-            <Stack>
-            
-            </Stack>
+            <Stack></Stack>
           </Grid>
         </Grid>
       </Box>
       {/* Add Rate or comment */}
-      
+      <Box sx={{ paddingY: 5, paddingX: 2 }}>
+        <Stack
+          sx={{ border: "1px solid #ddd", borderRadius: 3, padding: 5 }}
+          direction={{ xs: "column", md: "row" }}
+          spacing={2}
+          divider={
+            <Divider
+              sx={{
+                backgroundColor: "rgb(32, 63, 199, 0.5)",
+                borderWidth: "2px",
+              }}
+              orientation="vertical"
+              flexItem
+            />
+          }
+        >
+          <Stack
+            spacing={2}
+            sx={{
+              width: { xs: "100%", md: "50%" },
+              justifyContent: 'space-between'
+            }}
+          >
+            <Typography variant="body1">Rate</Typography>
+            <Box sx={{ fontSize: "22px" }}>
+              <FaStar color="#DFCB1D" />
+              <FaStar color="#DFCB1D" />
+              <FaStar color="#DFCB1D" />
+              <FaStar color="#DFCB1D" />
+              <FaStar color="#ddd" />
+            <Typography variant="body1">Message</Typography>
+            </Box>
+            <TextField id="message" multiline rows={4} />
+            <Button
+              variant="contained"
+              sx={{ backgroundColor: "#3252DF", width: "25%" }}
+            >
+              Rate
+            </Button>
+          </Stack>
+          <Stack
+            sx={{
+              width: { xs: "100%", md: "50%" },
+              justifyContent: 'space-between',
+              alignContent: 'space-between'
+            }}
+          >
+            <Typography variant="body1">Add Your Comment</Typography>
+            <TextField id="message" multiline rows={4} sx={{borderColor: "3252DF"}} />
+            <Button
+              variant="contained"
+              sx={{ backgroundColor: "#3252DF", width: "25%", alignSelf: "end" }}
+            >
+              Send
+            </Button>
+          </Stack>
+        </Stack>
+      </Box>
     </>
   );
 }
