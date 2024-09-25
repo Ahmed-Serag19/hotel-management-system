@@ -3,6 +3,7 @@ import {
   Button,
   Divider,
   Link,
+  Modal,
   Stack,
   TextField,
   Typography,
@@ -21,6 +22,12 @@ import ic_ac from "../../../../assets/images/ic_ac.png";
 import ic_kulkas from "../../../../assets/images/ic_kulkas.png";
 import ic_tv from "../../../../assets/images/ic_tv.png";
 import { FaStar } from "react-icons/fa";
+import { useState } from "react";
+import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
+import "react-date-range/dist/styles.css"; // Main CSS file for react-date-range
+import "react-date-range/dist/theme/default.css"; // Theme CSS file for react-date-range
+import { DateRange } from "react-date-range"; // React Date Range
+import { format } from "date-fns"; // Date formatting
 
 function handleClick(event: React.MouseEvent<HTMLDivElement, MouseEvent>) {
   event.preventDefault();
@@ -28,6 +35,14 @@ function handleClick(event: React.MouseEvent<HTMLDivElement, MouseEvent>) {
 }
 
 function RoomDetail() {
+  const [openDatePicker, setOpenDatePicker] = useState(false);
+  const [state, setState] = useState([
+    {
+      startDate: new Date(),
+      endDate: new Date(),
+      key: "selection",
+    },
+  ]);
   return (
     <>
       {/* Breadcrumbs */}
@@ -94,7 +109,7 @@ function RoomDetail() {
       <Box sx={{ paddingY: 5, paddingX: 2 }}>
         <Grid container spacing={2}>
           {/* Aboute room */}
-          <Grid size={7}>
+          <Grid size={{xs: 12, md: 7}}>
             <Box>
               <Typography
                 sx={{ lineHeight: 1.7 }}
@@ -198,17 +213,118 @@ function RoomDetail() {
             </Grid>
           </Grid>
           {/* Start booking */}
-          <Grid size={5} sx={{ border: "1px solid #ddd", borderRadius: 3 }}>
+          <Grid size={{xs: 12, md: 5}} padding={9} sx={{ border: "1px solid #ddd", borderRadius: 3, justifyContent: 'center', alignItems: 'center' }}>
             <Stack spacing={2}>
-              <Typography variant="h4">Start Booking</Typography>
-              <Typography variant="h4">
+              <Typography variant="h4" color="#152C5B">Start Booking</Typography>
+              <Typography variant="h3">
                 <span style={{ color: "#1ABC9C" }}>$280</span> per night
               </Typography>
-              <Typography variant="h4" color="red">
+              <Typography variant="h5" color="red">
                 Discount 20% Off
               </Typography>
             </Stack>
-            <Stack></Stack>
+            {/* Pick Data */}
+            <Stack sx={{ mt: 4 }}>
+                <Typography
+                  sx={{
+                    fontWeight: "bold",
+                    mb: 1,
+                    color: "#152c5b",
+                    fontSize: "18px",
+                  }}
+                >
+                  Pick a Date
+                </Typography>
+
+                <Stack
+                  sx={{ cursor: "pointer" }}
+                  direction={"row"}
+                  onClick={() => setOpenDatePicker(true)}
+                >
+                  <CalendarMonthIcon
+                    sx={{
+                      height: "40px",
+                      width: "40px",
+                      justifyItems: "flex-start",
+                      background: "#152c5b",
+                      padding: "5px",
+                      color: "white",
+                      borderRadius: "5px",
+                    }}
+                  />
+                  <Box
+                    sx={{
+                      mb: 3,
+                      display: "flex",
+                      justifyContent: "center",
+                      width: "68%",
+                      background: "#f5f6f8",
+                      border: "none",
+                      color: "#152c5b",
+                      height: "40px",
+                      alignItems: "center",
+                    }}
+                  >
+                    <span>
+                      {format(state[0].startDate, "dd MMM")} -{" "}
+                      {format(state[0].endDate, "dd MMM")}
+                    </span>
+                  </Box>
+                </Stack>
+
+                <Typography color="#B0B0B0" marginY={2}>
+                  You will pay <span style={{color: "#152C5B"}}>$480 USD </span>
+                  per 2 <span style={{color: "#152C5B"}}>Person</span>
+                </Typography>
+
+                <Button
+                  variant="contained"
+                  size="large"
+                  sx={{
+                    backgroundColor: "#3252DF",
+                    padding: "10px 30px",
+                    textTransform: "none",
+                    fontWeight: "bold",
+                    width: "300px",
+                  }}
+                  // onClick={handleBooking}
+                >
+                  Continue Book
+                </Button>
+                {/* Date Range Picker Modal */}
+                <Modal
+                  open={openDatePicker}
+                  onClose={() => setOpenDatePicker(false)}
+                  sx={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
+                  <Box sx={{ backgroundColor: "white", padding: 4 }}>
+                    <DateRange
+                      editableDateInputs={true}
+                      onChange={(item) =>
+                        setState([
+                          {
+                            startDate: item.selection.startDate || new Date(),
+                            endDate: item.selection.endDate || new Date(),
+                            key: item.selection.key || "selection", // Ensures the key is not undefined
+                          },
+                        ])
+                      }
+                      moveRangeOnFirstSelection={false}
+                      ranges={state}
+                    />
+                    <Button
+                      onClick={() => setOpenDatePicker(false)}
+                      sx={{ mt: 2 }}
+                    >
+                      Confirm
+                    </Button>
+                  </Box>
+                </Modal>
+            </Stack>
           </Grid>
         </Grid>
       </Box>
@@ -233,17 +349,17 @@ function RoomDetail() {
             spacing={2}
             sx={{
               width: { xs: "100%", md: "50%" },
-              justifyContent: 'space-between'
+              justifyContent: "space-between",
             }}
           >
-            <Typography variant="body1">Rate</Typography>
+            <Typography variant="h6" color="#152C5B">Rate</Typography>
             <Box sx={{ fontSize: "22px" }}>
               <FaStar color="#DFCB1D" />
               <FaStar color="#DFCB1D" />
               <FaStar color="#DFCB1D" />
               <FaStar color="#DFCB1D" />
               <FaStar color="#ddd" />
-            <Typography variant="body1">Message</Typography>
+              <Typography variant="h6" color="#152C5B">Message</Typography>
             </Box>
             <TextField id="message" multiline rows={4} />
             <Button
@@ -256,15 +372,24 @@ function RoomDetail() {
           <Stack
             sx={{
               width: { xs: "100%", md: "50%" },
-              justifyContent: 'space-between',
-              alignContent: 'space-between'
+              justifyContent: "space-between",
+              alignContent: "space-between",
             }}
           >
-            <Typography variant="body1">Add Your Comment</Typography>
-            <TextField id="message" multiline rows={4} sx={{borderColor: "3252DF"}} />
+            <Typography variant="h5" color="#152C5B" sx={{fontWeight: 500}}>Add Your Comment</Typography>
+            <TextField
+              id="message"
+              multiline
+              rows={4}
+              sx={{ borderColor: "3252DF" }}
+            />
             <Button
               variant="contained"
-              sx={{ backgroundColor: "#3252DF", width: "25%", alignSelf: "end" }}
+              sx={{
+                backgroundColor: "#3252DF",
+                width: "25%",
+                alignSelf: "end",
+              }}
             >
               Send
             </Button>
