@@ -5,7 +5,10 @@ import axios from "axios";
 import { getDashboard } from "../../../../constants/End_Points";
 import CircleChart from "../Chart/Chart";
 import UsersChart from "../Chart/UsersChart";
+import Layout from "../../../Shared/components/Layout/Layout";
+import Footer from "../../../Shared/Footer/Footer";
 import { toast } from "react-toastify";
+
 
 interface BookingData {
   completed: number;
@@ -54,6 +57,7 @@ export default function Home() {
 
   return (
     <>
+      {/* <Layout /> */}
       <Box
         sx={{
           display: "flex",
@@ -152,6 +156,7 @@ export default function Home() {
           <UsersChart users={users} />
         </Box>
       </Box>
+      {/* <Footer /> */}
     </>
   );
 }
