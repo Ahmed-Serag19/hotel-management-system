@@ -20,7 +20,7 @@ export default function MasterLayout() {
       }}
     >
       {/* Sidebar */}
-      <Box
+      {/* <Box
         component="nav"
         sx={{
           height: "100vh",
@@ -30,7 +30,7 @@ export default function MasterLayout() {
         }}
       >
         <Sidebarr onToggle={toggleSidebar} collapsed={collapsed} />
-      </Box>
+      </Box> */}
 
       {/* Main Content (Outlet) */}
       <Box
