@@ -55,3 +55,9 @@ const Base_Portal= `${Base_Url}/portal`;
 export const RoomsUrl ={
   getAllRoom:`${Base_Portal}/rooms/available?page=1&size=10&startDate=2023-01-20&endDate=2023-01-30`
 }
+
+const Base_comment= `${Base_Url}/portal/room-comments`;
+export const CommentUrls ={
+  getAllComments:`${Base_comment}`,
+  createComment:`${Base_comment}`
+}

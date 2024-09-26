@@ -28,6 +28,8 @@ import "react-date-range/dist/styles.css"; // Main CSS file for react-date-range
 import "react-date-range/dist/theme/default.css"; // Theme CSS file for react-date-range
 import { DateRange } from "react-date-range"; // React Date Range
 import { format } from "date-fns"; // Date formatting
+import axios from "axios";
+import { CommentUrls } from "../../../../constants/End_Points";
 
 function handleClick(event: React.MouseEvent<HTMLDivElement, MouseEvent>) {
   event.preventDefault();
@@ -43,6 +45,21 @@ function RoomDetail() {
       key: "selection",
     },
   ]);
+
+  const createComment =async()=>{
+    await axios.post(CommentUrls.createComment, {
+      headers: { Authorization: `${localStorage.getItem("token")}` },
+      body: {
+        comment: "test",
+        roomId: "66f532536475e2d50da90cbd"
+      }
+    }).then((comment)=>{
+      console.log(comment.data);
+    }).catch((err)=>{
+      console.log(err);
+    })
+  }
+
   return (
     <>
       {/* Breadcrumbs */}
@@ -384,6 +401,7 @@ function RoomDetail() {
               sx={{ borderColor: "3252DF" }}
             />
             <Button
+            onClick={()=>createComment()}
               variant="contained"
               sx={{
                 backgroundColor: "#3252DF",
