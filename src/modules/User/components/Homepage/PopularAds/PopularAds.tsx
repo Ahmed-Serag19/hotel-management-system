@@ -115,7 +115,7 @@ const PopularAds = () => {
                 display: "flex",
                 flexDirection: "column",
                 justifyContent: "flex-end",
-                transition: "0.5s all ease-in-out",
+                transition: "0.3s all ease-in-out",
                 ":hover": {
                   background: "rgba(0, 0, 0, 0.3)",
                 },

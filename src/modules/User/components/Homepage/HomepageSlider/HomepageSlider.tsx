@@ -90,6 +90,8 @@ const HomepageSlider = () => {
     slidesToScroll: 1,
     nextArrow: <NextArrow />,
     prevArrow: <PrevArrow />,
+    autoplay: true, // Enable autoplay
+    autoplaySpeed: 5000, // Set autoplay interval to 3 seconds (3000 ms)
   };
 
   return (
@@ -108,19 +110,19 @@ const HomepageSlider = () => {
             sx={{
               background: "#fff",
               borderRadius: "16px",
-              //   overflow: "hidden",
-              height: "500px",
+              height: "600px",
               display: "flex !important",
               justifyContent: "flex-start",
               gap: "50px",
               alignItems: "center",
+              paddingX: "60px",
             }}
           >
             {/* Left side: Image */}
             <Box
               sx={{
                 width: "30%",
-                height: "100%",
+                height: "90%",
                 position: "relative",
                 border: "1px solid grey",
                 borderRadius: "5px",

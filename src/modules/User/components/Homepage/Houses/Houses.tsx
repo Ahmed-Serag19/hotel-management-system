@@ -53,7 +53,7 @@ const Houses = () => {
               boxShadow: "none",
               color: "#152c5b",
               cursor: "pointer",
-              transition: "0.5s all ease-in-out",
+              transition: "0.3s all ease-in-out",
               ":hover": {
                 boxShadow: "0 8px 20px rgba(0,0,0,0.1)",
               },
