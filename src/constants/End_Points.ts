@@ -63,3 +63,10 @@ export const favoriteUrl ={
 
   
 }
+const Base_comment= `${Base_Url}/portal/room-comments`;
+export const CommentUrls ={
+  getAllComments:`${Base_comment}`,
+  createComment:`${Base_comment}`
+}
+
+
