@@ -18,7 +18,9 @@ import Register from "./modules/Auth/components/Register/Register";
 import ResetPassword from "./modules/Auth/components/ResetPassword/ResetPassword";
 import Rooms from "./modules/Admin/components/Rooms/Rooms";
 import Users from "./modules/Admin/components/Users/Users";
+import RoomDetail from "./modules/User/components/RoomDetails/RoomDetail";
 import Homepage from "./modules/User/components/Homepage/Homepage";
+
 
 //import ProtectedRoute from "./modules/Shared/components/ProtectedRoute/ProtectedRoute";
 
@@ -34,6 +36,7 @@ function App() {
         { path: "register", element: <Register /> },
         { path: "forget-password", element: <ForgetPassword /> },
         { path: "reset-password", element: <ResetPassword /> },
+        { path: "room-details", element: <RoomDetail /> },
       ],
     },
     {
