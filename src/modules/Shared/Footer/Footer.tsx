@@ -1,85 +1,126 @@
-// Footer.tsx
 import React from "react";
-import { Box, Typography, Grid2, Link } from "@mui/material";
+import { Typography, Box, Link,Grid2 } from "@mui/material";
+// import Grid2 from "@mui/material-next/Grid2"; 
 
 const Footer: React.FC = () => {
   return (
-    <Box sx={{ backgroundColor: "#f5f5f5", p: 4 }}>
+    <Box
+      sx={{
+        backgroundColor: "#f8f8f8",
+        padding: "40px 20px",
+        marginTop: "20px",
+        borderTop: "1px solid #e0e0e0",
+      }}
+    >
       <Grid2 container spacing={4}>
-        {/* Brand Section */}
-        <Grid2 item xs={12} sm={3}>
-          <Typography variant="h6" color="primary" gutterBottom>
-            Staycation.
+        {/* Staycation Brand and Description */}
+        <Grid2 xs={12} sm={4}>
+          <Typography variant="h6" sx={{ color: "#1565C0", fontWeight: "700" }}>
+            Stay<span style={{ color: "black" }}>cation.</span>
           </Typography>
-          <Typography variant="body2" color="textSecondary">
+          <Typography
+            variant="body2"
+            sx={{ color: "#6c757d", marginTop: "10px" }}
+          >
             We kaboom your beauty holiday instantly and memorable.
           </Typography>
         </Grid2>
 
-        {/* For Beginners */}
-        <Grid2 item xs={12} sm={3}>
-          <Typography variant="h6" color="textPrimary" gutterBottom>
+        {/* For Beginners Section */}
+        <Grid2 xs={12} sm={2}>
+          <Typography
+            variant="h6"
+            sx={{ fontWeight: "700", marginBottom: "15px" }}
+          >
             For Beginners
           </Typography>
-          <Typography variant="body2">
-            <Link href="#" underline="none" color="inherit">
-              New Account
-            </Link>
-          </Typography>
-          <Typography variant="body2">
-            <Link href="#" underline="none" color="inherit">
-              Start Booking a Room
-            </Link>
-          </Typography>
-          <Typography variant="body2">
-            <Link href="#" underline="none" color="inherit">
-              Use Payments
-            </Link>
-          </Typography>
+          <Link
+            href="#"
+            underline="none"
+            sx={{ display: "block", marginBottom: "8px", color: "#6c757d" }}
+          >
+            New Account
+          </Link>
+          <Link
+            href="#"
+            underline="none"
+            sx={{ display: "block", marginBottom: "8px", color: "#6c757d" }}
+          >
+            Start Booking a Room
+          </Link>
+          <Link
+            href="#"
+            underline="none"
+            sx={{ display: "block", marginBottom: "8px", color: "#6c757d" }}
+          >
+            Use Payments
+          </Link>
         </Grid2>
 
-        {/* Explore Us */}
-        <Grid2 item xs={12} sm={3}>
-          <Typography variant="h6" color="textPrimary" gutterBottom>
+        {/* Explore Us Section */}
+        <Grid2 xs={12} sm={2}>
+          <Typography
+            variant="h6"
+            sx={{ fontWeight: "700", marginBottom: "15px" }}
+          >
             Explore Us
           </Typography>
-          <Typography variant="body2">
-            <Link href="#" underline="none" color="inherit">
-              Our Careers
-            </Link>
-          </Typography>
-          <Typography variant="body2">
-            <Link href="#" underline="none" color="inherit">
-              Privacy
-            </Link>
-          </Typography>
-          <Typography variant="body2">
-            <Link href="#" underline="none" color="inherit">
-              Terms & Conditions
-            </Link>
-          </Typography>
+          <Link
+            href="#"
+            underline="none"
+            sx={{ display: "block", marginBottom: "8px", color: "#6c757d" }}
+          >
+            Our Careers
+          </Link>
+          <Link
+            href="#"
+            underline="none"
+            sx={{ display: "block", marginBottom: "8px", color: "#6c757d" }}
+          >
+            Privacy
+          </Link>
+          <Link
+            href="#"
+            underline="none"
+            sx={{ display: "block", marginBottom: "8px", color: "#6c757d" }}
+          >
+            Terms & Conditions
+          </Link>
         </Grid2>
 
-        {/* Connect Us */}
-        <Grid2 item xs={12} sm={3}>
-          <Typography variant="h6" color="textPrimary" gutterBottom>
+        {/* Connect Us Section */}
+        <Grid2 xs={12} sm={4}>
+          <Typography
+            variant="h6"
+            sx={{ fontWeight: "700", marginBottom: "15px" }}
+          >
             Connect Us
           </Typography>
-          <Typography variant="body2" color="textSecondary">
+          <Typography
+            variant="body2"
+            sx={{ marginBottom: "8px", color: "#6c757d" }}
+          >
             support@staycation.id
           </Typography>
-          <Typography variant="body2" color="textSecondary">
-            021 - 2208 - 1996
+          <Typography
+            variant="body2"
+            sx={{ marginBottom: "8px", color: "#6c757d" }}
+          >
+            022 - 2208 - 1996
           </Typography>
-          <Typography variant="body2" color="textSecondary">
+          <Typography
+            variant="body2"
+            sx={{ marginBottom: "8px", color: "#6c757d" }}
+          >
             Staycation, Kemang, Jakarta
           </Typography>
         </Grid2>
       </Grid2>
 
-      <Box mt={4} textAlign="center">
-        <Typography variant="body2" color="textSecondary">
-          Copyright © 2023 - All rights reserved - Staycation.
+      {/* Copyright Section */}
+      <Box sx={{ textAlign: "center", marginTop: "40px" }}>
+        <Typography variant="body2" sx={{ color: "#6c757d" }}>
+          Copyright 2019 • All rights reserved • Staycation
         </Typography>
       </Box>
     </Box>
