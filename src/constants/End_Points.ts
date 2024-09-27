@@ -35,7 +35,7 @@ export const roomsUrl = {
 
 const Base_Ads = `${Base_Url}/admin/ads`;
 export const Ads_URls = {
-  gitAds: `${Base_Ads}`,
+  getAds: `${Base_Ads}`,
   addAds: `${Base_Ads}`,
   updateAds: (id: string): string => `${Base_Ads}/${id}`,
   deleteAds: (id: string): string => `${Base_Ads}/${id}`,

@@ -18,6 +18,7 @@ import Register from "./modules/Auth/components/Register/Register";
 import ResetPassword from "./modules/Auth/components/ResetPassword/ResetPassword";
 import Rooms from "./modules/Admin/components/Rooms/Rooms";
 import Users from "./modules/Admin/components/Users/Users";
+import Homepage from "./modules/User/components/Homepage/Homepage";
 
 //import ProtectedRoute from "./modules/Shared/components/ProtectedRoute/ProtectedRoute";
 
@@ -46,6 +47,7 @@ function App() {
       children: [
         { index: true, element: <Home /> },
         { path: "home", element: <Home /> },
+        { path: "homepage", element: <Homepage /> },
         { path: "facilities", element: <Facilities /> },
         { path: "Ads-list", element: <AdsList /> },
         { path: "List-booking", element: <ListBooking /> },
