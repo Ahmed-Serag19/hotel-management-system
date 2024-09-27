@@ -19,7 +19,11 @@ import { useForm } from "react-hook-form";
 import axios from "axios";
 import { User_URls } from "../../../../constants/End_Points";
 import { toast } from "react-toastify";
-import { ConfirmPasswordValidation, EmailValidation, PasswordValidation } from "../../../../constants/Validations";
+import {
+  ConfirmPasswordValidation,
+  EmailValidation,
+  PasswordValidation,
+} from "../../../../constants/Validations";
 import { useState } from "react";
 
 type DataForget = {
@@ -35,13 +39,18 @@ export default function ResetPassword() {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
-  const handleClickShowConfirmPassword = () => setShowConfirmPassword((show) => !show);
+  const handleClickShowConfirmPassword = () =>
+    setShowConfirmPassword((show) => !show);
 
-  const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement> ) => {
+  const handleMouseDownPassword = (
+    event: React.MouseEvent<HTMLButtonElement>
+  ) => {
     event.preventDefault();
   };
 
-  const handleMouseUpPassword = ( event: React.MouseEvent<HTMLButtonElement>) => {
+  const handleMouseUpPassword = (
+    event: React.MouseEvent<HTMLButtonElement>
+  ) => {
     event.preventDefault();
   };
 
@@ -51,10 +60,9 @@ export default function ResetPassword() {
     handleSubmit,
   } = useForm<DataForget>({ mode: "onChange" });
 
-  const onSubmit = async (data: DataForget) => {     
+  const onSubmit = async (data: DataForget) => {
     try {
       const response = await axios.post(User_URls.resetPassword, data);
-      console.log(response);
       toast.success(response.data.message);
       navigate("/login");
     } catch (error: any) {
@@ -125,7 +133,7 @@ export default function ResetPassword() {
                         fontWeight: "600",
                       }}
                     >
-                     Login here !
+                      Login here !
                     </Link>{" "}
                   </span>
                 </Typography>
@@ -278,7 +286,11 @@ export default function ResetPassword() {
                         onMouseUp={handleMouseUpPassword}
                         edge="end"
                       >
-                        {showConfirmPassword ? <VisibilityOff /> : <Visibility />}
+                        {showConfirmPassword ? (
+                          <VisibilityOff />
+                        ) : (
+                          <Visibility />
+                        )}
                       </IconButton>
                     </InputAdornment>
                   }

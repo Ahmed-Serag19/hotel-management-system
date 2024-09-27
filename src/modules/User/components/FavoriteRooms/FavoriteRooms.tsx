@@ -100,17 +100,12 @@ export default function FavoriteRoom() {
                       />
                       <Box className="LayerIcon">
                         <Box className="IconsBar">
-                          <Tooltip title="Details Room">
-                            <VisibilityIcon
-                              fontSize="large"
-                              onClick={() => navigate(``)}
-                            />
-                          </Tooltip>
+                   
                           <Tooltip title="Delete From Favorite! ">
                             <FavoriteBorderIcon
                               fontSize="large"
                               onClick={() => removeFavorite(room._id)}
-                              sx={{ marginLeft: "15px" }}
+               
                             />
                           </Tooltip>
                         </Box>
@@ -120,45 +115,7 @@ export default function FavoriteRoom() {
                 ))}
               </Grid2>
 
-              {/* 
-<ImageList cols={3} sx={{ width: "100%" }}>
- {favoriteList.map((room: any) => (
-  
-     <ImageListItem className="ImgList" key={room._id} sx={{ m: 2 }}>
-
-
-     <Box component="img"
-         alt="img-room"
-         src={room?.images[0]}
-         loading="lazy"
-         sx={{
-         
-           height:{xs:"120px",sm:"160px",md:"215px"},
-           borderRadius: "15px",
-           width:"100%",
-           
-         }}
-       />
-
-       <Box className="LayerIcon">
-         <Box className="IconsBar">
-
-         <Tooltip title="Details Room">
-      <VisibilityIcon fontSize="large" onClick={()=>navigate(``)}/>
-       </Tooltip>
-       
-         <Tooltip title="Delete From Favorite! ">
-         <FavoriteBorderIcon fontSize="large" onClick={()=>removeFavorite(room._id)} sx={{marginLeft:"15px"}}/>
-          </Tooltip>
-         </Box>
-
-
-       </Box>
-
-     </ImageListItem>
-  
- ))}
-</ImageList> */}
+     
             </Container>
           ) : (
             <NoData />
