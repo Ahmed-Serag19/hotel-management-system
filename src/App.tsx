@@ -1,10 +1,6 @@
 import "./App.css";
 
-import {
-  RouterProvider,
-  createBrowserRouter,
-} from "react-router-dom";
-
+import { RouterProvider, createBrowserRouter } from "react-router-dom";
 
 import AddRoom from "./modules/Admin/components/Rooms/AddRoom";
 import AdsList from "./modules/Admin/components/AdsList/AdsList";
@@ -23,18 +19,10 @@ import ResetPassword from "./modules/Auth/components/ResetPassword/ResetPassword
 import Rooms from "./modules/Admin/components/Rooms/Rooms";
 import Users from "./modules/Admin/components/Users/Users";
 import RoomDetail from "./modules/User/components/RoomDetails/RoomDetail";
+import Homepage from "./modules/User/components/Homepage/Homepage";
+
 
 //import ProtectedRoute from "./modules/Shared/components/ProtectedRoute/ProtectedRoute";
-
-
-
-
-
-
-
-
-
-
 
 function App() {
   const routes = createBrowserRouter([
@@ -62,6 +50,7 @@ function App() {
       children: [
         { index: true, element: <Home /> },
         { path: "home", element: <Home /> },
+        { path: "homepage", element: <Homepage /> },
         { path: "facilities", element: <Facilities /> },
         { path: "Ads-list", element: <AdsList /> },
         { path: "List-booking", element: <ListBooking /> },
@@ -70,7 +59,6 @@ function App() {
         { path: "add-room", element: <AddRoom /> },
         { path: "change-password", element: <ChangePassword /> },
         { path: "all-rooms", element: <AllRooms /> },
-
       ],
     },
   ]);

@@ -1,5 +1,5 @@
 import { Sidebar, Menu, MenuItem } from "react-pro-sidebar";
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import HomeTwoToneIcon from "@mui/icons-material/HomeTwoTone";
 import PeopleAltTwoToneIcon from "@mui/icons-material/PeopleAltTwoTone";
 import DashboardTwoToneIcon from "@mui/icons-material/DashboardTwoTone";
@@ -10,12 +10,30 @@ import LockOpenTwoToneIcon from "@mui/icons-material/LockOpenTwoTone";
 import LogoutTwoToneIcon from "@mui/icons-material/LogoutTwoTone";
 import DoubleArrowIcon from "@mui/icons-material/DoubleArrow";
 import { Box, IconButton } from "@mui/material";
+import { useContext } from "react";
+import { AuthContext } from "../../../../context/authcontext";
 
 interface SidebarProps {
-  onToggle: () => void; // Function type for onToggle
-  collapsed: boolean; // Boolean type for collapsed
+  onToggle: () => void;
+  collapsed: boolean;
 }
-export default function Sidebarr({ onToggle, collapsed }: SidebarProps) {
+
+export default function SidebarComponent({
+  onToggle,
+  collapsed,
+}: SidebarProps) {
+  const { logout }: any = useContext(AuthContext);
+  const navigate = useNavigate();
+  const location = useLocation(); // Get the current path
+
+  const handleLogout = () => {
+    logout();
+    navigate("/login");
+  };
+
+  // Helper function to determine if the path is active
+  const isActive = (path: string) => location.pathname === path;
+
   return (
     <Sidebar
       rootStyles={{
@@ -23,12 +41,13 @@ export default function Sidebarr({ onToggle, collapsed }: SidebarProps) {
       }}
     >
       <IconButton
-        onClick={onToggle} // Toggle sidebar collapse
+        onClick={onToggle}
         sx={{
-          transform: collapsed ? "rotate(180deg)" : "rotate(0deg)", // Rotate the arrow when collapsed
+          transform: collapsed ? "rotate(180deg)" : "rotate(0deg)",
           transition: "all 0.3s",
           position: "absolute",
-          right: collapsed ? "146px" : "5px",
+          right: collapsed ? "170px" : "5px",
+          color: "white",
         }}
       >
         <DoubleArrowIcon />
@@ -40,12 +59,19 @@ export default function Sidebarr({ onToggle, collapsed }: SidebarProps) {
           height: "100%",
         }}
       >
-        <MenuItem component={<Link to="/dashboard/home" />}>
+        <MenuItem
+          component={<Link to="/dashboard/home" />}
+          rootStyles={{
+            backgroundColor: isActive("/dashboard/home")
+              ? "rgba(0, 0, 0, 0.2)"
+              : "transparent",
+          }}
+        >
           <Box
             sx={{
               display: "flex",
               alignItems: "center",
-              marginLeft: collapsed ? "1.5rem" : "3rem",
+              marginLeft: collapsed ? "0.5rem" : "1rem",
               color: "white",
               transition: "all 0.3s",
               marginBottom: "1rem",
@@ -57,12 +83,19 @@ export default function Sidebarr({ onToggle, collapsed }: SidebarProps) {
           </Box>
         </MenuItem>
 
-        <MenuItem component={<Link to="/dashboard/users" />}>
+        <MenuItem
+          component={<Link to="/dashboard/users" />}
+          rootStyles={{
+            backgroundColor: isActive("/dashboard/users")
+              ? "rgba(0, 0, 0, 0.2)"
+              : "transparent",
+          }}
+        >
           <Box
             sx={{
               display: "flex",
               alignItems: "center",
-              marginLeft: collapsed ? "1.5rem" : "3rem",
+              marginLeft: collapsed ? "0.5rem" : "1rem",
               color: "white",
               transition: "all 0.3s",
               marginBottom: "1rem",
@@ -74,12 +107,19 @@ export default function Sidebarr({ onToggle, collapsed }: SidebarProps) {
           </Box>
         </MenuItem>
 
-        <MenuItem component={<Link to="/dashboard/rooms" />}>
+        <MenuItem
+          component={<Link to="/dashboard/rooms" />}
+          rootStyles={{
+            backgroundColor: isActive("/dashboard/rooms")
+              ? "rgba(0, 0, 0, 0.2)"
+              : "transparent",
+          }}
+        >
           <Box
             sx={{
               display: "flex",
               alignItems: "center",
-              marginLeft: collapsed ? "1.5rem" : "3rem",
+              marginLeft: collapsed ? "0.5rem" : "1rem",
               color: "white",
               transition: "all 0.3s",
               marginBottom: "1rem",
@@ -91,12 +131,19 @@ export default function Sidebarr({ onToggle, collapsed }: SidebarProps) {
           </Box>
         </MenuItem>
 
-        <MenuItem component={<Link to="/dashboard/Ads-list" />}>
+        <MenuItem
+          component={<Link to="/dashboard/Ads-list" />}
+          rootStyles={{
+            backgroundColor: isActive("/dashboard/Ads-list")
+              ? "rgba(0, 0, 0, 0.2)"
+              : "transparent",
+          }}
+        >
           <Box
             sx={{
               display: "flex",
               alignItems: "center",
-              marginLeft: collapsed ? "1.5rem" : "3rem",
+              marginLeft: collapsed ? "0.5rem" : "1rem",
               color: "white",
               transition: "all 0.3s",
               marginBottom: "1rem",
@@ -108,12 +155,19 @@ export default function Sidebarr({ onToggle, collapsed }: SidebarProps) {
           </Box>
         </MenuItem>
 
-        <MenuItem component={<Link to="/dashboard/List-booking" />}>
+        <MenuItem
+          component={<Link to="/dashboard/List-booking" />}
+          rootStyles={{
+            backgroundColor: isActive("/dashboard/List-booking")
+              ? "rgba(0, 0, 0, 0.2)"
+              : "transparent",
+          }}
+        >
           <Box
             sx={{
               display: "flex",
               alignItems: "center",
-              marginLeft: collapsed ? "1.5rem" : "3rem",
+              marginLeft: collapsed ? "0.5rem" : "1rem",
               color: "white",
               transition: "all 0.3s",
               marginBottom: "1rem",
@@ -125,12 +179,19 @@ export default function Sidebarr({ onToggle, collapsed }: SidebarProps) {
           </Box>
         </MenuItem>
 
-        <MenuItem component={<Link to="/dashboard/facilities" />}>
+        <MenuItem
+          component={<Link to="/dashboard/facilities" />}
+          rootStyles={{
+            backgroundColor: isActive("/dashboard/facilities")
+              ? "rgba(0, 0, 0, 0.2)"
+              : "transparent",
+          }}
+        >
           <Box
             sx={{
               display: "flex",
               alignItems: "center",
-              marginLeft: collapsed ? "1.5rem" : "3rem",
+              marginLeft: collapsed ? "0.5rem" : "1rem",
               color: "white",
               transition: "all 0.3s",
               marginBottom: "1rem",
@@ -144,12 +205,19 @@ export default function Sidebarr({ onToggle, collapsed }: SidebarProps) {
           </Box>
         </MenuItem>
 
-        <MenuItem component={<Link to="/dashboard/change-password" />}>
+        <MenuItem
+          component={<Link to="/dashboard/change-password" />}
+          rootStyles={{
+            backgroundColor: isActive("/dashboard/change-password")
+              ? "rgba(0, 0, 0, 0.2)"
+              : "transparent",
+          }}
+        >
           <Box
             sx={{
               display: "flex",
               alignItems: "center",
-              marginLeft: collapsed ? "1.5rem" : "3rem",
+              marginLeft: collapsed ? "0.5rem" : "1rem",
               color: "white",
               transition: "all 0.3s",
               marginBottom: "1rem",
@@ -158,19 +226,17 @@ export default function Sidebarr({ onToggle, collapsed }: SidebarProps) {
           >
             <LockOpenTwoToneIcon />
             {!collapsed && (
-              <span style={{ marginLeft: "1rem" }}>
-                Change <br /> Password
-              </span>
+              <span style={{ marginLeft: "1rem" }}>Change Password</span>
             )}
           </Box>
         </MenuItem>
 
-        <MenuItem component={<Link to="/dashboard" />}>
+        <MenuItem onClick={handleLogout}>
           <Box
             sx={{
               display: "flex",
               alignItems: "center",
-              marginLeft: collapsed ? "1.5rem" : "3rem",
+              marginLeft: collapsed ? "0.5rem" : "1rem",
               color: "white",
               transition: "all 0.3s",
               marginBottom: "1rem",

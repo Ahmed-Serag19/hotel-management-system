@@ -1,10 +1,8 @@
 import { useForm } from "react-hook-form";
-import resetPhoto from "../../../../assets/images/resetpassword.png";
 import {
   Box,
   Card,
   CardContent,
-  CardMedia,
   TextField,
   Typography,
   Button,
@@ -33,7 +31,6 @@ export default function ChangePassword() {
       const response = await axios.post(User_URls.changePassword, data, {
         headers: { Authorization: localStorage.getItem("token") },
       });
-      console.log(response.data.message);
       reset();
       toast.success(response.data.message || "Password changed successfully");
     } catch (error: any) {
@@ -44,14 +41,14 @@ export default function ChangePassword() {
     <Card
       sx={{
         display: "flex",
-        justifyContent: "space-evenly",
+        justifyContent: "center",
         alignItems: "center",
         minHeight: "500px",
         marginTop: "3rem",
         boxShadow: "0 8px 30px rgba(0, 0, 0, 0.2)",
       }}
     >
-      <Box>
+      <Box sx={{ width: "70%" }}>
         <CardContent>
           <Typography
             component="div"
@@ -124,6 +121,8 @@ export default function ChangePassword() {
               variant="contained"
               sx={{
                 marginTop: "30px",
+                paddingY: "15px",
+                fontWeight: "bold",
               }}
             >
               Change Password
@@ -131,14 +130,6 @@ export default function ChangePassword() {
           </FormControl>
         </CardContent>
       </Box>
-
-      <CardMedia
-        className="changePassword"
-        component="img"
-        sx={{ width: 350 }}
-        image={resetPhoto}
-        alt="Live from space album cover"
-      />
     </Card>
   );
 }
