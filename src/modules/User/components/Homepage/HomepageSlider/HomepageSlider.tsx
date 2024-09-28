@@ -81,7 +81,6 @@ const HomepageSlider = () => {
     </IconButton>
   );
 
-  // Slick settings
   const settings = {
     dots: true,
     infinite: true,
@@ -90,10 +89,9 @@ const HomepageSlider = () => {
     slidesToScroll: 1,
     nextArrow: <NextArrow />,
     prevArrow: <PrevArrow />,
-    autoplay: true, // Enable autoplay
-    autoplaySpeed: 5000, // Set autoplay interval to 3 seconds (3000 ms)
+    autoplay: true,
+    autoplaySpeed: 4000,
   };
-
   return (
     <Box
       sx={{

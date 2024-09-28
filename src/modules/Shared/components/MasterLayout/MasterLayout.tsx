@@ -52,12 +52,12 @@ export default function MasterLayout() {
             position: "sticky",
             top: 0,
             left: 0,
-            width: collapsed ? "75px" : "243px", // Collapsed or expanded width
-            height: "100vh", // Ensure it takes full height
+            width: collapsed ? "75px" : "243px",
+            height: "100vh",
             transition: "width 0.3s",
-            overflowX: "hidden", // Prevent horizontal scroll when collapsed
-            bgcolor: "#f0f0f0", // Sidebar background color (optional)
-            zIndex: 1000, // Ensure it stays on top of the content
+            overflowX: "hidden",
+            bgcolor: "#f0f0f0",
+            zIndex: 1000,
           }}
         >
           <SidebarComponent onToggle={toggleSidebar} collapsed={collapsed} />
@@ -71,16 +71,24 @@ export default function MasterLayout() {
           flexGrow: 1,
           height: "100vh",
           overflowY: "auto",
-          padding: loginData?.role === "admin" ? 2 : 0, // Conditional padding
-          paddingX: loginData?.role === "admin" ? 2 : 10, // Conditional padding
+          padding: loginData?.role === "admin" ? 2 : 0,
+          paddingX: loginData?.role === "admin" ? 2 : 0,
 
           bgcolor: loginData?.role === "admin" ? "#fafafa" : "white",
         }}
       >
         {loginData?.role === "admin" && <Navbar />}
-        {/* <Layout /> */}
-        <Outlet />
-        {/* <Footer /> */}
+        {loginData?.role !== "admin" && <Layout />}
+        <Box
+          sx={{
+            padding: loginData?.role === "admin" ? 2 : 2,
+            paddingX: loginData?.role === "admin" ? 2 : 6,
+            minHeight: "calc(100vh - 290px)",
+          }}
+        >
+          <Outlet />
+        </Box>
+        {loginData?.role !== "admin" && <Footer />}
       </Box>
     </Box>
   );
