@@ -20,11 +20,15 @@ import ResetPassword from "./modules/Auth/components/ResetPassword/ResetPassword
 import Rooms from "./modules/Admin/components/Rooms/Rooms";
 import Users from "./modules/Admin/components/Users/Users";
 import Homepage from "./modules/User/components/Homepage/Homepage";
+import { useContext } from "react";
+import { AuthContext } from "./context/authcontext";
 import RoomDetail from "./modules/User/components/RoomDetails/RoomDetail";
 
 //import ProtectedRoute from "./modules/Shared/components/ProtectedRoute/ProtectedRoute";
 
 function App() {
+  const { loginData }: any = useContext(AuthContext);
+  console.log(loginData);
   const routes = createBrowserRouter([
     {
       path: "",
@@ -48,7 +52,9 @@ function App() {
       ),
       errorElement: <NotFound />,
       children: [
-        { index: true, element: <Home /> },
+        loginData?.role === "admin"
+          ? { index: true, element: <Home /> }
+          : { index: true, element: <Homepage /> },
         { path: "home", element: <Home /> },
         { path: "homepage", element: <Homepage /> },
         { path: "facilities", element: <Facilities /> },
