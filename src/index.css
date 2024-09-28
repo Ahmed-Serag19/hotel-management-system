@@ -69,3 +69,29 @@ body {
     top:0;
     color: white;
 }
+.card{
+    padding: 2rem;
+    background-color: #f8fafc;
+    border-radius: 12px;
+}
+.read-the-docs{
+    color:#888;
+}
+.form-wrapper{
+    display: flex;
+    flex-direction: column;
+    background-color: #f1f5f9;
+    width: 500px;
+    padding-block: 32px;
+    padding-right: 16px;
+    border-radius: 12px;
+    gap:24px
+}
+.submit-btn{
+    text-transform: uppercase;
+    background-color: #38bdf8;
+    border: none;
+    color: black;
+    font-weight: 700;
+}
+

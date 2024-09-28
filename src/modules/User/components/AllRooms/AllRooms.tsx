@@ -11,7 +11,6 @@ import {
   ImageListItem,
   ImageListItemBar,
   Pagination,
-
   Tooltip,
   Typography,
 } from "@mui/material";
@@ -33,7 +32,7 @@ export default function AllRooms() {
   let getAllRoom = async (page:number) => {
     try {
       let response = await axios.get(`${RoomsUrl.getAllRoom}/available?
-            page=${page + 1}&size=${pageSize}&startDate=2024-02-20&endDate=2024-03-30`);
+            page=${page}&size=${pageSize}&startDate=2024-02-20&endDate=2024-03-30`);
 
 
       setRoomList(response.data.data.rooms);
