@@ -40,7 +40,6 @@ function App() {
         { path: "register", element: <Register /> },
         { path: "forget-password", element: <ForgetPassword /> },
         { path: "reset-password", element: <ResetPassword /> },
-      
       ],
     },
     {
@@ -66,7 +65,7 @@ function App() {
         { path: "change-password", element: <ChangePassword /> },
         { path: "all-rooms", element: <AllRooms /> },
         { path: "favorite-room", element: <FavoriteRooms /> },
-        { path: "room-details", element: <RoomDetail /> },
+        { path: "room-details/:roomId", element: <RoomDetail /> },
       ],
     },
   ]);

@@ -1,6 +1,7 @@
 import {
   Breadcrumbs,
   Button,
+  CircularProgress,
   Divider,
   Link,
   Modal,
@@ -10,7 +11,6 @@ import {
 } from "@mui/material";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid2";
-import RoomImg1 from "../../../../assets/images/room big.png";
 import RoomImg2 from "../../../../assets/images/room img.png";
 import RoomImg3 from "../../../../assets/images/room img2.png";
 import ic_bedroom from "../../../../assets/images/ic_bedroom.png";
@@ -22,49 +22,170 @@ import ic_ac from "../../../../assets/images/ic_ac.png";
 import ic_kulkas from "../../../../assets/images/ic_kulkas.png";
 import ic_tv from "../../../../assets/images/ic_tv.png";
 import { FaStar } from "react-icons/fa";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
-import "react-date-range/dist/styles.css"; // Main CSS file for react-date-range
-import "react-date-range/dist/theme/default.css"; // Theme CSS file for react-date-range
-import { DateRange } from "react-date-range"; // React Date Range
-import { format } from "date-fns"; // Date formatting
+import "react-date-range/dist/styles.css";
+import "react-date-range/dist/theme/default.css";
+import { DateRange } from "react-date-range";
+import { format } from "date-fns";
 import axios from "axios";
-import { CommentUrls } from "../../../../constants/End_Points";
+import { CommentUrls, RoomsUrl } from "../../../../constants/End_Points";
+import { useLocation, useParams } from "react-router-dom";
 
+type Facility = {
+  _id: string;
+  name: string;
+};
+
+type RoomDetails = {
+  _id: string;
+  roomNumber: string;
+  price: number;
+  capacity: number;
+  discount: number;
+  facilities: Facility[];
+  createdBy: {
+    _id: string;
+    userName: string;
+  };
+  images: string[];
+};
 function handleClick(event: React.MouseEvent<HTMLDivElement, MouseEvent>) {
   event.preventDefault();
   console.info("You clicked a breadcrumb.");
 }
 
 function RoomDetail() {
+  const { roomId } = useParams();
+  const location = useLocation();
+  const { startDate, endDate, capacity } = location.state || {
+    startDate: new Date(),
+    endDate: new Date(),
+    capacity: 2,
+  };
+  const [roomDetails, setRoomDetails] = useState<RoomDetails | null>(null);
   const [openDatePicker, setOpenDatePicker] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const [state, setState] = useState([
     {
-      startDate: new Date(),
-      endDate: new Date(),
+      startDate: new Date(startDate),
+      endDate: new Date(endDate),
       key: "selection",
     },
   ]);
+  const calculateTotalDays = (start: Date, end: Date) => {
+    const diffTime = Math.abs(end.getTime() - start.getTime());
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    return diffDays;
+  };
+  console.log(location.state);
+  useEffect(() => {
+    // Fetch room details using roomId
+    const fetchRoomDetails = async () => {
+      try {
+        console.log("Fetching room details for ID:", roomId); // Debug the roomId
+        const response = await axios.get(RoomsUrl.getRoomDetails(roomId!));
 
-  const createComment =async()=>{
-    await axios.post(CommentUrls.createComment, {
-      headers: { Authorization: `${localStorage.getItem("token")}` },
-      body: {
-        comment: "test",
-        roomId: "66f532536475e2d50da90cbd"
+        // Correctly access the room details in the response structure
+        if (response.data && response.data.data && response.data.data.room) {
+          setRoomDetails(response.data.data.room); // Set room details correctly
+          setLoading(false); // Turn off loading state
+        } else {
+          throw new Error("Room data is missing from the response");
+        }
+      } catch (error: any) {
+        console.error("Error fetching room details:", error);
+        setError("Error fetching room details. Please try again later.");
+        setLoading(false); // Turn off loading state
       }
-    }).then((comment)=>{
-      console.log(comment.data);
-    }).catch((err)=>{
-      console.log(err);
-    })
+    };
+
+    if (roomId) {
+      fetchRoomDetails();
+    }
+  }, [roomId]);
+
+  // Show loading spinner
+  if (loading) {
+    return (
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100vh",
+        }}
+      >
+        <CircularProgress />
+      </Box>
+    );
   }
+
+  // Show error message if something went wrong
+  if (error) {
+    return (
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100vh",
+        }}
+      >
+        <Typography variant="h6" color="error">
+          {error}
+        </Typography>
+      </Box>
+    );
+  }
+
+  // Ensure room details exist
+  if (!roomDetails) {
+    return (
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100vh",
+        }}
+      >
+        <Typography variant="h6" color="error">
+          No room details found. Please try again later.
+        </Typography>
+      </Box>
+    );
+  }
+
+  const createComment = async () => {
+    await axios
+      .post(CommentUrls.createComment, {
+        headers: { Authorization: `${localStorage.getItem("token")}` },
+        body: {
+          comment: "test",
+          roomId: "66f532536475e2d50da90cbd",
+        },
+      })
+      .then((comment) => {
+        console.log(comment.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  // Calculate the total cost
+  const totalDays = calculateTotalDays(state[0].startDate, state[0].endDate);
+  const totalCost = totalDays * roomDetails.price * capacity;
+  const discountAmount = (totalCost * roomDetails.discount) / 100;
+  const finalCost = totalCost - discountAmount;
 
   return (
     <>
       {/* Breadcrumbs */}
       <Stack direction="row" sx={{ padding: 5, alignItems: "center" }}>
-        <Box role="presentation" onClick={handleClick}>
+        <Box role="presentation">
           <Breadcrumbs aria-label="breadcrumb">
             <Link underline="hover" color="inherit" href="/">
               Home
@@ -74,9 +195,11 @@ function RoomDetail() {
         </Box>
         <Box sx={{ marginX: "auto", textAlign: "center" }}>
           <Typography variant="h4" sx={{ color: "#152C5B", fontWeight: 600 }}>
-            Village Angga
+            {roomDetails?.roomNumber}
           </Typography>
-          <Typography sx={{ color: "#B0B0B0" }}>Bogor, Indonesia</Typography>
+          <Typography sx={{ color: "#B0B0B0" }}>
+            Created by: {roomDetails?.createdBy.userName}
+          </Typography>
         </Box>
       </Stack>
       {/* Room Images */}
@@ -90,7 +213,7 @@ function RoomDetail() {
             }}
           >
             <img
-              src={RoomImg1}
+              src={roomDetails.images[0]} // Dynamically load first image
               alt="First Image"
               style={{ width: "100%", height: "100%" }}
             />
@@ -107,14 +230,14 @@ function RoomDetail() {
           >
             <Box sx={{ flex: 1 }}>
               <img
-                src={RoomImg2}
+                src={roomDetails?.images[1] ? roomDetails.images[1] : RoomImg2}
                 alt="Second Image"
                 style={{ width: "100%", height: "100%" }}
               />
             </Box>
             <Box sx={{ flex: 1 }}>
               <img
-                src={RoomImg3}
+                src={roomDetails?.images[2] || RoomImg3}
                 alt="Third Image"
                 style={{ width: "100%", height: "100%" }}
               />
@@ -126,7 +249,7 @@ function RoomDetail() {
       <Box sx={{ paddingY: 5, paddingX: 2 }}>
         <Grid container spacing={2}>
           {/* Aboute room */}
-          <Grid size={{xs: 12, md: 7}}>
+          <Grid size={{ xs: 12, md: 7 }}>
             <Box>
               <Typography
                 sx={{ lineHeight: 1.7 }}
@@ -230,117 +353,135 @@ function RoomDetail() {
             </Grid>
           </Grid>
           {/* Start booking */}
-          <Grid size={{xs: 12, md: 5}} padding={9} sx={{ border: "1px solid #ddd", borderRadius: 3, justifyContent: 'center', alignItems: 'center' }}>
+          <Grid
+            size={{ xs: 12, md: 5 }}
+            padding={9}
+            sx={{
+              border: "1px solid #ddd",
+              borderRadius: 3,
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
             <Stack spacing={2}>
-              <Typography variant="h4" color="#152C5B">Start Booking</Typography>
+              <Typography variant="h4" color="#152C5B">
+                Start Booking
+              </Typography>
               <Typography variant="h3">
-                <span style={{ color: "#1ABC9C" }}>$280</span> per night
+                <span style={{ color: "#1ABC9C" }}>{roomDetails.price}$</span>{" "}
+                per night
               </Typography>
               <Typography variant="h5" color="red">
-                Discount 20% Off
+                {roomDetails.discount}% discount applied
               </Typography>
             </Stack>
             {/* Pick Data */}
             <Stack sx={{ mt: 4 }}>
-                <Typography
+              <Typography
+                sx={{
+                  fontWeight: "bold",
+                  mb: 1,
+                  color: "#152c5b",
+                  fontSize: "18px",
+                }}
+              >
+                Pick a Date
+              </Typography>
+
+              <Stack
+                sx={{ cursor: "pointer" }}
+                direction={"row"}
+                onClick={() => setOpenDatePicker(true)}
+              >
+                <CalendarMonthIcon
                   sx={{
-                    fontWeight: "bold",
-                    mb: 1,
-                    color: "#152c5b",
-                    fontSize: "18px",
+                    height: "40px",
+                    width: "40px",
+                    justifyItems: "flex-start",
+                    background: "#152c5b",
+                    padding: "5px",
+                    color: "white",
+                    borderRadius: "5px",
                   }}
-                >
-                  Pick a Date
-                </Typography>
-
-                <Stack
-                  sx={{ cursor: "pointer" }}
-                  direction={"row"}
-                  onClick={() => setOpenDatePicker(true)}
-                >
-                  <CalendarMonthIcon
-                    sx={{
-                      height: "40px",
-                      width: "40px",
-                      justifyItems: "flex-start",
-                      background: "#152c5b",
-                      padding: "5px",
-                      color: "white",
-                      borderRadius: "5px",
-                    }}
-                  />
-                  <Box
-                    sx={{
-                      mb: 3,
-                      display: "flex",
-                      justifyContent: "center",
-                      width: "68%",
-                      background: "#f5f6f8",
-                      border: "none",
-                      color: "#152c5b",
-                      height: "40px",
-                      alignItems: "center",
-                    }}
-                  >
-                    <span>
-                      {format(state[0].startDate, "dd MMM")} -{" "}
-                      {format(state[0].endDate, "dd MMM")}
-                    </span>
-                  </Box>
-                </Stack>
-
-                <Typography color="#B0B0B0" marginY={2}>
-                  You will pay <span style={{color: "#152C5B"}}>$480 USD </span>
-                  per 2 <span style={{color: "#152C5B"}}>Person</span>
-                </Typography>
-
-                <Button
-                  variant="contained"
-                  size="large"
+                />
+                <Box
                   sx={{
-                    backgroundColor: "#3252DF",
-                    padding: "10px 30px",
-                    textTransform: "none",
-                    fontWeight: "bold",
-                    width: "300px",
-                  }}
-                  // onClick={handleBooking}
-                >
-                  Continue Book
-                </Button>
-                {/* Date Range Picker Modal */}
-                <Modal
-                  open={openDatePicker}
-                  onClose={() => setOpenDatePicker(false)}
-                  sx={{
+                    mb: 3,
                     display: "flex",
                     justifyContent: "center",
+                    width: "68%",
+                    background: "#f5f6f8",
+                    border: "none",
+                    color: "#152c5b",
+                    height: "40px",
                     alignItems: "center",
                   }}
                 >
-                  <Box sx={{ backgroundColor: "white", padding: 4 }}>
-                    <DateRange
-                      editableDateInputs={true}
-                      onChange={(item) =>
-                        setState([
-                          {
-                            startDate: item.selection.startDate || new Date(),
-                            endDate: item.selection.endDate || new Date(),
-                            key: item.selection.key || "selection", // Ensures the key is not undefined
-                          },
-                        ])
-                      }
-                      moveRangeOnFirstSelection={false}
-                      ranges={state}
-                    />
-                    <Button
-                      onClick={() => setOpenDatePicker(false)}
-                      sx={{ mt: 2 }}
-                    >
-                      Confirm
-                    </Button>
-                  </Box>
-                </Modal>
+                  <span>
+                    {format(state[0].startDate, "dd MMM")} -{" "}
+                    {format(state[0].endDate, "dd MMM")}
+                  </span>
+                </Box>
+              </Stack>
+
+              <Typography color="#B0B0B0" marginY={2}>
+                You will pay{" "}
+                <span style={{ color: "#152C5B" }}>
+                  ${finalCost} USD instead of ${totalCost}
+                </span>{" "}
+                for{" "}
+                <span style={{ color: "#152C5B" }}>{capacity} Person(s)</span>
+                for <span style={{ color: "#152C5B" }}>{totalDays}</span>{" "}
+                night(s)
+              </Typography>
+
+              <Button
+                variant="contained"
+                size="large"
+                sx={{
+                  backgroundColor: "#3252DF",
+                  padding: "10px 30px",
+                  textTransform: "none",
+                  fontWeight: "bold",
+                  width: "300px",
+                }}
+                // onClick={handleBooking}
+              >
+                Continue Book
+              </Button>
+              {/* Date Range Picker Modal */}
+              <Modal
+                open={openDatePicker}
+                onClose={() => setOpenDatePicker(false)}
+                sx={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <Box sx={{ backgroundColor: "white", padding: 4 }}>
+                  <DateRange
+                    editableDateInputs={true}
+                    onChange={(item) =>
+                      setState([
+                        {
+                          startDate: item.selection.startDate || new Date(),
+                          endDate: item.selection.endDate || new Date(),
+                          key: item.selection.key || "selection",
+                        },
+                      ])
+                    }
+                    moveRangeOnFirstSelection={false}
+                    ranges={state}
+                  />
+                  <Button
+                    onClick={() => setOpenDatePicker(false)}
+                    sx={{ mt: 2 }}
+                  >
+                    Confirm
+                  </Button>
+                </Box>
+              </Modal>
             </Stack>
           </Grid>
         </Grid>
@@ -369,14 +510,18 @@ function RoomDetail() {
               justifyContent: "space-between",
             }}
           >
-            <Typography variant="h6" color="#152C5B">Rate</Typography>
+            <Typography variant="h6" color="#152C5B">
+              Rate
+            </Typography>
             <Box sx={{ fontSize: "22px" }}>
               <FaStar color="#DFCB1D" />
               <FaStar color="#DFCB1D" />
               <FaStar color="#DFCB1D" />
               <FaStar color="#DFCB1D" />
               <FaStar color="#ddd" />
-              <Typography variant="h6" color="#152C5B">Message</Typography>
+              <Typography variant="h6" color="#152C5B">
+                Message
+              </Typography>
             </Box>
             <TextField id="message" multiline rows={4} />
             <Button
@@ -393,7 +538,9 @@ function RoomDetail() {
               alignContent: "space-between",
             }}
           >
-            <Typography variant="h5" color="#152C5B" sx={{fontWeight: 500}}>Add Your Comment</Typography>
+            <Typography variant="h5" color="#152C5B" sx={{ fontWeight: 500 }}>
+              Add Your Comment
+            </Typography>
             <TextField
               id="message"
               multiline
@@ -401,7 +548,7 @@ function RoomDetail() {
               sx={{ borderColor: "3252DF" }}
             />
             <Button
-            onClick={()=>createComment()}
+              onClick={() => createComment()}
               variant="contained"
               sx={{
                 backgroundColor: "#3252DF",

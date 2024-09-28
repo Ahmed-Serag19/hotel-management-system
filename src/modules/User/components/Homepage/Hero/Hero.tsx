@@ -36,8 +36,6 @@ export default function HeroSection() {
     capacity > 1 && setCapacity((prev) => prev - 1);
 
   const handleExplore = () => {
-    // Ensure we have valid start and end dates
-    console.log(capacity, state);
     const startDate = state[0].startDate
       ? format(state[0].startDate, "yyyy-MM-dd")
       : format(new Date(), "yyyy-MM-dd");
@@ -45,8 +43,8 @@ export default function HeroSection() {
       ? format(state[0].endDate, "yyyy-MM-dd")
       : format(new Date(), "yyyy-MM-dd");
 
-    // Pass the selected date range and capacity to the explore page
-    navigate("/explore", {
+    // Pass the selected date range and capacity to the explore page (AllRooms)
+    navigate("/dashboard/all-rooms", {
       state: {
         capacity,
         startDate,
