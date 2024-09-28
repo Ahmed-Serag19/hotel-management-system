@@ -34,6 +34,17 @@ export default function MasterLayout() {
       }}
     >
       {/* Sidebar */}
+      {/* <Box
+        component="nav"
+        sx={{
+          height: "100vh",
+          width: collapsed ? "102px" : "243px", // Collapsed or expanded width
+          transition: "width 0.3s",
+          overflowX: "hidden", // Prevent horizontal scroll when collapsed
+        }}
+      >
+        <Sidebarr onToggle={toggleSidebar} collapsed={collapsed} />
+      </Box> */}
       {loginData?.role === "admin" && (
         <Box
           component="nav"

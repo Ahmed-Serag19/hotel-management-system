@@ -32,12 +32,13 @@ const Navbar: React.FC = () => {
   };
 
   return (
-    <AppBar
+    <AppBar 
       position="static"
       sx={{
         backgroundColor: "#F8F9FB",
         boxShadow: "none",
         borderRadius: "15px",
+        mb:3,
       }}
     >
       <Toolbar>
