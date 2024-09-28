@@ -48,12 +48,14 @@ const Houses = () => {
               position: "relative",
               borderRadius: "16px",
               overflow: "hidden",
-              width: "350px",
-              height: "300px",
+              width: "24%",
+              height: "100%",
               boxShadow: "none",
               color: "#152c5b",
               cursor: "pointer",
               transition: "0.3s all ease-in-out",
+              display: "flex",
+              flexDirection: "column",
               ":hover": {
                 boxShadow: "0 8px 20px rgba(0,0,0,0.1)",
               },
@@ -81,7 +83,7 @@ const Houses = () => {
             {/* House Image */}
             <CardMedia
               component="img"
-              height="220"
+              height="80%"
               image={house.image}
               alt={house.houseName}
               sx={{ objectFit: "cover", borderRadius: "8px" }}
