@@ -66,3 +66,8 @@ export const CommentUrls = {
   getAllComments: `${Base_comment}`,
   createComment: `${Base_comment}`,
 };
+
+const Base_review = `${Base_Url}/portal/room-reviews`;
+export const ReviewsUrls = {
+  createReview: `${Base_review}`,
+};

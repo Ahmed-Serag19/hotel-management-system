@@ -11,11 +11,11 @@ import {
 } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
-import { DateRange } from "react-date-range"; // React Date Range
-import { format } from "date-fns"; // Date formatting
+import { DateRange } from "react-date-range";
+import { format } from "date-fns";
 import { useNavigate } from "react-router-dom";
-import "react-date-range/dist/styles.css"; // Main CSS file for react-date-range
-import "react-date-range/dist/theme/default.css"; // Theme CSS file for react-date-range
+import "react-date-range/dist/styles.css";
+import "react-date-range/dist/theme/default.css";
 import Banner from "../../../../../assets/images/banner.png";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 export default function HeroSection() {
