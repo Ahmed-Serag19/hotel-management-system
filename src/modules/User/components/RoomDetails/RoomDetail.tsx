@@ -5,11 +5,9 @@ import {
   Breadcrumbs,
   Button,
   CircularProgress,
-  Divider,
   Link,
   Modal,
   Stack,
-  TextField,
   Typography,
 } from "@mui/material";
 import { CommentUrls, RoomsUrl } from "../../../../constants/End_Points";
@@ -23,6 +21,7 @@ import { FaStar } from "react-icons/fa";
 import Grid from "@mui/material/Grid2";
 import RoomImg2 from "../../../../assets/images/room img.png";
 import RoomImg3 from "../../../../assets/images/room img2.png";
+<<<<<<< HEAD
 import axios from "axios";
 import { format } from "date-fns";
 import ic_ac from "../../../../assets/images/ic_ac.png";
@@ -33,6 +32,26 @@ import ic_kulkas from "../../../../assets/images/ic_kulkas.png";
 import ic_livingroom from "../../../../assets/images/ic_livingroom.png";
 import ic_tv from "../../../../assets/images/ic_tv.png";
 import ic_wifi from "../../../../assets/images/ic_wifi.png";
+=======
+import ic_bedroom from "../../../../assets/images/ic_bedroom.png";
+import ic_livingroom from "../../../../assets/images/ic_livingroom.png";
+import ic_bathroom from "../../../../assets/images/ic_bathroom.png";
+import ic_diningroom from "../../../../assets/images/ic_diningroom 1.png";
+import ic_wifi from "../../../../assets/images/ic_wifi.png";
+import ic_ac from "../../../../assets/images/ic_ac.png";
+import ic_kulkas from "../../../../assets/images/ic_kulkas.png";
+import ic_tv from "../../../../assets/images/ic_tv.png";
+import { useEffect, useState } from "react";
+import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
+import "react-date-range/dist/styles.css";
+import "react-date-range/dist/theme/default.css";
+import { DateRange } from "react-date-range";
+import { format } from "date-fns";
+import axios from "axios";
+import { RoomsUrl, ReviewsUrls } from "../../../../constants/End_Points";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
+import Reviews from "./Reviews";
+>>>>>>> 6b22344ed7723304e9d2f972ffbad69c20e73e0b
 
 type Facility = {
   _id: string;
@@ -60,6 +79,7 @@ function handleClick(event: React.MouseEvent<HTMLDivElement, MouseEvent>) {
 function RoomDetail() {
   const { roomId } = useParams();
   const location = useLocation();
+  const [openLoginModal, setOpenLoginModal] = useState(false);
   const { startDate, endDate, capacity } = location.state || {
     startDate: new Date(),
     endDate: new Date(),
@@ -69,6 +89,7 @@ function RoomDetail() {
   const [openDatePicker, setOpenDatePicker] = useState(false);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const navigate = useNavigate();
   const [state, setState] = useState([
     {
       startDate: new Date(startDate),
@@ -81,18 +102,24 @@ function RoomDetail() {
     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
     return diffDays;
   };
-  console.log(location.state);
+  const handleBooking = () => {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      setOpenLoginModal(true);
+    } else {
+      console.log("Proceed with booking...");
+    }
+  };
   useEffect(() => {
     // Fetch room details using roomId
     const fetchRoomDetails = async () => {
       try {
-        console.log("Fetching room details for ID:", roomId); // Debug the roomId
+        console.log("Fetching room details for ID:", roomId);
         const response = await axios.get(RoomsUrl.getRoomDetails(roomId!));
 
-        // Correctly access the room details in the response structure
         if (response.data && response.data.data && response.data.data.room) {
-          setRoomDetails(response.data.data.room); // Set room details correctly
-          setLoading(false); // Turn off loading state
+          setRoomDetails(response.data.data.room);
+          setLoading(false);
         } else {
           throw new Error("Room data is missing from the response");
         }
@@ -159,23 +186,6 @@ function RoomDetail() {
       </Box>
     );
   }
-
-  const createComment = async () => {
-    await axios
-      .post(CommentUrls.createComment, {
-        headers: { Authorization: `${localStorage.getItem("token")}` },
-        body: {
-          comment: "test",
-          roomId: "66f532536475e2d50da90cbd",
-        },
-      })
-      .then((comment) => {
-        console.log(comment.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
 
   // Calculate the total cost
   const totalDays = calculateTotalDays(state[0].startDate, state[0].endDate);
@@ -284,45 +294,45 @@ function RoomDetail() {
                 <img src={ic_bedroom} alt="ic_bedroom" />
                 <Typography color="#B0B0B0">
                   <span style={{ fontWeight: "bold", color: "#152C5B" }}>
-                    5
+                    {Math.ceil(Math.random() * 6)}
                   </span>{" "}
-                  bedroom
+                  beds
                 </Typography>
               </Grid>
               <Grid size={3}>
                 <img src={ic_livingroom} alt="ic_bedroom" />
                 <Typography color="#B0B0B0">
                   <span style={{ fontWeight: "bold", color: "#152C5B" }}>
-                    5
+                    2
                   </span>{" "}
-                  bedroom
+                  living
                 </Typography>
               </Grid>
               <Grid size={3}>
                 <img src={ic_bathroom} alt="ic_bedroom" />
                 <Typography color="#B0B0B0">
                   <span style={{ fontWeight: "bold", color: "#152C5B" }}>
-                    5
+                    1
                   </span>{" "}
-                  bedroom
+                  bathroom
                 </Typography>
               </Grid>
               <Grid size={3}>
                 <img src={ic_diningroom} alt="ic_bedroom" />
                 <Typography color="#B0B0B0">
                   <span style={{ fontWeight: "bold", color: "#152C5B" }}>
-                    5
+                    1
                   </span>{" "}
-                  bedroom
+                  dining
                 </Typography>
               </Grid>
               <Grid size={3}>
                 <img src={ic_wifi} alt="ic_bedroom" />
                 <Typography color="#B0B0B0">
                   <span style={{ fontWeight: "bold", color: "#152C5B" }}>
-                    5
-                  </span>{" "}
-                  bedroom
+                    10
+                  </span>
+                  mbp/s
                 </Typography>
               </Grid>
               <Grid size={3}>
@@ -331,25 +341,25 @@ function RoomDetail() {
                   <span style={{ fontWeight: "bold", color: "#152C5B" }}>
                     5
                   </span>{" "}
-                  bedroom
+                  Ac units
                 </Typography>
               </Grid>
               <Grid size={3}>
                 <img src={ic_kulkas} alt="ic_bedroom" />
                 <Typography color="#B0B0B0">
                   <span style={{ fontWeight: "bold", color: "#152C5B" }}>
-                    5
+                    2
                   </span>{" "}
-                  bedroom
+                  fridges
                 </Typography>
               </Grid>
               <Grid size={3}>
                 <img src={ic_tv} alt="ic_bedroom" />
                 <Typography color="#B0B0B0">
                   <span style={{ fontWeight: "bold", color: "#152C5B" }}>
-                    5
+                    4
                   </span>{" "}
-                  bedroom
+                  Televisions
                 </Typography>
               </Grid>
             </Grid>
@@ -448,7 +458,7 @@ function RoomDetail() {
                   fontWeight: "bold",
                   width: {xs:"200px",md:"300px"},
                 }}
-                // onClick={handleBooking}
+                onClick={handleBooking}
               >
                 Continue Book
               </Button>
@@ -489,81 +499,44 @@ function RoomDetail() {
           </Grid>
         </Grid>
       </Box>
-      {/* Add Rate or comment */}
-      <Box sx={{ paddingY: 5, paddingX: 2 }}>
-        <Stack
-          sx={{ border: "1px solid #ddd", borderRadius: 3, padding: 5 }}
-          direction={{ xs: "column", md: "row" }}
-          spacing={2}
-          divider={
-            <Divider
-              sx={{
-                backgroundColor: "rgb(32, 63, 199, 0.5)",
-                borderWidth: "2px",
-              }}
-              orientation="vertical"
-              flexItem
-            />
-          }
+      {/* Review and Comments */}
+      <Reviews />
+      {/* Popup Modal */}
+
+      <Modal
+        open={openLoginModal}
+        onClose={() => setOpenLoginModal(false)}
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <Box
+          sx={{
+            backgroundColor: "white",
+            padding: 4,
+            textAlign: "center",
+            borderRadius: "5px",
+          }}
         >
-          <Stack
-            spacing={2}
-            sx={{
-              width: { xs: "100%", md: "50%" },
-              justifyContent: "space-between",
+          <Typography variant="h6" color="#152C5B" sx={{ mb: 2 }}>
+            To book a room, you need to log in first.
+          </Typography>
+          <Button
+            variant="contained"
+            sx={{ backgroundColor: "green", marginX: 3 }}
+            onClick={() => {
+              navigate("/login");
             }}
           >
-            <Typography variant="h6" color="#152C5B">
-              Rate
-            </Typography>
-            <Box sx={{ fontSize: "22px" }}>
-              <FaStar color="#DFCB1D" />
-              <FaStar color="#DFCB1D" />
-              <FaStar color="#DFCB1D" />
-              <FaStar color="#DFCB1D" />
-              <FaStar color="#ddd" />
-              <Typography variant="h6" color="#152C5B">
-                Message
-              </Typography>
-            </Box>
-            <TextField id="message" multiline rows={4} />
-            <Button
-              variant="contained"
-              sx={{ backgroundColor: "#3252DF", width: "25%" }}
-            >
-              Rate
-            </Button>
-          </Stack>
-          <Stack
-            sx={{
-              width: { xs: "100%", md: "50%" },
-              justifyContent: "space-between",
-              alignContent: "space-between",
-            }}
-          >
-            <Typography variant="h5" color="#152C5B" sx={{ fontWeight: 500 }}>
-              Add Your Comment
-            </Typography>
-            <TextField
-              id="message"
-              multiline
-              rows={4}
-              sx={{ borderColor: "3252DF" }}
-            />
-            <Button
-              onClick={() => createComment()}
-              variant="contained"
-              sx={{
-                backgroundColor: "#3252DF",
-                width: "25%",
-                alignSelf: "end",
-              }}
-            >
-              Send
-            </Button>
-          </Stack>
-        </Stack>
-      </Box>
+            Log In
+          </Button>
+          <Button variant="outlined" onClick={() => setOpenLoginModal(false)}>
+            Continue Browsing
+          </Button>
+        </Box>
+      </Modal>
     </>
   );
 }

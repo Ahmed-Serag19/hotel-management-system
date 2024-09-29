@@ -22,6 +22,7 @@ import { User_URls } from "../../../../constants/End_Points";
 import { AuthContext } from "../../../../context/authcontext";
 import { toast } from "react-toastify";
 import { EmailValidation } from "../../../../constants/Validations";
+import { jwtDecode } from "jwt-decode";
 
 type DataLogin = {
   email: string;
@@ -52,12 +53,24 @@ export default function Login() {
   const onSubmit = async (data: DataLogin) => {
     try {
       let response = await axios.post(User_URls.login, data);
-      localStorage.setItem("token", response.data.data.token);
+
+      const token = response.data.data.token;
+      localStorage.setItem("token", token);
+
+      const decodedToken: any = jwtDecode(token);
+
+      const role = decodedToken.role;
+
       saveLoginData();
       toast.success(response.data.message || "Login Successfully");
-      navigate("/dashboard");
+
+      if (role === "admin") {
+        navigate("/dashboard/home");
+      } else {
+        navigate("/dashboard/homepage");
+      }
     } catch (error: any) {
-      toast.error(error.response.data.message || "An error occurred");
+      toast.error(error.response?.data?.message || "An error occurred");
     }
   };
 

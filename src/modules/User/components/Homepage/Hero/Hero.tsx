@@ -13,6 +13,15 @@ import {
 } from "@mui/material";
 
 import AddIcon from "@mui/icons-material/Add";
+<<<<<<< HEAD
+=======
+import RemoveIcon from "@mui/icons-material/Remove";
+import { DateRange } from "react-date-range";
+import { format } from "date-fns";
+import { useNavigate } from "react-router-dom";
+import "react-date-range/dist/styles.css";
+import "react-date-range/dist/theme/default.css";
+>>>>>>> 6b22344ed7723304e9d2f972ffbad69c20e73e0b
 import Banner from "../../../../../assets/images/banner.png";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import { DateRange } from "react-date-range"; // React Date Range

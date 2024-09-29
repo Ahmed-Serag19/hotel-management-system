@@ -24,12 +24,11 @@ import RoomDetail from "./modules/User/components/RoomDetails/RoomDetail";
 import Rooms from "./modules/Admin/components/Rooms/Rooms";
 import Users from "./modules/Admin/components/Users/Users";
 import { useContext } from "react";
-
-//import ProtectedRoute from "./modules/Shared/components/ProtectedRoute/ProtectedRoute";
+import ProtectedRoute from "./modules/Shared/components/ProtectedRoute/ProtectedRoute";
 
 function App() {
   const { loginData }: any = useContext(AuthContext);
-  console.log(loginData);
+
   const routes = createBrowserRouter([
     {
       path: "",
@@ -45,32 +44,94 @@ function App() {
     },
     {
       path: "dashboard",
-      element: (
-        //  <ProtectedRoute>
-        <MasterLayout />
-        //  </ProtectedRoute>
-      ),
+      element: <MasterLayout />,
       errorElement: <NotFound />,
       children: [
-        loginData?.role === "admin"
-          ? { index: true, element: <Home /> }
-          : { index: true, element: <Homepage /> },
-        { path: "home", element: <Home /> },
+        // Public Routes: Homepage, AllRooms, RoomDetails accessible to all, including guests
         { path: "homepage", element: <Homepage /> },
-        { path: "facilities", element: <Facilities /> },
-        { path: "Ads-list", element: <AdsList /> },
-        { path: "List-booking", element: <ListBooking /> },
-        { path: "users", element: <Users /> },
-        { path: "rooms", element: <Rooms /> },
-        { path: "add-room", element: <AddRoom /> },
-        { path: "change-password", element: <ChangePassword /> },
         { path: "all-rooms", element: <AllRooms /> },
-        { path: "favorite-room", element: <FavoriteRooms /> },
         { path: "room-details/:roomId", element: <RoomDetail /> },
         { path: "payment", element: <Payment/> },
+
+        // Protected Routes: Only accessible to admins
+        {
+          path: "home",
+          element: (
+            <ProtectedRoute allowedRoles={["admin"]}>
+              <Home />
+            </ProtectedRoute>
+          ),
+        },
+        {
+          path: "facilities",
+          element: (
+            <ProtectedRoute allowedRoles={["admin"]}>
+              <Facilities />
+            </ProtectedRoute>
+          ),
+        },
+        {
+          path: "Ads-list",
+          element: (
+            <ProtectedRoute allowedRoles={["admin"]}>
+              <AdsList />
+            </ProtectedRoute>
+          ),
+        },
+        {
+          path: "List-booking",
+          element: (
+            <ProtectedRoute allowedRoles={["admin"]}>
+              <ListBooking />
+            </ProtectedRoute>
+          ),
+        },
+        {
+          path: "users",
+          element: (
+            <ProtectedRoute allowedRoles={["admin"]}>
+              <Users />
+            </ProtectedRoute>
+          ),
+        },
+        {
+          path: "rooms",
+          element: (
+            <ProtectedRoute allowedRoles={["admin"]}>
+              <Rooms />
+            </ProtectedRoute>
+          ),
+        },
+        {
+          path: "add-room",
+          element: (
+            <ProtectedRoute allowedRoles={["admin"]}>
+              <AddRoom />
+            </ProtectedRoute>
+          ),
+        },
+
+        // User-specific routes: Only accessible to logged-in users with role 'user' or 'admin'
+        {
+          path: "favorite-room",
+          element: (
+            <ProtectedRoute allowedRoles={["user", "admin"]}>
+              <FavoriteRooms />
+            </ProtectedRoute>
+          ),
+        },
+        {
+          path: "change-password",
+          element: (
+            <ProtectedRoute allowedRoles={["user", "admin"]}>
+              <ChangePassword />
+            </ProtectedRoute>
+          ),
+        },
       ],
     },
   ]);
+
   return (
     <>
       <RouterProvider router={routes} />
