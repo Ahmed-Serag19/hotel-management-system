@@ -1,4 +1,4 @@
-import { Box, Card, CardMedia, Typography, Stack } from "@mui/material";
+import { Box, Card, CardMedia, Typography, Grid2 } from "@mui/material";
 import Pic1 from "../../../../../assets/images/pic.png";
 import Pic2 from "../../../../../assets/images/pic (1).png";
 import Pic3 from "../../../../../assets/images/pic (2).png";
@@ -39,8 +39,22 @@ const Houses = () => {
         Houses with beauty backyard
       </Typography>
 
-      {/* Stack for horizontal row of cards */}
-      <Stack direction="row" spacing={3}>
+      {/* Grid for responsive layout of cards */}
+      <Grid2
+        container
+        spacing={3}
+        sx={{
+          display: "grid",
+          gridTemplateColumns: {
+            xs: "repeat(1, 1fr)", // Single column on extra small screens
+            sm: "repeat(2, 1fr)", // Two columns on small screens
+            md: "repeat(3, 1fr)", // Three columns on medium screens
+            lg: "repeat(4, 1fr)", // Four columns on large screens
+            paddingTop: "50px",
+          },
+          gap: "20px",
+        }}
+      >
         {dummyHouses.map((house) => (
           <Card
             key={house.id}
@@ -48,20 +62,21 @@ const Houses = () => {
               position: "relative",
               borderRadius: "16px",
               overflow: "hidden",
-              width: "24%",
+              width: "100%",
               height: "100%",
               boxShadow: "none",
               color: "#152c5b",
               cursor: "pointer",
               transition: "0.3s all ease-in-out",
               display: "flex",
+
               flexDirection: "column",
               ":hover": {
                 boxShadow: "0 8px 20px rgba(0,0,0,0.1)",
               },
             }}
           >
-            {/* If there's a label, display it at the top-left */}
+            {/* If there's a label, display it at the top-right */}
             {house.label && (
               <Box
                 sx={{
@@ -83,7 +98,7 @@ const Houses = () => {
             {/* House Image */}
             <CardMedia
               component="img"
-              height="80%"
+              height="200px"
               image={house.image}
               alt={house.houseName}
               sx={{ objectFit: "cover", borderRadius: "8px" }}
@@ -100,7 +115,7 @@ const Houses = () => {
             </Box>
           </Card>
         ))}
-      </Stack>
+      </Grid2>
     </Box>
   );
 };

@@ -1,4 +1,4 @@
-import { Box, Card, CardMedia, Typography, Stack } from "@mui/material";
+import { Box, Card, CardMedia, Typography } from "@mui/material";
 import Room1 from "../../../../../assets/images/img_Mg==.jpg";
 import Room2 from "../../../../../assets/images/room-2.jpg";
 import Room3 from "../../../../../assets/images/room-3.jpg";
@@ -53,9 +53,13 @@ const PopularAds = () => {
       <Box
         sx={{
           display: "grid",
-          gridTemplateColumns: "repeat(3, 1fr)",
-          gridTemplateRows: "repeat(2, 1fr)",
+          gridTemplateColumns: {
+            xs: "repeat(1, 1fr)", // Full width on small screens
+            sm: "repeat(2, 1fr)", // 2 columns on tablet
+            md: "repeat(3, 1fr)", // 3 columns on larger screens
+          },
           gap: "20px",
+          gridAutoRows: "minmax(100px, auto)", // Automatically determine row heights
         }}
       >
         {dummyAds.map((ad) => (
@@ -66,9 +70,11 @@ const PopularAds = () => {
               borderRadius: "16px",
               overflow: "hidden",
               width: "100%",
-              height: ad.id === "1" ? "100%" : "100%",
-              gridColumn: ad.id === "1" ? "span 1" : "span 1",
-              gridRow: ad.id === "1" ? "span 2" : "span 1",
+              height: "100%",
+              gridColumn: "span 1",
+              gridRow: {
+                md: ad.id === "1" ? "span 2" : "span 1", // First card spans 2 rows
+              },
               boxShadow: "0 8px 20px rgba(0,0,0,0.1)",
               cursor: "pointer",
             }}
@@ -93,10 +99,16 @@ const PopularAds = () => {
             {/* Room Image */}
             <CardMedia
               component="img"
-              height={ad.id === "1" ? "620" : "300"}
               image={ad.image}
               alt={ad.roomNumber}
-              sx={{ objectFit: "cover" }}
+              sx={{
+                objectFit: "cover",
+                height: {
+                  xs: "250px", // Smaller height for small screens
+                  sm: "300px", // Medium height for tablet
+                  md: ad.id === "1" ? "620px" : "300px", // Featured ad gets larger height on larger screens
+                },
+              }}
             />
 
             {/* Room Info (Overlayed on Image) */}

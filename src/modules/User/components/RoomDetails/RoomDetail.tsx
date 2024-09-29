@@ -21,18 +21,6 @@ import { FaStar } from "react-icons/fa";
 import Grid from "@mui/material/Grid2";
 import RoomImg2 from "../../../../assets/images/room img.png";
 import RoomImg3 from "../../../../assets/images/room img2.png";
-<<<<<<< HEAD
-import axios from "axios";
-import { format } from "date-fns";
-import ic_ac from "../../../../assets/images/ic_ac.png";
-import ic_bathroom from "../../../../assets/images/ic_bathroom.png";
-import ic_bedroom from "../../../../assets/images/ic_bedroom.png";
-import ic_diningroom from "../../../../assets/images/ic_diningroom 1.png";
-import ic_kulkas from "../../../../assets/images/ic_kulkas.png";
-import ic_livingroom from "../../../../assets/images/ic_livingroom.png";
-import ic_tv from "../../../../assets/images/ic_tv.png";
-import ic_wifi from "../../../../assets/images/ic_wifi.png";
-=======
 import ic_bedroom from "../../../../assets/images/ic_bedroom.png";
 import ic_livingroom from "../../../../assets/images/ic_livingroom.png";
 import ic_bathroom from "../../../../assets/images/ic_bathroom.png";
@@ -48,10 +36,11 @@ import "react-date-range/dist/theme/default.css";
 import { DateRange } from "react-date-range";
 import { format } from "date-fns";
 import axios from "axios";
-import { RoomsUrl, ReviewsUrls } from "../../../../constants/End_Points";
+import { RoomsUrl, UserBookingsUrl } from "../../../../constants/End_Points";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
-import Reviews from "./Reviews";
->>>>>>> 6b22344ed7723304e9d2f972ffbad69c20e73e0b
+import ReviewsSection from "./ReviewsSection";
+import { toast } from "react-toastify";
+
 
 type Facility = {
   _id: string;
@@ -97,19 +86,58 @@ function RoomDetail() {
       key: "selection",
     },
   ]);
+
   const calculateTotalDays = (start: Date, end: Date) => {
     const diffTime = Math.abs(end.getTime() - start.getTime());
     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
     return diffDays;
   };
-  const handleBooking = () => {
+
+  const handleBooking = async () => {
     const token = localStorage.getItem("token");
     if (!token) {
       setOpenLoginModal(true);
     } else {
-      console.log("Proceed with booking...");
+      try {
+        const totalDays = calculateTotalDays(
+          state[0].startDate,
+          state[0].endDate
+        );
+        const totalCost = totalDays * (roomDetails?.price ?? 0) * capacity;
+        const discountAmount = (totalCost * (roomDetails?.discount ?? 0)) / 100;
+        const finalCost = totalCost - discountAmount;
+
+        // Prepare the booking data
+        const bookingData = {
+          startDate: state[0].startDate.toISOString().split("T")[0], // format as YYYY-MM-DD
+          endDate: state[0].endDate.toISOString().split("T")[0],
+          room: roomId,
+          totalPrice: finalCost,
+        };
+
+        // Make the POST request to create a booking
+        const response = await axios.post(
+          UserBookingsUrl.createBooking,
+          bookingData,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+
+        // Handle success response
+        toast.success("Booking successful!");
+        console.log(response.data); // You can log or redirect after booking
+        navigate("/dashboard/bookings"); // Redirect user after booking
+      } catch (error) {
+        // Handle error during booking
+        console.error("Error creating booking:", error);
+        toast.error("Failed to create booking. Please try again.");
+      }
     }
   };
+
   useEffect(() => {
     // Fetch room details using roomId
     const fetchRoomDetails = async () => {
@@ -500,7 +528,7 @@ function RoomDetail() {
         </Grid>
       </Box>
       {/* Review and Comments */}
-      <Reviews />
+      <ReviewsSection />
       {/* Popup Modal */}
 
       <Modal

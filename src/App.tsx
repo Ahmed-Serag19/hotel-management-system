@@ -113,7 +113,7 @@ function App() {
 
         // User-specific routes: Only accessible to logged-in users with role 'user' or 'admin'
         {
-          path: "favorite-room",
+          path: "favorites",
           element: (
             <ProtectedRoute allowedRoles={["user", "admin"]}>
               <FavoriteRooms />

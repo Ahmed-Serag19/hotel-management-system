@@ -1,4 +1,4 @@
-import { Box, Card, CardMedia, Typography, Stack } from "@mui/material";
+import { Box, Card, CardMedia, Typography, Grid2 } from "@mui/material";
 import Pic4 from "../../../../../assets/images/pic.png";
 import Pic5 from "../../../../../assets/images/pic (1).png";
 import Pic6 from "../../../../../assets/images/pic (2).png";
@@ -37,11 +37,24 @@ const LivingRooms = () => {
   return (
     <Box sx={{ padding: "20px", paddingTop: "100px", color: "#152c5b" }}>
       <Typography variant="h5" sx={{ paddingBottom: "20px" }}>
-        Hotels with large living room
+        Hotels with large living rooms
       </Typography>
 
-      {/* Stack for horizontal row of cards */}
-      <Stack direction="row" spacing={3}>
+      {/* Grid2 for responsive layout of cards */}
+      <Grid2
+        container
+        spacing={3}
+        sx={{
+          display: "grid",
+          gridTemplateColumns: {
+            xs: "repeat(1, 1fr)", // Single column on small screens
+            sm: "repeat(2, 1fr)", // Two columns on small screens
+            md: "repeat(3, 1fr)", // Three columns on medium screens
+            lg: "repeat(4, 1fr)", // Four columns on large screens
+          },
+          gap: "20px",
+        }}
+      >
         {dummyLivingRooms.map((room) => (
           <Card
             key={room.id}
@@ -49,12 +62,14 @@ const LivingRooms = () => {
               position: "relative",
               borderRadius: "16px",
               overflow: "hidden",
-              width: "350px",
-              height: "300px",
+              width: "100%",
+              height: "100%",
               boxShadow: "none",
               color: "#152c5b",
               cursor: "pointer",
               transition: "0.3s all ease-in-out",
+              display: "flex",
+              flexDirection: "column",
               ":hover": {
                 boxShadow: "0 8px 20px rgba(0,0,0,0.1)",
               },
@@ -99,7 +114,7 @@ const LivingRooms = () => {
             </Box>
           </Card>
         ))}
-      </Stack>
+      </Grid2>
     </Box>
   );
 };
