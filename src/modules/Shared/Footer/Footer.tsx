@@ -1,25 +1,31 @@
+import { Box, Container, Grid2, Link, Typography } from "@mui/material";
+
 import React from "react";
-import { Box, Typography, Link, Grid2 } from "@mui/material";
 
 const Footer: React.FC = () => {
   return (
+
+
     <Box
       sx={{
-        backgroundColor: "#f5f5f5",
+     ps:2,
+      mt:2,
         py: 4,
-        px: 2,
+       
         borderTop: "1px solid #e2e2e0",
       }}
     >
+          <Container >
+      
+  
       {/* Container grid */}
       <Grid2
         container
-        columns={12}
-        spacing={7}
         sx={{ display: "flex", justifyContent: "center" }}
       >
-        {/* Brand Section */}
-        <Box sx={{ width: "15%" }}>
+
+      <Grid2 size={{xs:12, sm:6,md:3}} >
+      <Box >
           <Typography
             variant="h5"
             sx={{ color: "#4252df", fontWeight: "bold", mb: 2 }}
@@ -36,62 +42,54 @@ const Footer: React.FC = () => {
             We kaboom your beauty holiday instantly and memorable.
           </Typography>
         </Box>
+        </Grid2>  
+        {/* Brand Section */}
+  
 
-        {/* For Beginners */}
-        <Box sx={{ width: "15%" }}>
+      <Grid2 size={{xs:12, sm:6,md:3}}>    <Box sx={{fontFamily:"Poppins"}}>
           <Typography
             variant="h6"
-            sx={{ color: "#152c5b", fontWeight: "bold", mb: 2 }}
+            sx={{ color: "#152c5b", fontWeight: 500, mb: 2 ,fontFamily:"Poppins",}}
           >
             For Beginners
           </Typography>
-          <Typography variant="body2">
-            <Link href="#" underline="hover" sx={{ color: "#152c5b" }}>
-              New Account
-            </Link>
+          <Typography variant="body2"  sx={{ color: "#9e9e9e" }}>
+          New Account
+          
           </Typography>
-          <Typography variant="body2">
-            <Link href="#" underline="hover" sx={{ color: "#152c5b" }}>
-              Start Booking a Room
-            </Link>
+          <Typography variant="body2"  sx={{ color: "#9e9e9e" }}>
+          Start Booking a Room
+     
           </Typography>
-          <Typography variant="body2">
-            <Link href="#" underline="hover" sx={{ color: "#152c5b" }}>
-              Use Payments
-            </Link>
+          <Typography variant="body2"  sx={{ color: "#9e9e9e" }}>
+          Use Payments
           </Typography>
-        </Box>
-
-        {/* Explore Us */}
-        <Box sx={{ width: "15%" }}>
-          <Typography
+        </Box></Grid2> 
+        {/* For Beginners */}
+    
+        <Grid2 size={{xs:12, sm:6,md:3}}>        <Box >
+          <Typography 
             variant="h6"
-            sx={{ color: "#152c5b", fontWeight: "bold", mb: 2 }}
+            sx={{ color: "#152c5b", fontWeight: 500, mb: 2 ,fontFamily:"Poppins"}}
           >
             Explore Us
           </Typography>
-          <Typography variant="body2">
-            <Link href="#" underline="hover" sx={{ color: "#152c5b" }}>
-              Our Careers
-            </Link>
+          <Typography variant="body2" sx={{ color: "#9e9e9e" }}>
+          Our Careers
           </Typography>
-          <Typography variant="body2">
-            <Link href="#" underline="hover" sx={{ color: "#152c5b" }}>
-              Privacy
-            </Link>
+          <Typography variant="body2" sx={{ color: "#9e9e9e" }}>
+          Privacy
           </Typography>
-          <Typography variant="body2">
-            <Link href="#" underline="hover" sx={{ color: "#152c5b" }}>
-              Terms & Conditions
-            </Link>
+          <Typography variant="body2" sx={{ color: "#9e9e9e" }}>
+          Terms & Conditions
           </Typography>
-        </Box>
+        </Box></Grid2> 
+        {/* Explore Us */}
 
-        {/* Connect Us */}
-        <Box sx={{ width: "15%" }}>
+        <Grid2 size={{xs:12, sm:6,md:3}}>  <Box >
           <Typography
             variant="h6"
-            sx={{ color: "#152c5b", fontWeight: "bold", mb: 2 }}
+            sx={{ color: "#152c5b", fontWeight: 500, mb: 2,fontFamily:"Poppins"}}
           >
             Contact Us
           </Typography>
@@ -104,7 +102,9 @@ const Footer: React.FC = () => {
           <Typography variant="body2" sx={{ color: "#9e9e9e" }}>
             Staycation, Kemang, Jakarta
           </Typography>
-        </Box>
+        </Box></Grid2> 
+        {/* Connect Us */}
+      
       </Grid2>
 
       {/* Copyright */}
@@ -113,6 +113,7 @@ const Footer: React.FC = () => {
           Copyright © 2024 - All rights reserved - Staycation.
         </Typography>
       </Box>
+      </Container>
     </Box>
   );
 };

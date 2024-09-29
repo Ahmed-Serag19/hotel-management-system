@@ -1,12 +1,8 @@
-import { useContext, useEffect, useState } from "react";
 import {
   Base_Img_Url,
-  favoriteUrl,
   RoomsUrl,
+  favoriteUrl,
 } from "../../../../constants/End_Points";
-import axios from "axios";
-import VisibilityIcon from "@mui/icons-material/Visibility";
-import FavoriteIcon from "@mui/icons-material/Favorite";
 import {
   Box,
   Container,
@@ -18,12 +14,18 @@ import {
   Tooltip,
   Typography,
 } from "@mui/material";
-import { toast } from "react-toastify";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useContext, useEffect, useState } from "react";
+
 import { AuthContext } from "../../../../context/authcontext";
-import NoData from "../../../Shared/components/NoData/NoData";
+import FavoriteIcon from "@mui/icons-material/Favorite";
 import HeaderUserRoom from "../../../Shared/components/HeaderUserRoom/HeaderUserRoom";
+import NoData from "../../../Shared/components/NoData/NoData";
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import axios from "axios";
 import { format } from "date-fns";
+import { toast } from "react-toastify";
+
 export default function AllRooms() {
   let { loginData }: any = useContext(AuthContext);
   let navigate = useNavigate();
