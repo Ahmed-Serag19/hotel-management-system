@@ -1,10 +1,10 @@
-import { Box, Card, CardMedia, Typography, Stack } from "@mui/material";
+import { Box, Card, CardMedia, Typography, Grid2 } from "@mui/material";
 import Pic8 from "../../../../../assets/images/pic8.png";
 import Pic9 from "../../../../../assets/images/pic9.png";
 import Pic10 from "../../../../../assets/images/pic10.png";
 import Pic11 from "../../../../../assets/images/pic11.png";
 
-// Static dummy data with discount labels for the first three H
+// Static dummy data with discount labels for the first three Ads
 const dummyAds = [
   {
     id: "1",
@@ -42,8 +42,21 @@ const HomeAds = () => {
         Ads
       </Typography>
 
-      {/* Stack for horizontal row of cards */}
-      <Stack direction="row" spacing={3}>
+      {/* Grid2 for responsive layout of cards */}
+      <Grid2
+        container
+        spacing={3}
+        sx={{
+          display: "grid",
+          gridTemplateColumns: {
+            xs: "repeat(1, 1fr)", // Single column on small screens
+            sm: "repeat(2, 1fr)", // Two columns on small screens
+            md: "repeat(3, 1fr)", // Three columns on medium screens
+            lg: "repeat(4, 1fr)", // Four columns on large screens
+          },
+          gap: "20px",
+        }}
+      >
         {dummyAds.map((ad) => (
           <Card
             key={ad.id}
@@ -51,12 +64,14 @@ const HomeAds = () => {
               position: "relative",
               borderRadius: "16px",
               overflow: "hidden",
-              width: "350px", // Fixed width for uniformity
-              height: "300px", // Fixed height for all images
+              width: "100%", // Responsive width
+              height: "100%", // Responsive height
               boxShadow: "none",
               color: "#152c5b",
               cursor: "pointer",
               transition: "0.3s all ease-in-out",
+              display: "flex",
+              flexDirection: "column",
               ":hover": {
                 boxShadow: "0 8px 20px rgba(0,0,0,0.1)",
               },
@@ -103,7 +118,7 @@ const HomeAds = () => {
             </Box>
           </Card>
         ))}
-      </Stack>
+      </Grid2>
     </Box>
   );
 };

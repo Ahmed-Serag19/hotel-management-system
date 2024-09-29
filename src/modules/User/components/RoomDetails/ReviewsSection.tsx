@@ -12,12 +12,10 @@ import { FaStar } from "react-icons/fa";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 
-// Define the type for URL parameters (in this case, roomId)
 interface Params {
   roomId: string;
 }
 
-// Define the type for the comment response (adjust fields as necessary)
 interface CommentResponse {
   data: {
     comment: string;
@@ -25,7 +23,7 @@ interface CommentResponse {
   };
 }
 
-const Reviews: React.FC = () => {
+const ReviewsSection: React.FC = () => {
   const { roomId } = useParams<Record<string, string>>(); // Use Record type
   const [loggedIn, setLoggedIn] = useState<boolean>(false);
   const [token, setToken] = useState<string | null>(null);
@@ -118,7 +116,17 @@ const Reviews: React.FC = () => {
   };
 
   return (
-    <Box sx={{ paddingY: 5, paddingX: 2 }}>
+    <Box
+      sx={{
+        paddingY: 5,
+        paddingX: 2,
+        display: "flex",
+        flexDirection: { md: "row", sm: "column" },
+        justifyContent: "center",
+        alignItems: "center",
+        gap: "50px",
+      }}
+    >
       {loggedIn ? (
         <>
           {/* Review Section */}
@@ -128,6 +136,8 @@ const Reviews: React.FC = () => {
               borderRadius: 3,
               padding: 5,
               mb: 5,
+              flex: 1,
+              width: { sm: "100%" },
             }}
             spacing={2}
           >
@@ -171,7 +181,13 @@ const Reviews: React.FC = () => {
 
           {/* Comment Section */}
           <Stack
-            sx={{ border: "1px solid #ddd", borderRadius: 3, padding: 5 }}
+            sx={{
+              border: "1px solid #ddd",
+              borderRadius: 3,
+              padding: 5,
+              flex: 1,
+              width: { sm: "100%" },
+            }}
             direction={{ xs: "column", md: "row" }}
             spacing={2}
             divider={
@@ -188,7 +204,7 @@ const Reviews: React.FC = () => {
             <Stack
               spacing={2}
               sx={{
-                width: { xs: "100%", md: "50%" },
+                width: { xs: "100%", md: "100%" },
                 justifyContent: "space-between",
               }}
             >
@@ -230,4 +246,4 @@ const Reviews: React.FC = () => {
   );
 };
 
-export default Reviews;
+export default ReviewsSection;
