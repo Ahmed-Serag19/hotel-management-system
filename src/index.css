@@ -75,7 +75,7 @@ body {
 
 .nav-button {
   background-color: #3252df;
-  padding: 12px 30px;
+  padding: 8px 15px;
   color: white !important;
   border-radius: 7px;
   transition: 0.3s all;
@@ -83,3 +83,45 @@ body {
 .nav-button:hover {
   background-color: #4c6af0;
 }
+
+.card{
+    padding: 20PX;
+    background-color: #fff;
+    border-radius: 8px;
+  
+}
+.read-the-docs{
+    color:#888;
+}
+.form-wrapper{
+  
+    display: flex;
+    flex-direction: column;
+    background-color: #f1f5f9;
+    width: 500px;
+    margin: auto;;
+    padding-block: 32px;
+    padding-inline: 16px;
+    border-radius: 12px;
+    gap:24px
+  
+}
+.submit-btn{
+    text-transform: uppercase;
+    background-color: #3252DF;
+    border: none;
+    color: white;
+    font-weight: 700;
+    padding-block: 15px;
+    border-radius: 5px;
+}
+
+.submit-btn:hover{
+  background-color:#152C5B;
+}
+.PaymentIcon{
+transform: translateY(7px) !important;
+margin-left: 5px;
+
+}
+

@@ -1,3 +1,6 @@
+import "react-date-range/dist/styles.css";
+import "react-date-range/dist/theme/default.css";
+
 import {
   Breadcrumbs,
   Button,
@@ -7,10 +10,29 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
+import { CommentUrls, RoomsUrl } from "../../../../constants/End_Points";
+import { useEffect, useState } from "react";
+import { useLocation, useParams } from "react-router-dom";
+
 import Box from "@mui/material/Box";
+import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
+import { DateRange } from "react-date-range";
+import { FaStar } from "react-icons/fa";
 import Grid from "@mui/material/Grid2";
 import RoomImg2 from "../../../../assets/images/room img.png";
 import RoomImg3 from "../../../../assets/images/room img2.png";
+<<<<<<< HEAD
+import axios from "axios";
+import { format } from "date-fns";
+import ic_ac from "../../../../assets/images/ic_ac.png";
+import ic_bathroom from "../../../../assets/images/ic_bathroom.png";
+import ic_bedroom from "../../../../assets/images/ic_bedroom.png";
+import ic_diningroom from "../../../../assets/images/ic_diningroom 1.png";
+import ic_kulkas from "../../../../assets/images/ic_kulkas.png";
+import ic_livingroom from "../../../../assets/images/ic_livingroom.png";
+import ic_tv from "../../../../assets/images/ic_tv.png";
+import ic_wifi from "../../../../assets/images/ic_wifi.png";
+=======
 import ic_bedroom from "../../../../assets/images/ic_bedroom.png";
 import ic_livingroom from "../../../../assets/images/ic_livingroom.png";
 import ic_bathroom from "../../../../assets/images/ic_bathroom.png";
@@ -29,6 +51,7 @@ import axios from "axios";
 import { RoomsUrl, ReviewsUrls } from "../../../../constants/End_Points";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import Reviews from "./Reviews";
+>>>>>>> 6b22344ed7723304e9d2f972ffbad69c20e73e0b
 
 type Facility = {
   _id: string;
@@ -417,9 +440,10 @@ function RoomDetail() {
                 You will pay{" "}
                 <span style={{ color: "#152C5B" }}>
                   ${finalCost} USD instead of ${totalCost}
-                </span>{" "}
+                </span>{" "}   <br/> 
                 for{" "}
-                <span style={{ color: "#152C5B" }}>{capacity} Person(s)</span>
+             
+                <span style={{ color: "#152C5B" ,marginRight:1}}>{capacity} Person(s)</span>
                 for <span style={{ color: "#152C5B" }}>{totalDays}</span>{" "}
                 night(s)
               </Typography>
@@ -429,10 +453,10 @@ function RoomDetail() {
                 size="large"
                 sx={{
                   backgroundColor: "#3252DF",
-                  padding: "10px 30px",
+                  padding: {xs:"10px 20px",md:"10px 30px"},
                   textTransform: "none",
                   fontWeight: "bold",
-                  width: "300px",
+                  width: {xs:"200px",md:"300px"},
                 }}
                 onClick={handleBooking}
               >

@@ -1,122 +1,290 @@
+import {
+  AppBar,
+  Box,
+  MenuItem,
+  Select,
+  Toolbar,
+  Typography,
+} from "@mui/material";
+import { Link,useNavigate } from "react-router-dom";
 import React, { useContext } from "react";
-import { AppBar, Toolbar, Typography, Box, Button } from "@mui/material";
-import { NavLink, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../../../context/authcontext";
+import CssBaseline from "@mui/material/CssBaseline";
+import Divider from "@mui/material/Divider";
+import Drawer from "@mui/material/Drawer";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import IconButton from "@mui/material/IconButton";
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import ListItemButton from "@mui/material/ListItemButton";
+import ListItemText from "@mui/material/ListItemText";
+import MenuIcon from "@mui/icons-material/Menu";
 
-const Layout: React.FC = () => {
-  const { loginData, logout }: any = useContext(AuthContext);
-  let navigate = useNavigate();
-  const linkStyles = (isActive: boolean) => ({
-    textDecoration: "none",
-    color: isActive ? "#3252df" : "#152c5b",
-    marginRight: "20px",
-    "&:hover": {
-      color: "red",
-    },
-  });
-  const handleLogout = () => {
-    logout();
-    navigate("/dashboard/homepage");
+import { selectStyle } from "../../../Admin/components/Facilities/FacilitiesData";
+
+interface Props {
+  window?: () => Window;
+}
+const drawerWidth = 240;
+//const navItems = ['Home', 'About', 'Contact'];
+export default function Layout(props: Props) {
+  const navigate = useNavigate();
+  const { loginData }: any = useContext(AuthContext);
+
+  const { window } = props;
+  const [mobileOpen, setMobileOpen] = React.useState(false);
+
+  const handleDrawerToggle = () => {
+    setMobileOpen((prevState) => !prevState);
   };
+
+  const container =
+    window !== undefined ? () => window().document.body : undefined;
+
   return (
-    <AppBar
-      position="static"
-      color="default"
-      elevation={0}
-      sx={{ borderBottom: "1px solid #e2e2e0" }}
-    >
-      <Toolbar>
-        <Typography
-          variant="h5"
-          color="primary"
+    <>
+      <Box sx={{ display: "flex", mb: 5 }}>
+        <CssBaseline />
+        <AppBar
+          component="nav"
+          color="inherit"
           sx={{
-            flexGrow: 1,
-            color: "#3252df",
-            paddingLeft: "60px",
+            boxShadow: "none",
+            borderBottom: "1px solid #E5E5E5",
+            position: "static",
           }}
         >
-          Stay
-          <Box sx={{ color: "#152c5b", display: "inline" }}>cation.</Box>
-        </Typography>
-
-        <Box>
-          {loginData?.role ? (
-            <>
-              <NavLink
-                to="/dashboard/homepage"
-                style={({ isActive }) => linkStyles(isActive)}
-              >
-                Home
-              </NavLink>
-              <NavLink
-                to="/dashboard/all-rooms"
-                style={({ isActive }) => linkStyles(isActive)}
-              >
-                Explore
-              </NavLink>
-              <NavLink
-                to="/dashboard/reviews"
-                style={({ isActive }) => linkStyles(isActive)}
-              >
-                Reviews
-              </NavLink>
-              <NavLink
-                to="/dashboard/favorites"
-                style={({ isActive }) => linkStyles(isActive)}
-              >
-                Favorites
-              </NavLink>
-              <Button
-                onClick={handleLogout}
+          <Toolbar>
+            <IconButton
+              color="inherit"
+              aria-label="open drawer"
+              edge="start"
+              onClick={handleDrawerToggle}
+              sx={{ mr: 2, display: { md: "none" } }}
+            >
+              <MenuIcon />
+            </IconButton>
+            <Typography
+              variant="h5"
+              color="primary"
+              sx={{
+                color: "#3252df",
+                paddingLeft: "60px",
+                fontSize: "26px",
+                fontFamily: "Poppins",
+                ontWeight: 500,
+                flexGrow: 1,
+                display: { xs: "none", md: "block" },
+                width: "50%",
+              }}
+            >
+              Stay
+              <Box
                 sx={{
-                  textDecoration: "none",
-                  color: "white",
-                  backgroundColor: "#3252df",
-                  padding: "8px 25px",
-                  transition: "0.3s all",
-                  ":hover": {
-                    backgroundColor: "#4c6af0",
-                  },
+                  color: "#152c5b",
+                  display: "inline",
+                  fontSize: "26px",
+                  fontFamily: "Poppins",
+                  fontWeight: 500,
                 }}
-                className="nav-button"
               >
-                Logout
-              </Button>
-            </>
-          ) : (
-            <>
-              <NavLink
-                to="/dashboard/homepage"
-                style={({ isActive }) => linkStyles(isActive)}
+                cation.
+              </Box>
+            </Typography>
+            <Box sx={{ display: { xs: "none", md: "block" }, me: 4 }}>
+              <Link
+                style={{
+                  textDecoration: "none",
+                  color: "#152C5B",
+                  marginRight: "40px",
+                }}
+                to={"/dashboard"}
               >
                 Home
-              </NavLink>
-              <NavLink
-                to="/dashboard/all-rooms"
-                style={({ isActive }) => linkStyles(isActive)}
+              </Link>
+
+              <Link
+                style={{ textDecoration: "none", color: "#152C5B" }}
+                to={"/dashboard/all-rooms"}
               >
                 Explore
-              </NavLink>
-              <NavLink
-                to="/login"
-                style={({ isActive }) => linkStyles(isActive)}
-                className="nav-button"
-              >
-                Login Now
-              </NavLink>
-              <NavLink
-                to="/register"
-                style={({ isActive }) => linkStyles(isActive)}
-                className="nav-button"
-              >
-                Register
-              </NavLink>
-            </>
-          )}
-        </Box>
-      </Toolbar>
-    </AppBar>
-  );
-};
+              </Link>
 
-export default Layout;
+              {loginData?.role ? (
+                <>
+                  <Link
+                    style={{
+                      textDecoration: "none",
+                      color: "#152C5B",
+                      marginInline: "40px",
+                    }}
+                    to={"/dashboard/favorite-room"}
+                  >
+                    Favorite
+                  </Link>
+
+                  <Select
+                    sx={selectStyle}
+                    style={{ marginRight: "40px" }}
+                    value=""
+                    displayEmpty
+                    inputProps={{ "aria-label": "Without label" }}
+                    IconComponent={ExpandMoreIcon}
+                  >
+                    <MenuItem
+                      onClick={() => navigate("/dashboard/change-password")}
+                      sx={{ color: "#1F263E", fontFamily: "Poppins" }}
+                      value={20}
+                    >
+                      Change Password
+                    </MenuItem>
+                    <MenuItem
+                      sx={{ color: "#1F263E", fontFamily: "Poppins" }}
+                      onClick={() => {
+                        localStorage.removeItem("token");
+                        navigate("/login");
+                      }}
+                      value={30}
+                    >
+                      Logout
+                    </MenuItem>
+                  </Select>
+                </>
+              ) : (
+                <>
+                  <Link
+                    className="nav-button"
+                    style={{
+                      textDecoration: "none",
+                      color: "#152C5B",
+                      marginInline: "30px",
+                    }}
+                    to={"/"}
+                  >
+                    Login Now
+                  </Link>
+                  <Link
+                    className="nav-button"
+                    style={{
+                      textDecoration: "none",
+                      color: "#152C5B",
+                      marginRight: "40px",
+                    }}
+                    to={"/register"}
+                  >
+                    Register
+                  </Link>
+                </>
+              )}
+            </Box>
+          </Toolbar>
+        </AppBar>
+        <nav>
+          <Drawer
+            container={container}
+            variant="temporary"
+            open={mobileOpen}
+            onClose={handleDrawerToggle}
+            ModalProps={{
+              keepMounted: true, // Better open performance on mobile.
+            }}
+            sx={{
+              display: { xs: "block", md: "none" },
+              "& .MuiDrawer-paper": {
+                boxSizing: "border-box",
+                width: drawerWidth,
+              },
+            }}
+          >
+            {/* for mobile */}
+            <Box onClick={handleDrawerToggle} sx={{ textAlign: "center" }}>
+              <Typography
+                variant="h6"
+                color="primary"
+                sx={{
+                  my: 2,
+                  color: "#3252df",
+                  paddingLeft: "30px",
+                }}
+              >
+                Stay
+                <Box sx={{ color: "#152c5b", display: "inline" }}>cation.</Box>
+              </Typography>
+              <Divider />
+
+              <List>
+                <ListItem disablePadding>
+                  <ListItemButton sx={{ textAlign: "center" }}>
+                    <ListItemText
+                      primary="Home"
+                      onClick={() => navigate("/dashboard")}
+                    />
+                  </ListItemButton>
+                </ListItem>
+                <ListItem disablePadding>
+                  <ListItemButton sx={{ textAlign: "center" }}>
+                    <ListItemText
+                      primary=" Explore"
+                      onClick={() => navigate("/dashboard/all-rooms")}
+                    />
+                  </ListItemButton>
+                </ListItem>
+                {loginData?.role ? (
+                  <>
+                    <ListItem disablePadding>
+                      <ListItemButton sx={{ textAlign: "center" }}>
+                        <ListItemText
+                          primary="Favorite"
+                          onClick={() => navigate("/dashboard/favorite-room")}
+                        />
+                      </ListItemButton>
+                    </ListItem>
+                    <ListItem disablePadding>
+                      <ListItemButton sx={{ textAlign: "center" }}>
+                        <ListItemText
+                          primary="Change Password"
+                          onClick={() => navigate("/dashboard/change-password")}
+                        />
+                      </ListItemButton>
+                    </ListItem>
+                    <ListItem disablePadding>
+                      <ListItemButton sx={{ textAlign: "center" }}>
+                        <ListItemText
+                          primary="Logout"
+                          onClick={() => {
+                            localStorage.removeItem("token");
+                            navigate("/login");
+                          }}
+                        />
+                      </ListItemButton>
+                    </ListItem>
+                  </>
+                ) : (
+                  <>
+                    <ListItem disablePadding>
+                      <ListItemButton sx={{ textAlign: "center" }}>
+                        <ListItemText
+                          primary="Login Now"
+                          onClick={() => navigate("/")}
+                        />
+                      </ListItemButton>
+                    </ListItem>
+
+                    <ListItem disablePadding>
+                      <ListItemButton sx={{ textAlign: "center" }}>
+                        <ListItemText
+                          primary=" Register"
+                          onClick={() => navigate("/register")}
+                        />
+                      </ListItemButton>
+                    </ListItem>
+                  </>
+                )}
+              </List>
+            </Box>
+          </Drawer>
+        </nav>
+      </Box>
+    </>
+  );
+}
