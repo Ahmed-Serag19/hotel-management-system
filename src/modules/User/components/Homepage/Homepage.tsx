@@ -8,7 +8,7 @@ import HomepageSlider from "./HomepageSlider/HomepageSlider";
 
 const Homepage = () => {
   return (
-    <Box sx={{ background: "white" }}>
+    <Box sx={{ background: "white", paddingTop: "100px" }}>
       <HeroSection />
       <PopularAds />
       <Houses />

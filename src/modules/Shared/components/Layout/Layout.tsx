@@ -1,11 +1,11 @@
 import React, { useContext } from "react";
 import { AppBar, Toolbar, Typography, Box, Button } from "@mui/material";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../../../context/authcontext";
 
 const Layout: React.FC = () => {
-  const { loginData }: any = useContext(AuthContext);
-
+  const { loginData, logout }: any = useContext(AuthContext);
+  let navigate = useNavigate();
   const linkStyles = (isActive: boolean) => ({
     textDecoration: "none",
     color: isActive ? "#3252df" : "#152c5b",
@@ -14,7 +14,10 @@ const Layout: React.FC = () => {
       color: "red",
     },
   });
-
+  const handleLogout = () => {
+    logout();
+    navigate("/dashboard/homepage");
+  };
   return (
     <AppBar
       position="static"
@@ -63,6 +66,22 @@ const Layout: React.FC = () => {
               >
                 Favorites
               </NavLink>
+              <Button
+                onClick={handleLogout}
+                sx={{
+                  textDecoration: "none",
+                  color: "white",
+                  backgroundColor: "#3252df",
+                  padding: "8px 25px",
+                  transition: "0.3s all",
+                  ":hover": {
+                    backgroundColor: "#4c6af0",
+                  },
+                }}
+                className="nav-button"
+              >
+                Logout
+              </Button>
             </>
           ) : (
             <>
