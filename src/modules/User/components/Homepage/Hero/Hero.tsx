@@ -1,23 +1,26 @@
-import { useState } from "react";
+import "react-date-range/dist/styles.css"; // Main CSS file for react-date-range
+import "react-date-range/dist/theme/default.css"; // Theme CSS file for react-date-range
+
 import {
   Box,
   Button,
-  IconButton,
-  Stack,
-  Typography,
   Card,
   CardMedia,
+  IconButton,
   Modal,
+  Stack,
+  Typography,
 } from "@mui/material";
+
 import AddIcon from "@mui/icons-material/Add";
-import RemoveIcon from "@mui/icons-material/Remove";
-import { DateRange } from "react-date-range"; // React Date Range
-import { format } from "date-fns"; // Date formatting
-import { useNavigate } from "react-router-dom";
-import "react-date-range/dist/styles.css"; // Main CSS file for react-date-range
-import "react-date-range/dist/theme/default.css"; // Theme CSS file for react-date-range
 import Banner from "../../../../../assets/images/banner.png";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
+import { DateRange } from "react-date-range"; // React Date Range
+import RemoveIcon from "@mui/icons-material/Remove";
+import { format } from "date-fns"; // Date formatting
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+
 export default function HeroSection() {
   const [capacity, setCapacity] = useState(2);
   const [state, setState] = useState([
@@ -36,8 +39,6 @@ export default function HeroSection() {
     capacity > 1 && setCapacity((prev) => prev - 1);
 
   const handleExplore = () => {
-    // Ensure we have valid start and end dates
-    console.log(capacity, state);
     const startDate = state[0].startDate
       ? format(state[0].startDate, "yyyy-MM-dd")
       : format(new Date(), "yyyy-MM-dd");
@@ -45,8 +46,8 @@ export default function HeroSection() {
       ? format(state[0].endDate, "yyyy-MM-dd")
       : format(new Date(), "yyyy-MM-dd");
 
-    // Pass the selected date range and capacity to the explore page
-    navigate("/explore", {
+    // Pass the selected date range and capacity to the explore page (AllRooms)
+    navigate("/dashboard/all-rooms", {
       state: {
         capacity,
         startDate,
@@ -64,6 +65,8 @@ export default function HeroSection() {
         justifyContent: "space-between",
         alignItems: "center",
         height: "50vh",
+        mt:"10%",
+        mb:4  ,    
       }}
     >
       {/* Left side: Text and Inputs */}

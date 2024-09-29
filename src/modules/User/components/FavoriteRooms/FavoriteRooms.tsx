@@ -1,28 +1,48 @@
-import { useContext, useEffect, useState } from "react";
-import { favoriteUrl } from "../../../../constants/End_Points";
-import axios from "axios";
-import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
-
 import {
   Box,
   Container,
   Grid2,
   Tooltip,
 } from "@mui/material";
-import { toast } from "react-toastify";
-import {  useNavigate } from "react-router-dom";
+import { useContext, useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+
 import { AuthContext } from "../../../../context/authcontext";
-import NoData from "../../../Shared/components/NoData/NoData";
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import HeaderUserRoom from "../../../Shared/components/HeaderUserRoom/HeaderUserRoom";
+import NoData from "../../../Shared/components/NoData/NoData";
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import axios from "axios";
+import { favoriteUrl } from "../../../../constants/End_Points";
+import { format } from "date-fns";
+import { toast } from "react-toastify";
 
 export default function FavoriteRoom() {
-  let { loginData }: any = useContext(AuthContext);
+
   let navigate = useNavigate();
+    let { loginData }: any = useContext(AuthContext);
   if (loginData?.role != "user") {
     navigate("/NotFound");
   }
+  let location = useLocation();
   const [totalCount, setTotalCount] = useState(0);
+  const { startDate, endDate, capacity } = location.state || {};
   const [favoriteList, setFavoriteList] = useState([]);
+  const handleRoomClick = (
+    roomId: string,
+    capacity?: number,
+    startDate?: string,
+    endDate?: string
+  ) => {
+   
+    navigate(`/dashboard/room-details/${roomId}`, {
+      state: {
+        capacity: capacity || 2, 
+        startDate: startDate || format(new Date(), "yyyy-MM-dd"), 
+        endDate: endDate || format(new Date(), "yyyy-MM-dd"), 
+      },
+    });
+  };
 
   let getAllFavorite = async () => {
     try {
@@ -94,11 +114,24 @@ export default function FavoriteRoom() {
                       />
                       <Box className="LayerIcon">
                         <Box className="IconsBar">
-                   
+                        <Tooltip title="Details Room">
+                          <VisibilityIcon
+                            fontSize="large"
+                            onClick={() =>
+                              handleRoomClick(
+                                room._id,
+                                capacity,
+                                startDate,
+                                endDate
+                              )
+                            }
+                          />
+                        </Tooltip>
                           <Tooltip title="Delete From Favorite! ">
                             <FavoriteBorderIcon
                               fontSize="large"
                               onClick={() => removeFavorite(room._id)}
+                              sx={{ marginLeft: "15px" }}
                
                             />
                           </Tooltip>

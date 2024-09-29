@@ -1,17 +1,18 @@
-import { useForm } from "react-hook-form";
 import {
   Box,
+  Button,
   Card,
   CardContent,
-  TextField,
-  Typography,
-  Button,
   FormControl,
   FormHelperText,
+  TextField,
+  Typography,
 } from "@mui/material";
-import axios from "axios";
+
 import { User_URls } from "../../../../constants/End_Points";
+import axios from "axios";
 import { toast } from "react-toastify";
+import { useForm } from "react-hook-form";
 
 export default function ChangePassword() {
   interface UserData {
@@ -44,16 +45,17 @@ export default function ChangePassword() {
         justifyContent: "center",
         alignItems: "center",
         minHeight: "500px",
-        marginTop: "3rem",
+        marginY: "2rem",
+       
         boxShadow: "0 8px 30px rgba(0, 0, 0, 0.2)",
       }}
     >
-      <Box sx={{ width: "70%" }}>
+      <Box sx={{ width:{xs:"80%",md:"50%" } }}>
         <CardContent>
           <Typography
             component="div"
-            variant="h3"
-            sx={{ marginBottom: "25px" }}
+            variant="h4"           
+            sx={{ mb: 4 , color:"#3252df" }}
           >
             Change Password
           </Typography>

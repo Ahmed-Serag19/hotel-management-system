@@ -4,7 +4,7 @@ export const Base_Img_Url = "https://upskilling-egypt.com:3000/";
 const Base_Users = `${Base_Url}/portal/users`;
 export const User_URls = {
   login: `${Base_Users}/Login`,
-  register:`${Base_Users}`,
+  register: `${Base_Users}`,
   forgetPassword: `${Base_Users}/forgot-password`,
   resetPassword: `${Base_Users}/reset-password`,
   changePassword: `${Base_Users}/change-password`,
@@ -50,23 +50,19 @@ export const bookingUrl = {
 
 export const getDashboard = `${Base_Url}/admin/dashboard`;
 
+const Base_Portal = `${Base_Url}/portal`;
+export const RoomsUrl = {
+  getAllRoom: `${Base_Portal}/rooms/available?page=1&size=10&startDate=2023-01-20&endDate=2023-01-30`,
+  getRoomDetails: (roomId: string) => `${Base_Portal}/rooms/${roomId}`,
+};
 
-const Base_Portal= `${Base_Url}/portal`;
-export const RoomsUrl ={
-  getAllRoom:`${Base_Portal}/rooms/available?page=1&size=10&startDate=2023-01-20&endDate=2023-01-30`
-}
-
-export const favoriteUrl ={
-  getAllFavorites:`${Base_Portal}/favorite-rooms`,
+export const favoriteUrl = {
+  getAllFavorites: `${Base_Portal}/favorite-rooms`,
   delete: (id: string) => `${Base_Portal}/favorite-rooms/${id}`,
-  add:`${Base_Portal}/favorite-rooms`
-
-  
-}
-const Base_comment= `${Base_Url}/portal/room-comments`;
-export const CommentUrls ={
-  getAllComments:`${Base_comment}`,
-  createComment:`${Base_comment}`
-}
-
-
+  add: `${Base_Portal}/favorite-rooms`,
+};
+const Base_comment = `${Base_Url}/portal/room-comments`;
+export const CommentUrls = {
+  getAllComments: `${Base_comment}`,
+  createComment: `${Base_comment}`,
+};

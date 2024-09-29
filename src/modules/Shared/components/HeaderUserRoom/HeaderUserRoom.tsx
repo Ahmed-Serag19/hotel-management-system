@@ -13,7 +13,7 @@ export default function HeaderUserRoom({title,linkTo,NameLink,Name}:DataRoom) {
      <Box>
           <Typography
           variant="h3"
-          sx={{ textAlign: "center", color: "#1F263E", fontWeight: "600", fontFamily:"Poppins", pt:2,mt:5 ,fontSize:{xs:"26px",md:"36px"}}}
+          sx={{ textAlign: "center", color: "#1F263E", fontWeight: "600", fontFamily:"Poppins", pt:1 ,fontSize:{xs:"26px",md:"36px"}}}
 
         >
           {/* Explore ALL Rooms */} {title}

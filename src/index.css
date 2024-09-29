@@ -1,97 +1,127 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
-
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
 
 body {
-    font-family: "Poppins", sans-serif !important;
+  font-family: "Poppins", sans-serif !important;
 }
 
 .css-ku7d13-MuiTypography-root {
-    font-family: "Poppins", sans-serif !important;
+  font-family: "Poppins", sans-serif !important;
 }
 
 :root {
-    --toastify-color-success: #3252df !important;
-    --toastify-icon-color-success: var(--toastify-color-success) !important;
+  --toastify-color-success: #3252df !important;
+  --toastify-icon-color-success: var(--toastify-color-success) !important;
 }
 
 * {
-    padding: 0;
-    margin: 0;
-    box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
 }
 
 .MuiTableCell-root.MuiTableCell-body.MuiTableCell-sizeMedium {
-    color: #3A3A3D !important;
-    font-family: "Poppins" !important;
-    padding-block: 4px !important;
+  color: #3a3a3d !important;
+  font-family: "Poppins" !important;
+  padding-block: 4px !important;
 }
 
 .ps-menu-button:hover {
-    background-color: rgba(26, 27, 30, 0.17) !important;
+  background-color: rgba(26, 27, 30, 0.17) !important;
 }
 
 @media (max-width: 992px) {
-    .changePassword {
-        display: none !important;
-    }
+  .changePassword {
+    display: none !important;
+  }
 }
-.ImgList{
-    position: relative;  
-    overflow: hidden;  
-    cursor: pointer;
+.ImgList {
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
 }
 
 .LayerIcon {
-    background: linear-gradient(180.1deg, rgba(32, 63, 199, 0.21) 50%, rgba(0, 0, 0, 0.5) 99.91%);
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    top: 100%;
-    transition: top 0.5s;
-    border-radius: 15px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
+  background: linear-gradient(
+    180.1deg,
+    rgba(32, 63, 199, 0.21) 50%,
+    rgba(0, 0, 0, 0.5) 99.91%
+  );
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 100%;
+  transition: top 0.5s;
+  border-radius: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
 }
-.ImgList:hover .LayerIcon  {
-    top: 0%;
+.ImgList:hover .LayerIcon {
+  top: 0%;
 }
-.headerImg{
-    background-color: #FF498B;
-    position: absolute;
-    width: 50%;
-    padding: 10px;
-    border-top-right-radius: 15px;
-    border-bottom-left-radius:15px;
-    left: 50%;
-    text-align: center;
-    top:0;
-    color: white;
+.headerImg {
+  background-color: #ff498b;
+  position: absolute;
+  width: 50%;
+  padding: 10px;
+  border-top-right-radius: 15px;
+  border-bottom-left-radius: 15px;
+  left: 50%;
+  text-align: center;
+  top: 0;
+  color: white;
 }
+
+.nav-button {
+  background-color: #3252df;
+  padding: 8px 15px;
+  color: white !important;
+  border-radius: 7px;
+  transition: 0.3s all;
+}
+.nav-button:hover {
+  background-color: #4c6af0;
+}
+
 .card{
-    padding: 2rem;
-    background-color: #f8fafc;
-    border-radius: 12px;
+    padding: 20PX;
+    background-color: #fff;
+    border-radius: 8px;
+  
 }
 .read-the-docs{
     color:#888;
 }
 .form-wrapper{
+  
     display: flex;
     flex-direction: column;
     background-color: #f1f5f9;
     width: 500px;
+    margin: auto;;
     padding-block: 32px;
-    padding-right: 16px;
+    padding-inline: 16px;
     border-radius: 12px;
     gap:24px
+  
 }
 .submit-btn{
     text-transform: uppercase;
-    background-color: #38bdf8;
+    background-color: #3252DF;
     border: none;
-    color: black;
+    color: white;
     font-weight: 700;
+    padding-block: 15px;
+    border-radius: 5px;
+}
+
+.submit-btn:hover{
+  background-color:#152C5B;
+}
+.PaymentIcon{
+transform: translateY(7px) !important;
+margin-left: 5px;
+
 }
 
