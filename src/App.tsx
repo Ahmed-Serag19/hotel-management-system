@@ -25,19 +25,41 @@ import RoomDetail from "./modules/User/components/RoomDetails/RoomDetail";
 import Rooms from "./modules/Admin/components/Rooms/Rooms";
 import Users from "./modules/Admin/components/Users/Users";
 import ProtectedRoute from "./modules/Shared/components/ProtectedRoute/ProtectedRoute";
+import { useContext } from "react";
+import { AuthContext } from "./context/authcontext";
 
 function App() {
+  const { loginData } = useContext(AuthContext) || {};
+
+  const getDefaultRouteElement = () => {
+    if (loginData?.role === "admin") {
+      return <Navigate to="dashboard/home" replace />;
+    } else {
+      return <Navigate to="dashboard/homepage" replace />;
+    }
+  };
+
   const routes = createBrowserRouter([
     {
       path: "",
-      element: <MasterLayout />, // Use MasterLayout for the dashboard as the main layout
+      element: <MasterLayout />,
       errorElement: <NotFound />,
       children: [
-        // Redirect base path to dashboard homepage
-        { index: true, element: <Navigate to="dashboard/homepage" replace /> },
+        {
+          index: true,
+          element: getDefaultRouteElement(), // Decide where to redirect based on the role
+        },
 
         // Public Routes
-        { path: "dashboard/homepage", element: <Homepage /> },
+        {
+          path: "dashboard/homepage",
+          element:
+            loginData?.role === "admin" ? (
+              <Navigate to="dashboard/home" replace />
+            ) : (
+              <Homepage />
+            ),
+        },
         { path: "dashboard/all-rooms", element: <AllRooms /> },
         { path: "dashboard/room-details/:roomId", element: <RoomDetail /> },
         { path: "dashboard/payment", element: <Payment /> },
@@ -133,11 +155,7 @@ function App() {
     },
   ]);
 
-  return (
-    <>
-      <RouterProvider router={routes} />
-    </>
-  );
+  return <RouterProvider router={routes} />;
 }
 
 export default App;
