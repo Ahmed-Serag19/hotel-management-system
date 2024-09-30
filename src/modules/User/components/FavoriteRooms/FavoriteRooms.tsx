@@ -16,9 +16,9 @@ import axios from "axios";
 import { favoriteUrl } from "../../../../constants/End_Points";
 import { format } from "date-fns";
 import { toast } from "react-toastify";
-
+import LoadingScreen from "../../../Shared/components/LoadingScreen/LoadingScreen";
 export default function FavoriteRoom() {
-
+  const[isLoading,setLoading] = useState(false);
   let navigate = useNavigate();
     let { loginData }: any = useContext(AuthContext);
   if (loginData?.role != "user") {
@@ -75,13 +75,18 @@ export default function FavoriteRoom() {
     }
   };
   useEffect(() => {
+    setLoading(true);
     getAllFavorite();
+    setTimeout(() => {
+      setLoading(false);
+    }, 2500);
   }, []);
 
   return (
     <>
       {loginData?.role === "user" ? (
         <Box>
+              {!isLoading?   (      <Box>
           {favoriteList.length > 0 ? (
             <Container>
               <HeaderUserRoom
@@ -147,6 +152,8 @@ export default function FavoriteRoom() {
           ) : (
             <NoData />
           )}
+          </Box>) :<LoadingScreen/>}
+    
         </Box>
       ) : (
         navigate("/NotFound")

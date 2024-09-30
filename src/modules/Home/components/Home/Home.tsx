@@ -1,14 +1,14 @@
-import { useEffect, useState } from "react";
 import { Box, Typography } from "@mui/material";
+import { useEffect, useState } from "react";
+
+import CircleChart from "../Chart/Chart";
+import Footer from "../../../Shared/components/Footer/Footer";
+import Layout from "../../../Shared/components/NavbarPortal/NavbarPortal";
+import UsersChart from "../Chart/UsersChart";
 import WorkTwoToneIcon from "@mui/icons-material/WorkTwoTone";
 import axios from "axios";
 import { getDashboard } from "../../../../constants/End_Points";
-import CircleChart from "../Chart/Chart";
-import UsersChart from "../Chart/UsersChart";
-import Layout from "../../../Shared/components/Layout/Layout";
-import Footer from "../../../Shared/Footer/Footer";
 import { toast } from "react-toastify";
-
 
 interface BookingData {
   completed: number;

@@ -1,5 +1,7 @@
 import "react-date-range/dist/styles.css"; // Main CSS file for react-date-range
 import "react-date-range/dist/theme/default.css"; // Theme CSS file for react-date-range
+import "react-date-range/dist/styles.css";
+import "react-date-range/dist/theme/default.css";
 
 import {
   Box,
@@ -14,8 +16,6 @@ import {
 } from "@mui/material";
 
 import AddIcon from "@mui/icons-material/Add";
-import "react-date-range/dist/styles.css";
-import "react-date-range/dist/theme/default.css";
 import Banner from "../../../../../assets/images/banner.png";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import { DateRange } from "react-date-range"; // React Date Range
@@ -67,6 +67,9 @@ export default function HeroSection() {
         display: "flex",
         justifyContent: "space-between",
         alignItems: "center",
+        height: "50vh",
+        mt:"10px",
+        mb:4  ,    
       }}
     >
       {/* Left side: Text and Inputs */}

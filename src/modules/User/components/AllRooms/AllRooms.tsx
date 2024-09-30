@@ -20,6 +20,7 @@ import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../../../context/authcontext";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import HeaderUserRoom from "../../../Shared/components/HeaderUserRoom/HeaderUserRoom";
+import LoadingScreen from "../../../Shared/components/LoadingScreen/LoadingScreen";
 import NoData from "../../../Shared/components/NoData/NoData";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import axios from "axios";
@@ -30,7 +31,7 @@ export default function AllRooms() {
   let { loginData }: any = useContext(AuthContext);
   let navigate = useNavigate();
   let location = useLocation();
-
+  const[isLoading,setLoading] = useState(false);
   // Handle the incoming values from location.state
   const { startDate, endDate, capacity } = location.state || {};
 
@@ -77,15 +78,13 @@ export default function AllRooms() {
       setTotalCount(response.data.data.totalCount);
       setTotalPages(Math.ceil(response.data.data.totalCount / pageSize));
 
-      console.log(response.data.data.rooms);
+      //console.log(response.data.data.rooms);
     } catch (error: any) {
       console.log("Failed to fetch rooms", error);
     }
   };
 
-  useEffect(() => {
-    getAllRoom(page);
-  }, [page, startDate, endDate, capacity]);
+
 
   let addToFav = async (id: string) => {
     try {
@@ -101,7 +100,9 @@ export default function AllRooms() {
       console.log(response);
     } catch (error: any) {
       if (loginData?.role === "user") {
-        toast.error("Failed to add to Favorites");
+        toast.error("Failed to add to Favorites", {
+          autoClose: 5000,
+      });
       } else {
         toast.error("You need to login to add a room to Favorites");
       }
@@ -109,15 +110,18 @@ export default function AllRooms() {
   };
 
   useEffect(() => {
+    setLoading(true);
     getAllRoom(page);
-    setTotalPages(Math.ceil(totalCount / pageSize));
-  }, [totalPages]);
+    setTimeout(() => {
+      setLoading(false);
+    }, 2500);
+  }, [page, startDate, endDate, capacity]);
 
   return (
     <>
+     {!isLoading?   (
       <Box>
-        {roomList.length > 0 ? (
-          <Container>
+       {roomList.length >0 ? (      <Container>
             <HeaderUserRoom
               title={"Explore ALL Rooms"}
               linkTo={"all-rooms"}
@@ -242,11 +246,12 @@ export default function AllRooms() {
       <Pagination page={page} count={totalPages} onChange={(e, value) => setPage(value)} color="primary" variant="outlined" shape="rounded"  />
      
     </Box>  */}
-          </Container>
-        ) : (
-          <NoData />
-        )}
-      </Box>
+          </Container>): <NoData/>}
+    
+      
+      </Box>  ) : (
+        <LoadingScreen/>
+      )}
     </>
   );
 }

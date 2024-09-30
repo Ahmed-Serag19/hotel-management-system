@@ -39,22 +39,23 @@ export default function ChangePassword() {
     }
   };
   return (
-    <Card
+    <Box
       sx={{
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        minHeight: "500px",
-        marginY: "2rem",
+         py:2,
+   
+      
        
-        boxShadow: "0 8px 30px rgba(0, 0, 0, 0.2)",
+        
       }}
     >
-      <Box sx={{ width:{xs:"80%",md:"50%" } }}>
+      <Box sx={{ width:{xs:"100%",sm:"75%",md:"50%" },boxShadow:"2" ,p:3,borderRadius:"15px" }}>
         <CardContent>
           <Typography
             component="div"
-            variant="h4"           
+            variant="h5"           
             sx={{ mb: 4 , color:"#3252df" }}
           >
             Change Password
@@ -125,6 +126,7 @@ export default function ChangePassword() {
                 marginTop: "30px",
                 paddingY: "15px",
                 fontWeight: "bold",
+                textTransform: "none",
               }}
             >
               Change Password
@@ -132,6 +134,6 @@ export default function ChangePassword() {
           </FormControl>
         </CardContent>
       </Box>
-    </Card>
+    </Box>
   );
 }

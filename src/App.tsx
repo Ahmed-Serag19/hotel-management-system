@@ -6,6 +6,7 @@ import {
 } from "react-router-dom";
 import AddRoom from "./modules/Admin/components/Rooms/AddRoom";
 import AdsList from "./modules/Admin/components/AdsList/AdsList";
+import AllBookings from "./modules/User/components/AllBookings/AllBookings";
 import AllRooms from "./modules/User/components/AllRooms/AllRooms";
 import AuthLayout from "./modules/Shared/components/AuthLayout/AuthLayout";
 import ChangePassword from "./modules/Auth/components/ChangePassword/ChangePassword";
@@ -19,13 +20,14 @@ import Login from "./modules/Auth/components/Login/Login";
 import MasterLayout from "./modules/Shared/components/MasterLayout/MasterLayout";
 import NotFound from "./modules/Shared/components/NotFound/NotFound";
 import Payment from "./modules/User/components/Payment/Payment";
+import ProtectedRoute from "./modules/Shared/components/ProtectedRoute/ProtectedRoute";
 import Register from "./modules/Auth/components/Register/Register";
 import ResetPassword from "./modules/Auth/components/ResetPassword/ResetPassword";
 import RoomDetail from "./modules/User/components/RoomDetails/RoomDetail";
 import Rooms from "./modules/Admin/components/Rooms/Rooms";
 import Users from "./modules/Admin/components/Users/Users";
-import ProtectedRoute from "./modules/Shared/components/ProtectedRoute/ProtectedRoute";
 import { useContext } from "react";
+
 import { AuthContext } from "./context/authcontext";
 
 function App() {
@@ -45,6 +47,13 @@ function App() {
       element: <MasterLayout />,
       errorElement: <NotFound />,
       children: [
+        // Public Routes: Homepage, AllRooms, RoomDetails accessible to all, including guests
+        { path: "homepage", element: <Homepage /> },
+        { path: "all-rooms", element: <AllRooms /> },
+        { path: "room-details/:roomId", element: <RoomDetail /> },
+        { path: "all-bookings", element: <AllBookings /> },
+        { path: "payment ", element: <Payment /> },
+        // Protected Routes: Only accessible to admins
         {
           index: true,
           element: getDefaultRouteElement(), // Decide where to redirect based on the role
@@ -131,6 +140,8 @@ function App() {
             </ProtectedRoute>
           ),
         },
+
+        
         {
           path: "dashboard/change-password",
           element: (

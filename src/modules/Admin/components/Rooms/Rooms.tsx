@@ -1,35 +1,37 @@
-import React, { useState, useEffect } from "react";
 import {
   Box,
+  Button,
+  IconButton,
+  ImageList,
+  ImageListItem,
+  MenuItem,
+  Modal,
+  Select,
+  Stack,
   Table,
   TableBody,
   TableCell,
   TableHead,
-  TableRow,
   TablePagination,
-  Button,
-  Modal,
+  TableRow,
   Typography,
-  Stack,
-  Select,
-  MenuItem,
-  ImageList,
-  ImageListItem,
-  IconButton,
 } from "@mui/material";
-import { FaRegEye } from "react-icons/fa6";
-import { FaRegEdit } from "react-icons/fa";
-import { RiDeleteBin6Line } from "react-icons/ri";
-import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
+import React, { useEffect, useState } from "react";
+
 import CloseIcon from "@mui/icons-material/Close";
-import styled from "@emotion/styled";
+import DeleteImg from "../../../../assets/images/delete.png";
+import { FaRegEdit } from "react-icons/fa";
+import { FaRegEye } from "react-icons/fa6";
+import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
+import NoData from "../../../Shared/components/NoData/NoData";
+import { RiDeleteBin6Line } from "react-icons/ri";
+import TitleTables from "../../../Shared/components/TitleTables/TitleTables";
 import axios from "axios";
 import { roomsUrl } from "../../../../constants/End_Points";
-import TitleTables from "../../../Shared/TitleTables/TitleTables";
-import NoData from "../../../Shared/components/NoData/NoData";
-import DeleteImg from "../../../../assets/images/delete.png";
+import styled from "@emotion/styled";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import { FirstCell, LastCell } from "../Facilities/FacilitiesData";
 
 const StyledTableRow = styled(TableRow)`
   &:nth-of-type(even) {
@@ -263,7 +265,7 @@ export default function Rooms() {
                     "&:last-child td, &:last-child th": { border: 0 },
                   }}
                 >
-                  <TableCell sx={{ fontWeight: "bold", fontFamily: "Poppins" }}>
+                  <TableCell sx={FirstCell || { fontWeight: "bold", fontFamily: "Poppins" }}>
                     Name
                   </TableCell>
                   <TableCell sx={{ fontWeight: "bold", fontFamily: "Poppins" }}>
@@ -281,7 +283,7 @@ export default function Rooms() {
                   <TableCell sx={{ fontWeight: "bold", fontFamily: "Poppins" }}>
                     Facilities
                   </TableCell>
-                  <TableCell sx={{ fontWeight: "bold", fontFamily: "Poppins" }}>
+                  <TableCell sx={LastCell || { fontWeight: "bold", fontFamily: "Poppins" }}>
                     Action
                   </TableCell>
                 </TableRow>
