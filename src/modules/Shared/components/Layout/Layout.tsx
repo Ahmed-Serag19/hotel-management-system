@@ -6,7 +6,7 @@ import {
   Toolbar,
   Typography,
 } from "@mui/material";
-import { Link,useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import React, { useContext } from "react";
 import { AuthContext } from "../../../../context/authcontext";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -98,7 +98,7 @@ export default function Layout(props: Props) {
                   color: "#152C5B",
                   marginRight: "40px",
                 }}
-                to={"/dashboard"}
+                to={"/dashboard/homepage"}
               >
                 Home
               </Link>
@@ -118,7 +118,7 @@ export default function Layout(props: Props) {
                       color: "#152C5B",
                       marginInline: "40px",
                     }}
-                    to={"/dashboard/favorite-room"}
+                    to={"/dashboard/favorites"}
                   >
                     Favorite
                   </Link>
@@ -159,7 +159,7 @@ export default function Layout(props: Props) {
                       color: "#152C5B",
                       marginInline: "30px",
                     }}
-                    to={"/"}
+                    to={"/login"}
                   >
                     Login Now
                   </Link>
