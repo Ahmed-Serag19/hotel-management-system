@@ -1,5 +1,5 @@
 import Slider from "react-slick";
-import { Box, Typography, Stack, IconButton } from "@mui/material";
+import { Box, Typography, IconButton } from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import StarIcon from "@mui/icons-material/Star";
@@ -92,10 +92,11 @@ const HomepageSlider = () => {
     autoplay: true,
     autoplaySpeed: 4000,
   };
+
   return (
     <Box
       sx={{
-        paddingY: "70px",
+        paddingY: { xs: "30px", md: "70px" }, // Adjust padding based on screen size
         maxWidth: "100%",
         background: "#fff",
         borderRadius: "16px",
@@ -108,36 +109,43 @@ const HomepageSlider = () => {
             sx={{
               background: "#fff",
               borderRadius: "16px",
-              height: "600px",
+              height: { xs: "auto", md: "600px" }, // Adjust height for mobile
               display: "flex !important",
+              flexDirection: { xs: "column", md: "row" }, // Stack in column on small screens
               justifyContent: "flex-start",
-              gap: "50px",
+              gap: { xs: "20px", md: "50px" }, // Adjust gap
               alignItems: "center",
-              paddingX: "60px",
+              paddingX: { xs: "20px", md: "60px" }, // Adjust padding for mobile
             }}
           >
             {/* Left side: Image */}
             <Box
               sx={{
-                width: "30%",
-                height: "90%",
+                width: { xs: "100%", md: "30%" }, // Full width on small screens
+                height: { xs: "400px", md: "90%", sm: "300px" },
                 position: "relative",
                 border: "1px solid grey",
                 borderRadius: "5px",
+                marginBottom: { xs: "20px", md: "0" }, // Add margin-bottom for mobile
               }}
             >
-              <img
+              <Box
+                component="img"
                 src={testimonial.image}
                 alt={testimonial.title}
-                style={{
+                sx={{
                   width: "100%",
                   height: "100%",
                   objectFit: "cover",
-                  objectPosition: "bottom center",
+                  objectPosition: "center center",
                   position: "absolute",
-                  top: "30px",
-                  left: "30px",
-                  borderBottomRightRadius: "20%",
+                  top: { sm: "0", md: "30px" },
+                  left: { sm: "0", md: "30px" },
+                  borderBottomRightRadius: {
+                    xs: "0%", // Set border radius to 0 on small screens and below
+                    sm: "0%", // Also set to 0 on sm (optional, as xs includes sm by default)
+                    md: "20%", // Apply 20% border radius on medium screens and above
+                  },
                 }}
               />
             </Box>
@@ -145,11 +153,12 @@ const HomepageSlider = () => {
             {/* Right side: Text and Information */}
             <Box
               sx={{
-                width: "50%",
+                width: { xs: "100%", md: "50%" }, // Full width on mobile
                 padding: "5px 5px",
                 display: "flex",
                 flexDirection: "column",
                 justifyContent: "center",
+                textAlign: { xs: "center", md: "left" }, // Center text on small screens
               }}
             >
               <Typography
@@ -164,7 +173,14 @@ const HomepageSlider = () => {
               </Typography>
 
               {/* Rating */}
-              <Box sx={{ display: "flex", alignItems: "center", mb: 2 }}>
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: { xs: "center", md: "flex-start" }, // Center rating on small screens
+                  alignItems: "center",
+                  mb: 2,
+                }}
+              >
                 {Array.from({ length: testimonial.rating }, (_, i) => (
                   <StarIcon
                     key={i}
@@ -177,7 +193,7 @@ const HomepageSlider = () => {
                 sx={{
                   color: "#152c5b",
                   marginBottom: "20px",
-                  fontSize: "25px",
+                  fontSize: { xs: "18px", md: "25px" }, // Adjust font size based on screen size
                   lineHeight: 1.6,
                 }}
               >
@@ -185,9 +201,14 @@ const HomepageSlider = () => {
               </Typography>
 
               <Typography
-                sx={{ fontWeight: "bold", color: "#888", marginBottom: 1 }}
+                sx={{
+                  fontWeight: "bold",
+                  color: "#888",
+                  marginBottom: 1,
+                  textAlign: { xs: "center", md: "left" }, // Center text on small screens
+                }}
               >
-                {testimonial.name} {testimonial.role}
+                {testimonial.name} - {testimonial.role}
               </Typography>
             </Box>
           </Box>

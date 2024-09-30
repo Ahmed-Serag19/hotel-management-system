@@ -71,3 +71,8 @@ const Base_review = `${Base_Url}/portal/room-reviews`;
 export const ReviewsUrls = {
   createReview: `${Base_review}`,
 };
+
+const BaseUserBookings = `${Base_Url}/portal/booking`;
+export const UserBookingsUrl = {
+  createBooking: `${BaseUserBookings}`,
+};

@@ -1,12 +1,13 @@
 import "./App.css";
-
-import { RouterProvider, createBrowserRouter } from "react-router-dom";
-
+import {
+  RouterProvider,
+  createBrowserRouter,
+  Navigate,
+} from "react-router-dom";
 import AddRoom from "./modules/Admin/components/Rooms/AddRoom";
 import AdsList from "./modules/Admin/components/AdsList/AdsList";
 import AllBookings from "./modules/User/components/AllBookings/AllBookings";
 import AllRooms from "./modules/User/components/AllRooms/AllRooms";
-import { AuthContext } from "./context/authcontext";
 import AuthLayout from "./modules/Shared/components/AuthLayout/AuthLayout";
 import ChangePassword from "./modules/Auth/components/ChangePassword/ChangePassword";
 import Facilities from "./modules/Admin/components/Facilities/Facilities";
@@ -27,24 +28,22 @@ import Rooms from "./modules/Admin/components/Rooms/Rooms";
 import Users from "./modules/Admin/components/Users/Users";
 import { useContext } from "react";
 
+import { AuthContext } from "./context/authcontext";
+
 function App() {
-  const { loginData }: any = useContext(AuthContext);
+  const { loginData } = useContext(AuthContext) || {};
+
+  const getDefaultRouteElement = () => {
+    if (loginData?.role === "admin") {
+      return <Navigate to="dashboard/home" replace />;
+    } else {
+      return <Navigate to="dashboard/homepage" replace />;
+    }
+  };
 
   const routes = createBrowserRouter([
     {
       path: "",
-      element: <AuthLayout />,
-      errorElement: <NotFound />,
-      children: [
-        { index: true, element: <Login /> },
-        { path: "login", element: <Login /> },
-        { path: "register", element: <Register /> },
-        { path: "forget-password", element: <ForgetPassword /> },
-        { path: "reset-password", element: <ResetPassword /> },
-      ],
-    },
-    {
-      path: "dashboard",
       element: <MasterLayout />,
       errorElement: <NotFound />,
       children: [
@@ -56,7 +55,27 @@ function App() {
         { path: "payment ", element: <Payment /> },
         // Protected Routes: Only accessible to admins
         {
-          path: "home",
+          index: true,
+          element: getDefaultRouteElement(), // Decide where to redirect based on the role
+        },
+
+        // Public Routes
+        {
+          path: "dashboard/homepage",
+          element:
+            loginData?.role === "admin" ? (
+              <Navigate to="dashboard/home" replace />
+            ) : (
+              <Homepage />
+            ),
+        },
+        { path: "dashboard/all-rooms", element: <AllRooms /> },
+        { path: "dashboard/room-details/:roomId", element: <RoomDetail /> },
+        { path: "dashboard/payment", element: <Payment /> },
+
+        // Protected Routes for Admin
+        {
+          path: "dashboard/home",
           element: (
             <ProtectedRoute allowedRoles={["admin"]}>
               <Home />
@@ -64,7 +83,7 @@ function App() {
           ),
         },
         {
-          path: "facilities",
+          path: "dashboard/facilities",
           element: (
             <ProtectedRoute allowedRoles={["admin"]}>
               <Facilities />
@@ -72,7 +91,7 @@ function App() {
           ),
         },
         {
-          path: "Ads-list",
+          path: "dashboard/ads-list",
           element: (
             <ProtectedRoute allowedRoles={["admin"]}>
               <AdsList />
@@ -80,7 +99,7 @@ function App() {
           ),
         },
         {
-          path: "List-booking",
+          path: "dashboard/list-booking",
           element: (
             <ProtectedRoute allowedRoles={["admin"]}>
               <ListBooking />
@@ -88,7 +107,7 @@ function App() {
           ),
         },
         {
-          path: "users",
+          path: "dashboard/users",
           element: (
             <ProtectedRoute allowedRoles={["admin"]}>
               <Users />
@@ -96,7 +115,7 @@ function App() {
           ),
         },
         {
-          path: "rooms",
+          path: "dashboard/rooms",
           element: (
             <ProtectedRoute allowedRoles={["admin"]}>
               <Rooms />
@@ -104,7 +123,7 @@ function App() {
           ),
         },
         {
-          path: "add-room",
+          path: "dashboard/add-room",
           element: (
             <ProtectedRoute allowedRoles={["admin"]}>
               <AddRoom />
@@ -112,9 +131,9 @@ function App() {
           ),
         },
 
-        // User-specific routes: Only accessible to logged-in users with role 'user' or 'admin'
+        // User-specific routes for logged-in users
         {
-          path: "favorite-room",
+          path: "dashboard/favorites",
           element: (
             <ProtectedRoute allowedRoles={["user", "admin"]}>
               <FavoriteRooms />
@@ -124,7 +143,7 @@ function App() {
 
         
         {
-          path: "change-password",
+          path: "dashboard/change-password",
           element: (
             <ProtectedRoute allowedRoles={["user", "admin"]}>
               <ChangePassword />
@@ -133,16 +152,21 @@ function App() {
         },
       ],
     },
+    {
+      path: "",
+      element: <AuthLayout />,
+      errorElement: <NotFound />,
+      children: [
+        { index: true, element: <Navigate to="login" replace /> },
+        { path: "login", element: <Login /> },
+        { path: "register", element: <Register /> },
+        { path: "forget-password", element: <ForgetPassword /> },
+        { path: "reset-password", element: <ResetPassword /> },
+      ],
+    },
   ]);
 
-  return (
-    <>
-      <RouterProvider router={routes} />
-    </>
-  );
+  return <RouterProvider router={routes} />;
 }
-
-
-
 
 export default App;
