@@ -324,20 +324,6 @@ export default function ResetPassword() {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-          
-
           <Grid2
             display={{ xs: "none", md: "inline" }}
             size={{ xs: 12, md: 6 }}
@@ -345,7 +331,7 @@ export default function ResetPassword() {
           >
             <Stack
               sx={{
-                height: "100vh",
+                height: "97vh",
                 backgroundImage: `url(${ImgLogin})`,
                 backgroundSize: "cover",
                 backgroundPosition: "100% 100%",

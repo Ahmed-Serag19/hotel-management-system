@@ -10,6 +10,7 @@ import {
   Table,
   TableBody,
   TableCell,
+  tableCellClasses,
   TableContainer,
   TableHead,
   TableRow,
@@ -28,6 +29,8 @@ import { RiDeleteBin6Line } from "react-icons/ri";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import { FaRegEdit } from "react-icons/fa";
 import DeleteImg from "../../../../assets/images/delete.png";
+import TitleTables from "../../../Shared/components/TitleTables/TitleTables";
+import { FirstCell, LastCell } from "../Facilities/FacilitiesData";
 
 interface AdsTypes {
   room: {
@@ -189,49 +192,32 @@ function AdsList() {
 
   return (
     <Box component="section">
-      <Stack
-        direction="row"
-        sx={{
-          justifyContent: "space-between",
-          alignItems: "center",
-          padding: 1.5,
-          mb: 5,
-        }}
-      >
-        <Box>
-          <Typography variant="h4" fontWeight="bold">
-            ADS Table Details
-          </Typography>
-          <Typography variant="h5">You can check all details</Typography>
-        </Box>
-        <Box>
-          <Button
-            onClick={handleOpenAdd}
-            sx={{
-              px: 5,
-              backgroundColor: "#203FC7",
-              textTransform: "none",
-              fontSize: { xs: "12px", md: "16px" },
-            }}
-            variant="contained"
-            size="large"
-          >
-            Add New Ads
-          </Button>
-        </Box>
-      </Stack>
+
+<TitleTables
+        titleTable="Ads"
+        btn="Ads"
+        onClick={handleOpenAdd}
+      />
+
       <Stack sx={{ padding: 1.5 }}>
         {ads.length > 0 ? (
-          <TableContainer component={Paper}>
-            <Table sx={{ minWidth: 650 }} aria-label="simple table">
+        
+            <Table  sx={{
+                minWidth: 350,
+                [`& .${tableCellClasses.root}`]: {
+                  borderBottom: "none",
+                },
+            
+              }}
+               aria-label="simple table">
               <TableHead sx={{ backgroundColor: "#E2E5EB" }}>
                 <TableRow>
-                  <TableCell sx={{ padding: 3 }}>Room Number</TableCell>
+                  <TableCell sx={ FirstCell}>Room Number</TableCell>
                   <TableCell align="center">Price</TableCell>
                   <TableCell align="center">Discount</TableCell>
                   <TableCell align="center">Capacity</TableCell>
                   <TableCell align="center">Active</TableCell>
-                  <TableCell align="center">Action</TableCell>
+                  <TableCell sx={ LastCell} align="center">Action</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -280,7 +266,7 @@ function AdsList() {
                 ))}
               </TableBody>
             </Table>
-          </TableContainer>
+        
         ) : (
           <NoData />
         )}

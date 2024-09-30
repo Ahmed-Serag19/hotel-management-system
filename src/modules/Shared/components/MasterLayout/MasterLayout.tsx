@@ -1,11 +1,12 @@
 import { useContext, useState } from "react";
-import { Outlet } from "react-router-dom";
-import { Box } from "@mui/material";
-import SidebarComponent from "../Sidebar/Sidebar";
-import Navbar from "../Navbar/Navbar";
+
 import { AuthContext } from "../../../../context/authcontext";
-import Footer from "../../Footer/Footer";
-import Layout from "../Layout/Layout";
+import { Box } from "@mui/material";
+import Footer from "../Footer/Footer";
+import NavbarPortal from "../NavbarPortal/NavbarPortal";
+import Navbar from "../Navbar/Navbar";
+import { Outlet } from "react-router-dom";
+import SidebarComponent from "../Sidebar/Sidebar";
 
 export default function MasterLayout() {
   const [collapsed, setCollapsed] = useState(false);
@@ -74,11 +75,11 @@ export default function MasterLayout() {
           padding: loginData?.role === "admin" ? 2 : 0,
           paddingX: loginData?.role === "admin" ? 2 : 0,
 
-          bgcolor: loginData?.role === "admin" ? "#fafafa" : "white",
+          // bgcolor: loginData?.role === "admin" ? "#fafafa" : "white",
         }}
       >
         {loginData?.role === "admin" && <Navbar />}
-        {loginData?.role !== "admin" && <Layout />}
+        {loginData?.role !== "admin" && <NavbarPortal />}
         <Box
           sx={{
             padding: loginData?.role === "admin" ? 2 : 2,

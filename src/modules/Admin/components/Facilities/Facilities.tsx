@@ -9,8 +9,19 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
+import {
+  FirstCell,
+  LastCell,
+  Numbers,
+  StyledTableRow,
+  TableBorderRow,
+  selectStyle,
+  style,
+} from "../Facilities/FacilitiesData";
 import { useEffect, useState } from "react";
+
 import { FaRegEdit } from "react-icons/fa";
+import ModalPop from "../../../Shared/components/ModalPop/ModalPop";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import NoData from "../../../Shared/components/NoData/NoData";
 import { RiDeleteBin6Line } from "react-icons/ri";
@@ -20,22 +31,13 @@ import TableCell from "@mui/material/TableCell";
 import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
-import TitleTables from "../../../Shared/TitleTables/TitleTables";
+import TitleTables from "../../../Shared/components/TitleTables/TitleTables";
 import axios from "axios";
 import { facility_Urls } from "../../../../constants/End_Points";
 import { tableCellClasses } from "@mui/material/TableCell"; // for table border
 import { toast } from "react-toastify";
 import { useForm } from "react-hook-form";
-import {
-  style,
-  StyledTableRow,
-  selectStyle,
-  Numbers,
-  TableBorderRow,
-  FirstCell,
-  LastCell,
-  } from "../Facilities/FacilitiesData";
-import ModalPop from "../../../Shared/components/ModalPop/ModalPop";
+
 export default function Facilities() {
   const [facility, setFacility] = useState([]);
   const [modalOpen, setModalOpen] = useState(false); //add& update
@@ -242,7 +244,6 @@ export default function Facilities() {
         FunctionBtn={deleteFacility}
       />
 
-
       <Box sx={{ pb: 1 }}>
         {facility.length > 0 ? (
           <Box>
@@ -258,11 +259,7 @@ export default function Facilities() {
             >
               <TableHead sx={{ hight: "50px" }}>
                 <TableRow sx={TableBorderRow}>
-                  <TableCell
-                    sx={FirstCell}
-                  >
-                    Name
-                  </TableCell>
+                  <TableCell sx={FirstCell}>Name</TableCell>
                   <TableCell
                     sx={{
                       color: "#1F263E",
@@ -273,11 +270,7 @@ export default function Facilities() {
                     Created at
                   </TableCell>
 
-                  <TableCell
-                    sx={LastCell}
-                  >
-                    Action
-                  </TableCell>
+                  <TableCell sx={LastCell}>Action</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody

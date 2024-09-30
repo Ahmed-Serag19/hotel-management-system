@@ -5,9 +5,11 @@ import {
   Select,
   Toolbar,
   Typography,
+  styled,
 } from "@mui/material";
-import { Link,useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import React, { useContext } from "react";
+
 import { AuthContext } from "../../../../context/authcontext";
 import CssBaseline from "@mui/material/CssBaseline";
 import Divider from "@mui/material/Divider";
@@ -19,15 +21,23 @@ import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
 import MenuIcon from "@mui/icons-material/Menu";
-
 import { selectStyle } from "../../../Admin/components/Facilities/FacilitiesData";
 
 interface Props {
   window?: () => Window;
 }
 const drawerWidth = 240;
-//const navItems = ['Home', 'About', 'Contact'];
-export default function Layout(props: Props) {
+const StyledNavLink = styled(NavLink)<{ isActive: boolean }>(({ isActive }) => ({
+  textDecoration: "none",
+  borderBottom: isActive ? "2px solid #3252df" : "2px solid #fff",
+  marginRight: "40px",
+  color: "#152C5B",
+  "&:hover": {
+    color: "#FF498B",
+  },
+}))
+export default function NavbarPortal(props: Props) {
+
   const navigate = useNavigate();
   const { loginData }: any = useContext(AuthContext);
 
@@ -64,7 +74,7 @@ export default function Layout(props: Props) {
             >
               <MenuIcon />
             </IconButton>
-            <Typography
+            <Typography  onClick={() => navigate("/dashboard/homepage")}
               variant="h5"
               color="primary"
               sx={{
@@ -76,10 +86,11 @@ export default function Layout(props: Props) {
                 flexGrow: 1,
                 display: { xs: "none", md: "block" },
                 width: "50%",
+                cursor:"pointer",
               }}
             >
               Stay
-              <Box
+              <Box 
                 sx={{
                   color: "#152c5b",
                   display: "inline",
@@ -92,36 +103,39 @@ export default function Layout(props: Props) {
               </Box>
             </Typography>
             <Box sx={{ display: { xs: "none", md: "block" }, me: 4 }}>
-              <Link
-                style={{
-                  textDecoration: "none",
-                  color: "#152C5B",
-                  marginRight: "40px",
-                }}
-                to={"/dashboard"}
+              <StyledNavLink
+               isActive={location.pathname === "/dashboard/homepage"}
+
+                to={"/dashboard/homepage"}
               >
                 Home
-              </Link>
+              </StyledNavLink>
 
-              <Link
-                style={{ textDecoration: "none", color: "#152C5B" }}
+              <StyledNavLink
+               isActive={location.pathname === "/dashboard/all-rooms"}
+            
                 to={"/dashboard/all-rooms"}
               >
                 Explore
-              </Link>
+              </StyledNavLink>
 
               {loginData?.role ? (
                 <>
-                  <Link
-                    style={{
-                      textDecoration: "none",
-                      color: "#152C5B",
-                      marginInline: "40px",
-                    }}
+                  <StyledNavLink
+                    isActive={location.pathname === "/dashboard/favorite-room"}
+                    
                     to={"/dashboard/favorite-room"}
                   >
-                    Favorite
-                  </Link>
+                    Favorites
+                  </StyledNavLink>
+
+                  <StyledNavLink
+                    isActive={location.pathname === "/dashboard/all-bookings"}
+                    
+                    to={"/dashboard/all-bookings"}
+                  >
+                    All Bookings
+                  </StyledNavLink>
 
                   <Select
                     sx={selectStyle}
@@ -152,18 +166,7 @@ export default function Layout(props: Props) {
                 </>
               ) : (
                 <>
-                  <Link
-                    className="nav-button"
-                    style={{
-                      textDecoration: "none",
-                      color: "#152C5B",
-                      marginInline: "30px",
-                    }}
-                    to={"/"}
-                  >
-                    Login Now
-                  </Link>
-                  <Link
+                     <NavLink
                     className="nav-button"
                     style={{
                       textDecoration: "none",
@@ -173,7 +176,19 @@ export default function Layout(props: Props) {
                     to={"/register"}
                   >
                     Register
-                  </Link>
+                  </NavLink>
+                  <NavLink
+                    className="nav-button"
+                    style={{
+                      textDecoration: "none",
+                      color: "#152C5B",
+                      marginInline: "30px",
+                    }}
+                    to={"/login"}
+                  >
+                    Login Now
+                  </NavLink>
+             
                 </>
               )}
             </Box>
@@ -196,7 +211,7 @@ export default function Layout(props: Props) {
               },
             }}
           >
-            {/* for mobile */}
+            {/* -----------------for mobile--------------------- */}
             <Box onClick={handleDrawerToggle} sx={{ textAlign: "center" }}>
               <Typography
                 variant="h6"
@@ -204,7 +219,7 @@ export default function Layout(props: Props) {
                 sx={{
                   my: 2,
                   color: "#3252df",
-                  paddingLeft: "30px",
+                  paddingLeft: "10px",
                 }}
               >
                 Stay
@@ -217,7 +232,7 @@ export default function Layout(props: Props) {
                   <ListItemButton sx={{ textAlign: "center" }}>
                     <ListItemText
                       primary="Home"
-                      onClick={() => navigate("/dashboard")}
+                      onClick={() => navigate("/dashboard/homepage")}
                     />
                   </ListItemButton>
                 </ListItem>
@@ -234,8 +249,16 @@ export default function Layout(props: Props) {
                     <ListItem disablePadding>
                       <ListItemButton sx={{ textAlign: "center" }}>
                         <ListItemText
-                          primary="Favorite"
+                          primary="Favorites"
                           onClick={() => navigate("/dashboard/favorite-room")}
+                        />
+                      </ListItemButton>
+                    </ListItem>
+                    <ListItem disablePadding>
+                      <ListItemButton sx={{ textAlign: "center" }}>
+                        <ListItemText
+                          primary="All Bookings"
+                          onClick={() => navigate("/dashboard/all-bookings")}
                         />
                       </ListItemButton>
                     </ListItem>
@@ -261,11 +284,13 @@ export default function Layout(props: Props) {
                   </>
                 ) : (
                   <>
+               
+
                     <ListItem disablePadding>
                       <ListItemButton sx={{ textAlign: "center" }}>
                         <ListItemText
-                          primary="Login Now"
-                          onClick={() => navigate("/")}
+                          primary=" Register"
+                          onClick={() => navigate("/register")}
                         />
                       </ListItemButton>
                     </ListItem>
@@ -273,8 +298,8 @@ export default function Layout(props: Props) {
                     <ListItem disablePadding>
                       <ListItemButton sx={{ textAlign: "center" }}>
                         <ListItemText
-                          primary=" Register"
-                          onClick={() => navigate("/register")}
+                          primary="Login Now"
+                          onClick={() => navigate("/login")}
                         />
                       </ListItemButton>
                     </ListItem>

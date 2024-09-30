@@ -4,6 +4,7 @@ import { RouterProvider, createBrowserRouter } from "react-router-dom";
 
 import AddRoom from "./modules/Admin/components/Rooms/AddRoom";
 import AdsList from "./modules/Admin/components/AdsList/AdsList";
+import AllBookings from "./modules/User/components/AllBookings/AllBookings";
 import AllRooms from "./modules/User/components/AllRooms/AllRooms";
 import { AuthContext } from "./context/authcontext";
 import AuthLayout from "./modules/Shared/components/AuthLayout/AuthLayout";
@@ -18,13 +19,13 @@ import Login from "./modules/Auth/components/Login/Login";
 import MasterLayout from "./modules/Shared/components/MasterLayout/MasterLayout";
 import NotFound from "./modules/Shared/components/NotFound/NotFound";
 import Payment from "./modules/User/components/Payment/Payment";
+import ProtectedRoute from "./modules/Shared/components/ProtectedRoute/ProtectedRoute";
 import Register from "./modules/Auth/components/Register/Register";
 import ResetPassword from "./modules/Auth/components/ResetPassword/ResetPassword";
 import RoomDetail from "./modules/User/components/RoomDetails/RoomDetail";
 import Rooms from "./modules/Admin/components/Rooms/Rooms";
 import Users from "./modules/Admin/components/Users/Users";
 import { useContext } from "react";
-import ProtectedRoute from "./modules/Shared/components/ProtectedRoute/ProtectedRoute";
 
 function App() {
   const { loginData }: any = useContext(AuthContext);
@@ -51,8 +52,8 @@ function App() {
         { path: "homepage", element: <Homepage /> },
         { path: "all-rooms", element: <AllRooms /> },
         { path: "room-details/:roomId", element: <RoomDetail /> },
-        { path: "payment", element: <Payment/> },
-
+        { path: "all-bookings", element: <AllBookings /> },
+        { path: "payment ", element: <Payment /> },
         // Protected Routes: Only accessible to admins
         {
           path: "home",
@@ -120,6 +121,8 @@ function App() {
             </ProtectedRoute>
           ),
         },
+
+        
         {
           path: "change-password",
           element: (
