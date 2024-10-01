@@ -187,65 +187,6 @@ export default function AllRooms() {
               ))}
             </Grid2>
 
-            {/* <ImageList cols={3} sx={{ width: "100%" }}>
-      
-          {roomList.map((room: any) => (
-           
-              <ImageListItem className="ImgList" key={room._id} sx={{ m: 2 }}>
-                <ImageListItemBar
-                  title={"$" + room.price + "" +" per night"}
-                  position="top"
-                  sx={{
-                    textAlign: "center",
-                    display:"flex",
-                    justifyContent:"end",
-                    borderTopRightRadius: "15px",
-                    borderBottomLeftRadius: "15px",            
-                    left:{xs:"35%",md:"50%"},
-                    width:{xs:"85%",md:"50%"},
-                    fontWeight:500,
-                    backgroundColor:"#FF498B",
-                    fontSize:{xs:"6px", sm:"13px",md:"16px"}
-                  }}
-                />
-   
-              <Box component="img"
-                  alt="img-room"
-                  src={room?.images[0]}
-                  loading="lazy"
-                  sx={{
-                  
-                    height:{xs:"120px",sm:"160px",md:"215px"},
-                    borderRadius: "15px",
-                    width:"100%",
-                    
-                  }}
-                />
-
-                <Box className="LayerIcon">
-                  <Box className="IconsBar">
-<Tooltip title="Details Room">
-<VisibilityIcon fontSize="large" onClick={()=>navigate(``)}/>
-</Tooltip>
-<Tooltip title="Add To Favorite">
-<FavoriteIcon fontSize="large" onClick={()=>addToFav(room._id)} sx={{marginLeft:"15px"}}/>
-</Tooltip>
- 
-               
-                  </Box>
-
-
-                </Box>
-
-              </ImageListItem>
-           
-          ))}
-        </ImageList> */}
-
-            {/* <Box  sx={{display:"flex", justifyContent:"center", my:4, height:"30%"}}>
-      <Pagination page={page} count={totalPages} onChange={(e, value) => setPage(value)} color="primary" variant="outlined" shape="rounded"  />
-     
-    </Box>  */}
           </Container>): <NoData/>}
     
       
