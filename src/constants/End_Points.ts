@@ -35,7 +35,7 @@ export const roomsUrl = {
 
 const Base_Ads = `${Base_Url}/admin/ads`;
 export const Ads_URls = {
-  gitAds: `${Base_Ads}`,
+  getAds: `${Base_Ads}`,
   addAds: `${Base_Ads}`,
   updateAds: (id: string): string => `${Base_Ads}/${id}`,
   deleteAds: (id: string): string => `${Base_Ads}/${id}`,
@@ -53,4 +53,26 @@ export const getDashboard = `${Base_Url}/admin/dashboard`;
 const Base_Portal = `${Base_Url}/portal`;
 export const RoomsUrl = {
   getAllRoom: `${Base_Portal}/rooms/available?page=1&size=10&startDate=2023-01-20&endDate=2023-01-30`,
+  getRoomDetails: (roomId: string) => `${Base_Portal}/rooms/${roomId}`,
+};
+
+export const favoriteUrl = {
+  getAllFavorites: `${Base_Portal}/favorite-rooms`,
+  delete: (id: string) => `${Base_Portal}/favorite-rooms/${id}`,
+  add: `${Base_Portal}/favorite-rooms`,
+};
+const Base_comment = `${Base_Url}/portal/room-comments`;
+export const CommentUrls = {
+  getAllComments: `${Base_comment}`,
+  createComment: `${Base_comment}`,
+};
+
+const Base_review = `${Base_Url}/portal/room-reviews`;
+export const ReviewsUrls = {
+  createReview: `${Base_review}`,
+};
+
+const BaseUserBookings = `${Base_Url}/portal/booking`;
+export const UserBookingsUrl = {
+  createBooking: `${BaseUserBookings}`,
 };

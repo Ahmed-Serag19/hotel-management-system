@@ -6,10 +6,17 @@ interface AuthData {
   loginData: any;
   logout: () => void;
 }
-export let AuthContext = createContext<AuthData | null>(null);
+interface User {
+  _id: string;
+  role: string;
+  verified: boolean;
+  iat: number;
+  exp: number;
+}
+export const AuthContext = createContext<AuthData | null>(null);
 
 export default function AuthContextProvider(props: any) {
-  const [loginData, setLoginData] = useState(null);
+  const [loginData, setLoginData] = useState<User | null>(null);
   const saveLoginData = () => {
     const encodedToken: any = localStorage.getItem("token");
     const decodedToken: any = jwtDecode(encodedToken);

@@ -1,17 +1,18 @@
-import { useForm } from "react-hook-form";
 import {
   Box,
+  Button,
   Card,
   CardContent,
-  TextField,
-  Typography,
-  Button,
   FormControl,
   FormHelperText,
+  TextField,
+  Typography,
 } from "@mui/material";
-import axios from "axios";
+
 import { User_URls } from "../../../../constants/End_Points";
+import axios from "axios";
 import { toast } from "react-toastify";
+import { useForm } from "react-hook-form";
 
 export default function ChangePassword() {
   interface UserData {
@@ -31,7 +32,6 @@ export default function ChangePassword() {
       const response = await axios.post(User_URls.changePassword, data, {
         headers: { Authorization: localStorage.getItem("token") },
       });
-      console.log(response.data.message);
       reset();
       toast.success(response.data.message || "Password changed successfully");
     } catch (error: any) {
@@ -39,22 +39,24 @@ export default function ChangePassword() {
     }
   };
   return (
-    <Card
+    <Box
       sx={{
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        minHeight: "500px",
-        marginTop: "3rem",
-        boxShadow: "0 8px 30px rgba(0, 0, 0, 0.2)",
+         py:2,
+   
+      
+       
+        
       }}
     >
-      <Box sx={{ width: "70%" }}>
+      <Box sx={{ width:{xs:"100%",sm:"75%",md:"50%" },boxShadow:"2" ,p:3,borderRadius:"15px" }}>
         <CardContent>
           <Typography
             component="div"
-            variant="h3"
-            sx={{ marginBottom: "25px" }}
+            variant="h5"           
+            sx={{ mb: 4 , color:"#3252df" }}
           >
             Change Password
           </Typography>
@@ -124,6 +126,7 @@ export default function ChangePassword() {
                 marginTop: "30px",
                 paddingY: "15px",
                 fontWeight: "bold",
+                textTransform: "none",
               }}
             >
               Change Password
@@ -131,6 +134,6 @@ export default function ChangePassword() {
           </FormControl>
         </CardContent>
       </Box>
-    </Card>
+    </Box>
   );
 }
