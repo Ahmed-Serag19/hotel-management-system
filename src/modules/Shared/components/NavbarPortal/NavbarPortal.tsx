@@ -171,7 +171,7 @@ export default function NavbarPortal(props: Props) {
                     style={{
                       textDecoration: "none",
                       color: "#152C5B",
-                      marginRight: "40px",
+                      marginRight: "30px",
                     }}
                     to={"/register"}
                   >
@@ -182,7 +182,7 @@ export default function NavbarPortal(props: Props) {
                     style={{
                       textDecoration: "none",
                       color: "#152C5B",
-                      marginInline: "30px",
+                    
                     }}
                     to={"/login"}
                   >

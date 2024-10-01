@@ -173,6 +173,7 @@ const ReviewsSection: React.FC = () => {
               sx={{
                 backgroundColor: "#3252DF",
                 width: "25%",
+                  textTransform: "none"
               }}
             >
               Submit Review
@@ -226,6 +227,7 @@ const ReviewsSection: React.FC = () => {
                   backgroundColor: "#3252DF",
                   width: "25%",
                   alignSelf: "end",
+                    textTransform: "none"
                 }}
               >
                 Send

@@ -67,9 +67,9 @@ export default function HeroSection() {
         display: "flex",
         justifyContent: "space-between",
         alignItems: "center",
-        height: "50vh",
-        mt:"10px",
-        mb:4  ,    
+        height: {xs:"auto",md:"50vh"},
+        mb:"5%",
+          
       }}
     >
       {/* Left side: Text and Inputs */}

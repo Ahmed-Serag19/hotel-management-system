@@ -31,7 +31,7 @@ export default function MasterLayout() {
       sx={{
         display: "flex",
         height: "100vh",
-        overflow: "hidden", // Prevents body scrolling
+        overflow: "hidden", // Prevents-bodys-crolling
       }}
     >
       {/* Sidebar */}
