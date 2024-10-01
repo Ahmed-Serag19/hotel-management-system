@@ -1,12 +1,8 @@
-import { useContext, useState } from "react";
-
-import { AuthContext } from "../../../../context/authcontext";
-import { Box } from "@mui/material";
-import Footer from "../Footer/Footer";
-import NavbarPortal from "../NavbarPortal/NavbarPortal";
-import Navbar from "../Navbar/Navbar";
+import { useState } from "react";
 import { Outlet } from "react-router-dom";
+import { Box } from "@mui/material";
 import SidebarComponent from "../Sidebar/Sidebar";
+import Navbar from "../Navbar/Navbar";
 
 export default function MasterLayout() {
   const [collapsed, setCollapsed] = useState(false);
@@ -14,17 +10,6 @@ export default function MasterLayout() {
   const toggleSidebar = () => {
     setCollapsed(!collapsed);
   };
-
-  const authContext = useContext(AuthContext);
-
-  if (!authContext) {
-    // Handle case when AuthContext is not provided
-    return <div>Loading...</div>;
-  }
-
-  const { loginData } = authContext;
-
-  console.log(loginData);
 
   return (
     <Box
@@ -35,35 +20,22 @@ export default function MasterLayout() {
       }}
     >
       {/* Sidebar */}
-      {/* <Box
+      <Box
         component="nav"
         sx={{
-          height: "100vh",
-          width: collapsed ? "102px" : "243px", // Collapsed or expanded width
+          position: "sticky",
+          top: 0,
+          left: 0,
+          width: collapsed ? "75px" : "243px", // Collapsed or expanded width
+          height: "100vh", // Ensure it takes full height
           transition: "width 0.3s",
           overflowX: "hidden", // Prevent horizontal scroll when collapsed
+          bgcolor: "#f0f0f0", // Sidebar background color (optional)
+          zIndex: 1000, // Ensure it stays on top of the content
         }}
       >
-        <Sidebarr onToggle={toggleSidebar} collapsed={collapsed} />
-      </Box> */}
-      {loginData?.role === "admin" && (
-        <Box
-          component="nav"
-          sx={{
-            position: "sticky",
-            top: 0,
-            left: 0,
-            width: collapsed ? "75px" : "243px",
-            height: "100vh",
-            transition: "width 0.3s",
-            overflowX: "hidden",
-            bgcolor: "#f0f0f0",
-            zIndex: 1000,
-          }}
-        >
-          <SidebarComponent onToggle={toggleSidebar} collapsed={collapsed} />
-        </Box>
-      )}
+        <SidebarComponent onToggle={toggleSidebar} collapsed={collapsed} />
+      </Box>
 
       {/* Main Content (Outlet) */}
       <Box
@@ -71,25 +43,13 @@ export default function MasterLayout() {
         sx={{
           flexGrow: 1,
           height: "100vh",
-          overflowY: "auto",
-          padding: loginData?.role === "admin" ? 2 : 0,
-          paddingX: loginData?.role === "admin" ? 2 : 0,
-
-          // bgcolor: loginData?.role === "admin" ? "#fafafa" : "white",
+          overflowY: "auto", // Enables scrolling for the main content
+          padding: 2,
+          bgcolor: "#fafafa", // Background color for the main content (optional)
         }}
       >
-        {loginData?.role === "admin" && <Navbar />}
-        {loginData?.role !== "admin" && <NavbarPortal />}
-        <Box
-          sx={{
-            padding: loginData?.role === "admin" ? 2 : 2,
-            paddingX: loginData?.role === "admin" ? 2 : 6,
-            minHeight: "calc(100vh - 290px)",
-          }}
-        >
-          <Outlet />
-        </Box>
-        {loginData?.role !== "admin" && <Footer />}
+        <Navbar />
+        <Outlet />
       </Box>
     </Box>
   );

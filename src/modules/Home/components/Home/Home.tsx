@@ -1,14 +1,10 @@
-import { Box, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
-
-import CircleChart from "../Chart/Chart";
-import Footer from "../../../Shared/components/Footer/Footer";
-import Layout from "../../../Shared/components/NavbarPortal/NavbarPortal";
-import UsersChart from "../Chart/UsersChart";
+import { Box, Typography } from "@mui/material";
 import WorkTwoToneIcon from "@mui/icons-material/WorkTwoTone";
 import axios from "axios";
 import { getDashboard } from "../../../../constants/End_Points";
-import { toast } from "react-toastify";
+import CircleChart from "../Chart/Chart";
+import UsersChart from "../Chart/UsersChart";
 
 interface BookingData {
   completed: number;
@@ -35,6 +31,7 @@ export default function Home() {
       const response = await axios.get(getDashboard, {
         headers: { Authorization: localStorage.getItem("token") },
       });
+      console.log(response?.data?.data);
       setRooms(response?.data?.data.rooms);
       setFacilities(response?.data?.data.facilities);
       setAds(response?.data?.data.ads);
@@ -47,7 +44,7 @@ export default function Home() {
         user: response?.data?.data.users.user,
       });
     } catch (error) {
-      toast.error(error as string);
+      console.log(error);
     }
   };
 
@@ -57,7 +54,6 @@ export default function Home() {
 
   return (
     <>
-      {/* <Layout /> */}
       <Box
         sx={{
           display: "flex",
@@ -156,7 +152,6 @@ export default function Home() {
           <UsersChart users={users} />
         </Box>
       </Box>
-      {/* <Footer /> */}
     </>
   );
 }

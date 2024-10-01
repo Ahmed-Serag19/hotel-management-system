@@ -1,3 +1,4 @@
+import ImgLogin from "../../../../assets/images/login.png";
 import {
   Box,
   FormControl,
@@ -7,23 +8,20 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
+import Stack from "@mui/material/Stack";
+import Button from "@mui/material/Button";
+import OutlinedInput from "@mui/material/OutlinedInput";
 import { Link, useNavigate } from "react-router-dom";
 import { useContext, useState } from "react";
-
-import { AuthContext } from "../../../../context/authcontext";
-import Button from "@mui/material/Button";
-import { EmailValidation } from "../../../../constants/Validations";
-import ImgLogin from "../../../../assets/images/login.png";
-import InputAdornment from "@mui/material/InputAdornment";
-import OutlinedInput from "@mui/material/OutlinedInput";
-import Stack from "@mui/material/Stack";
-import { User_URls } from "../../../../constants/End_Points";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
-import axios from "axios";
-import { jwtDecode } from "jwt-decode";
-import { toast } from "react-toastify";
+import InputAdornment from "@mui/material/InputAdornment";
 import { useForm } from "react-hook-form";
+import axios from "axios";
+import { User_URls } from "../../../../constants/End_Points";
+import { AuthContext } from "../../../../context/authcontext";
+import { toast } from "react-toastify";
+import { EmailValidation } from "../../../../constants/Validations";
 
 type DataLogin = {
   email: string;
@@ -54,24 +52,13 @@ export default function Login() {
   const onSubmit = async (data: DataLogin) => {
     try {
       let response = await axios.post(User_URls.login, data);
-
-      const token = response.data.data.token;
-      localStorage.setItem("token", token);
-
-      const decodedToken: any = jwtDecode(token);
-
-      const role = decodedToken.role;
-
+      console.log(response);
+      localStorage.setItem("token", response.data.data.token);
       saveLoginData();
       toast.success(response.data.message || "Login Successfully");
-
-      if (role === "admin") {
-        navigate("/dashboard/home");
-      } else {
-        navigate("/dashboard/homepage");
-      }
+      navigate("/dashboard");
     } catch (error: any) {
-      toast.error(error.response?.data?.message || "An error occurred");
+      toast.error(error.response.data.message || "An error occurred");
     }
   };
 
@@ -265,7 +252,7 @@ export default function Login() {
           >
             <Stack
               sx={{
-                height: "97vh",
+                height: "100vh",
                 backgroundImage: `url(${ImgLogin})`,
                 backgroundSize: "cover",
                 backgroundPosition: "100% 100%",
