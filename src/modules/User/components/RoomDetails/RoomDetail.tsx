@@ -1,11 +1,5 @@
 import "react-date-range/dist/styles.css";
 import "react-date-range/dist/theme/default.css";
-<<<<<<< HEAD
-import "react-date-range/dist/styles.css";
-import "react-date-range/dist/theme/default.css";
-
-=======
->>>>>>> 9d2b32e1397df4a51967312416858d80e3a7f84a
 import {
   Breadcrumbs,
   Button,
@@ -15,30 +9,11 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-<<<<<<< HEAD
-import { ReviewsUrls, RoomsUrl } from "../../../../constants/End_Points";
-import { useEffect, useState } from "react";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
 
-=======
->>>>>>> 9d2b32e1397df4a51967312416858d80e3a7f84a
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid2";
-import Reviews from "./Reviews";
 import RoomImg2 from "../../../../assets/images/room img.png";
 import RoomImg3 from "../../../../assets/images/room img2.png";
-<<<<<<< HEAD
-import axios from "axios";
-import { format } from "date-fns";
-import ic_ac from "../../../../assets/images/ic_ac.png";
-import ic_bathroom from "../../../../assets/images/ic_bathroom.png";
-import ic_bedroom from "../../../../assets/images/ic_bedroom.png";
-import ic_diningroom from "../../../../assets/images/ic_diningroom 1.png";
-import ic_kulkas from "../../../../assets/images/ic_kulkas.png";
-import ic_livingroom from "../../../../assets/images/ic_livingroom.png";
-import ic_tv from "../../../../assets/images/ic_tv.png";
-import ic_wifi from "../../../../assets/images/ic_wifi.png";
-=======
 import ic_bedroom from "../../../../assets/images/ic_bedroom.png";
 import ic_livingroom from "../../../../assets/images/ic_livingroom.png";
 import ic_bathroom from "../../../../assets/images/ic_bathroom.png";
@@ -58,7 +33,6 @@ import { RoomsUrl, UserBookingsUrl } from "../../../../constants/End_Points";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import ReviewsSection from "./ReviewsSection";
 import { toast } from "react-toastify";
->>>>>>> 9d2b32e1397df4a51967312416858d80e3a7f84a
 
 type Facility = {
   _id: string;
