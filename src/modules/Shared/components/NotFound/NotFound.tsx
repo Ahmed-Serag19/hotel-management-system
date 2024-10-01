@@ -1,12 +1,7 @@
 import { Link } from "react-router-dom";
 import Not from "../../../../assets/images/notfound.jpg";
 import { Box, Button } from "@mui/material";
-import { useContext } from "react";
-import { AuthContext } from "../../../../context/authcontext";
-
 export default function NotFound() {
-  const { loginData }: any = useContext(AuthContext);
-
   return (
     <>
       <Box
@@ -40,11 +35,7 @@ export default function NotFound() {
             variant="contained"
           >
             <Link
-              to={
-                loginData?.role === "admin"
-                  ? "/dashboard/home"
-                  : "/dashboard/homepage"
-              }
+              to={"/dashboard"}
               style={{ textDecoration: "none", color: "white" }}
             >
               Back To Home

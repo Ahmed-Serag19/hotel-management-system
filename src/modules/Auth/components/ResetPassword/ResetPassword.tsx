@@ -1,3 +1,4 @@
+import ImgLogin from "../../../../assets/images/resetpassword.png";
 import {
   Box,
   FormControl,
@@ -9,18 +10,16 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { ConfirmPasswordValidation, EmailValidation, PasswordValidation } from "../../../../constants/Validations";
-import { Link, useNavigate } from "react-router-dom";
-
-import Button from "@mui/material/Button";
-import ImgLogin from "../../../../assets/images/resetpassword.png";
 import Stack from "@mui/material/Stack";
-import { User_URls } from "../../../../constants/End_Points";
+import Button from "@mui/material/Button";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
-import axios from "axios";
-import { toast } from "react-toastify";
+import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import axios from "axios";
+import { User_URls } from "../../../../constants/End_Points";
+import { toast } from "react-toastify";
+import { ConfirmPasswordValidation, EmailValidation, PasswordValidation } from "../../../../constants/Validations";
 import { useState } from "react";
 
 type DataForget = {
@@ -29,14 +28,7 @@ type DataForget = {
   password: string;
   confirmPassword: string;
 };
-const css = `
- .css-1jk99ih-MuiInputBase-input-MuiOutlinedInput-input,
- .css-lc42l8-MuiInputBase-input-MuiOutlinedInput-input {
-height: 12px !important;
-padding:  12px !important;
-}
 
-`
 export default function ResetPassword() {
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
@@ -71,13 +63,11 @@ export default function ResetPassword() {
   };
 
   return (
-    
     <div>
-        <style type="text/css">{css}</style>
       <Box
         sx={{
           height: "100vh",
-          overflow: { xs: "auto"},
+          overflow: { xs: "auto", md: "hidden" },
         }}
       >
         <Grid2 container>
@@ -87,11 +77,11 @@ export default function ResetPassword() {
           >
             <Stack
               sx={{ marginLeft: "3%", marginTop: "20px" }}
-              height={{ xs: "6%", sm: "9%" }}
+              height={{ xs: "6%", sm: "13%" }}
             >
               <Typography
                 variant="h5"
-                style={{ fontSize: "26px", fontWeight: "600" }}
+                style={{ fontSize: "26px", fontWeight: "500" }}
                 component="p"
               >
                 <span style={{ color: "#3252DF" }}>Stay</span>
@@ -110,31 +100,29 @@ export default function ResetPassword() {
               <Stack>
                 <Typography
                   variant="h5"
-                  style={{ fontSize: "20px", fontWeight: "600" }}
+                  style={{ fontSize: "30px", fontWeight: "500" }}
                 >
                   Reset Password
                 </Typography>
-                <Typography className=""
+                <Typography
                   component="p"
                   sx={{
                     fontFamily: "Poppins",
-                    fontSize: "13px",
+                    fontSize: "16px",
                     fontWeight: "500",
-                    marginY: 2,
-                  
+                    marginY: 3,
                   }}
                 >
-                  <span>If you already have an account register</span>
+                  <span>If you don’t have an account register</span>
                   <br />
                   <span>
                     You can {""}
                     <Link
-                      to={"/login"}
+                      to={"/register"}
                       style={{
-                        color: "#eb5148",
+                        color: "#152C5B",
                         textDecoration: "none",
                         fontWeight: "600",
-
                       }}
                     >
                      Login here !
@@ -152,7 +140,7 @@ export default function ResetPassword() {
                 <label
                   htmlFor="email"
                   style={{
-                    fontSize: "15px",
+                    fontSize: "16px",
                     fontWeight: 400,
                     color: "#152C5B",
                   }}
@@ -181,7 +169,7 @@ export default function ResetPassword() {
                 <label
                   htmlFor="seed"
                   style={{
-                    fontSize: "15px",
+                    fontSize: "16px",
                     fontWeight: 400,
                     color: "#152C5B",
                   }}
@@ -216,7 +204,7 @@ export default function ResetPassword() {
                 <label
                   htmlFor="password"
                   style={{
-                    fontSize: "15px",
+                    fontSize: "16px",
                     fontWeight: 400,
                     color: "#152C5B",
                     marginTop: "10px",
@@ -260,7 +248,7 @@ export default function ResetPassword() {
                 <label
                   htmlFor="ConfirmPassword"
                   style={{
-                    fontSize: "15px",
+                    fontSize: "16px",
                     fontWeight: 400,
                     color: "#152C5B",
                     marginTop: "10px",
@@ -301,9 +289,8 @@ export default function ResetPassword() {
                   </FormHelperText>
                 )}
 
-                <Stack sx={{ my: 2 }} spacing={2} direction="row">
+                <Stack sx={{ my: 4 }} spacing={2} direction="row">
                   <Button
-                   variant="contained"
                     disabled={isSubmitting}
                     type="submit"
                     sx={{
@@ -313,7 +300,7 @@ export default function ResetPassword() {
                       fontSize: "17px",
                       fontWeight: 500,
                     }}
-                   
+                    variant="contained"
                   >
                     Reset
                   </Button>
@@ -322,23 +309,19 @@ export default function ResetPassword() {
             </Stack>
           </Grid2>
 
-
-
           <Grid2
             display={{ xs: "none", md: "inline" }}
             size={{ xs: 12, md: 6 }}
-          
           >
             <Stack
               sx={{
-                height: "97vh",
+                height: "100vh",
                 backgroundImage: `url(${ImgLogin})`,
                 backgroundSize: "cover",
                 backgroundPosition: "100% 100%",
                 backgroundRepeat: "no-repeat",
                 margin: "10px",
                 borderRadius: "15px",
-                
               }}
             ></Stack>
           </Grid2>

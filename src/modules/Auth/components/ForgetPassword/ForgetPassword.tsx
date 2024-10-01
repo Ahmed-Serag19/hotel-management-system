@@ -1,3 +1,4 @@
+import ImgLogin from "../../../../assets/images/forgetpassword.png";
 import {
   Box,
   FormControl,
@@ -6,16 +7,14 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { Link, useNavigate } from "react-router-dom";
-
-import Button from "@mui/material/Button";
-import { EmailValidation } from "../../../../constants/Validations";
-import ImgLogin from "../../../../assets/images/forgetpassword.png";
 import Stack from "@mui/material/Stack";
-import { User_URls } from "../../../../constants/End_Points";
-import axios from "axios";
-import { toast } from "react-toastify";
+import Button from "@mui/material/Button";
+import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import axios from "axios";
+import { User_URls } from "../../../../constants/End_Points";
+import { toast } from "react-toastify";
+import { EmailValidation } from "../../../../constants/Validations";
 
 type DataForget = {
   email: string;
@@ -170,7 +169,7 @@ export default function ForgetPassword() {
           >
             <Stack
               sx={{
-                height: "97vh",
+                height: "100vh",
                 backgroundImage: `url(${ImgLogin})`,
 
                 backgroundSize: "cover",
