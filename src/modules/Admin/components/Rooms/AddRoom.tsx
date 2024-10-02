@@ -262,13 +262,15 @@ export default function AddRoomForm() {
           rules={{ required: "At least one facility is required" }}
           render={({ field }) => (
             <Select
+              error={!!errors.facilities}
               {...field}
               multiple
               displayEmpty
-              value={selectedFacilities}
-              onChange={(e) =>
+              value={field.value || selectedFacilities}
+              onChange={(e) =>{
+                field.onChange(e.target.value as string[]);
                 setSelectedFacilities(e.target.value as string[])
-              }
+              }}
               renderValue={(selected) => {
                 if (selected.length === 0) {
                   return <em>Select Facilities</em>;
