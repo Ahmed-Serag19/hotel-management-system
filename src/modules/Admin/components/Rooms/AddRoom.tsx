@@ -108,7 +108,6 @@ export default function AddRoomForm() {
 
   const [facilities, setFacilities] = useState<Facility[]>([]);
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
-  const [existingImages, setExistingImages] = useState<string[]>([]);
   const [selectedFacilities, setSelectedFacilities] = useState<string[]>([]);
 
   const location = useLocation();
@@ -123,7 +122,6 @@ export default function AddRoomForm() {
       setValue("capacity", roomToEdit.capacity);
       setValue("discount", roomToEdit.discount);
       setSelectedFacilities(roomToEdit.facilities.map((f) => f._id));
-      setExistingImages(roomToEdit.images);
     }
   }, [roomToEdit, setValue]);
 
@@ -144,11 +142,6 @@ export default function AddRoomForm() {
     setSelectedFiles((prev) => [...prev, ...acceptedFiles]);
   };
 
-  // Handle deletion of existing images
-  const handleDeleteExistingImage = (image: string) => {
-    setExistingImages((prev) => prev.filter((img) => img !== image));
-  };
-
   // Handle deletion of newly uploaded files before submission
   const handleDeleteSelectedFile = (file: File) => {
     setSelectedFiles((prev) => prev.filter((f) => f !== file));
@@ -165,14 +158,9 @@ export default function AddRoomForm() {
       formData.append("facilities", facilityId); // Append multiple facilities
     });
 
-    // Append existing images URLs
-    existingImages.forEach((image) => {
-      formData.append("existingImages", image); // Assuming backend can handle existing images separately
-    });
-
     // Append new uploaded images
     selectedFiles.forEach((file) => {
-      formData.append("newImages", file);
+      formData.append("imgs", file);
     });
 
     try {
@@ -191,7 +179,6 @@ export default function AddRoomForm() {
       }
       reset();
       setSelectedFiles([]);
-      setExistingImages([]);
       navigate("/dashboard/rooms"); // Navigate back to rooms list after saving
     } catch (error: any) {
       console.error("Failed to create/update room", error);
@@ -308,49 +295,6 @@ export default function AddRoomForm() {
           </FormHelperText>
         )}
 
-        {/* Existing Images */}
-        {roomToEdit && (
-          <>
-            <Typography variant="subtitle1" gutterBottom>
-              Existing Images:
-            </Typography>
-            {existingImages.length > 0 ? (
-              <Box display="flex" gap={2} flexWrap="wrap" mb={2}>
-                {existingImages.map((image, index) => (
-                  <Box key={index} position="relative">
-                    <img
-                      src={image}
-                      alt={`Existing room ${index}`}
-                      style={{
-                        width: "100px",
-                        height: "100px",
-                        objectFit: "cover",
-                        borderRadius: "8px",
-                      }}
-                    />
-                    <IconButton
-                      size="small"
-                      onClick={() => handleDeleteExistingImage(image)}
-                      sx={{
-                        position: "absolute",
-                        top: -10,
-                        right: -10,
-                        backgroundColor: "#fff",
-                        color: "#f44336",
-                        "&:hover": { backgroundColor: "#fff" },
-                      }}
-                    >
-                      <DeleteIcon fontSize="small" />
-                    </IconButton>
-                  </Box>
-                ))}
-              </Box>
-            ) : (
-              <Typography>No existing images</Typography>
-            )}
-          </>
-        )}
-
         {/* Dropzone for new images */}
         <Dropzone onDrop={onDrop} accept={{ "image/*": [] }} multiple>
           {({ getRootProps, getInputProps }) => (
@@ -394,7 +338,6 @@ export default function AddRoomForm() {
             ))}
           </List>
         )}
-
         {/* Form Actions */}
         <Stack direction="row" justifyContent="flex-end" spacing={2} mt={4}>
           <CancelButton onClick={() => navigate("/dashboard/rooms")}>
