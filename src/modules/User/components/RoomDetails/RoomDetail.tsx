@@ -52,10 +52,6 @@ type RoomDetails = {
   };
   images: string[];
 };
-function handleClick(event: React.MouseEvent<HTMLDivElement, MouseEvent>) {
-  event.preventDefault();
-  console.info("You clicked a breadcrumb.");
-}
 
 function RoomDetail() {
   const { roomId } = useParams();
@@ -113,15 +109,16 @@ function RoomDetail() {
           bookingData,
           {
             headers: {
-              Authorization: `Bearer ${token}`,
+              Authorization: `${token}`,
             },
           }
         );
 
         // Handle success response
-        toast.success("Booking successful!");
-        console.log(response.data); // You can log or redirect after booking
-        navigate("/dashboard/bookings"); // Redirect user after booking
+        if(response.data.success == true){
+          toast.success(response.data.message);
+          navigate(`/dashboard/payment/${response.data.data.booking._id}`) // Redirect user after booking
+        }
       } catch (error) {
         // Handle error during booking
         console.error("Error creating booking:", error);
@@ -143,7 +140,7 @@ function RoomDetail() {
         } else {
           throw new Error("Room data is missing from the response");
         }
-      } catch (error: any) {
+      } catch (error) {
         console.error("Error fetching room details:", error);
         setError("Error fetching room details. Please try again later.");
         setLoading(false); // Turn off loading state
