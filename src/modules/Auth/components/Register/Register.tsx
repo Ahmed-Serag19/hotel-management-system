@@ -429,7 +429,7 @@ export default function Register() {
             <Stack
             className="img-Register"
               sx={{
-                height:{md:"130vh"},
+                height:{md:"130vh", xl:"97vh"},
                 backgroundImage: `url(${RegisterImg})`,
                 backgroundSize: " cover",
                 backgroundRepeat: "no-repeat",
