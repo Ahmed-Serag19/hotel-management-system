@@ -26,6 +26,8 @@ export default function AllRooms() {
   const [page, setPage] = useState(0);
   const [totalPages, setTotalPages] = useState(1);
   const pageSize = 10;
+  const defaultStartDate = "2023-01-20";
+  const defaultEndDate = "2023-09-30";
 
   const handleRoomClick = (
     roomId: string,
@@ -37,13 +39,14 @@ export default function AllRooms() {
     navigate(`/dashboard/room-details/${roomId}`, {
       state: {
         capacity: capacity || 2, // Default to 2 if not provided
-        startDate: startDate || format(new Date(), "yyyy-MM-dd"), // Default to today
-        endDate: endDate || format(new Date(), "yyyy-MM-dd"), // Default to today
+        startDate: startDate ||  defaultStartDate || format(new Date(), "yyyy-MM-dd") ,
+        endDate: endDate || defaultEndDate ||format(new Date(), "yyyy-MM-dd"), 
       },
     });
   };
 
-  // Fetch all rooms with optional startDate, endDate, and capacity
+ 
+  //Fetch all rooms with optional startDate, endDate, and capacity
   let getAllRoom = async (page: number) => {
     try {
       let response = await axios.get(`${RoomsUrl.getAllRoom}/available`, {
@@ -52,10 +55,10 @@ export default function AllRooms() {
           size: pageSize,
           startDate: startDate
             ? format(new Date(startDate), "yyyy-MM-dd")
-            : format(new Date(), "yyyy-MM-dd"),
+            : defaultStartDate || format(new Date(), "yyyy-MM-dd")  ,
           endDate: endDate
             ? format(new Date(endDate), "yyyy-MM-dd")
-            : format(new Date(), "yyyy-MM-dd"),
+            : defaultEndDate || format(new Date(), "yyyy-MM-dd") ,
           capacity: capacity || 2, // Default capacity to 2
         },
       });
@@ -68,8 +71,7 @@ export default function AllRooms() {
     } catch (error: any) {
       console.log("Failed to fetch rooms", error);
     }
-  };
-
+ };
   let addToFav = async (id: string) => {
     try {
       let response = await axios.post(

@@ -116,9 +116,22 @@ body {
     border-radius: 5px;
     cursor: pointer;
 }
-
+.cancel-btn{
+  text-transform: uppercase;
+  background-color: #d0d1d3;
+  border: none;
+  color: #152C5B;
+  font-weight: 700;
+  padding-block: 15px;
+  border-radius: 5px;
+  cursor: pointer;
+}
 .submit-btn:hover{
   background-color:#152C5B;
+}
+
+.cancel-btn:hover{
+  background-color:#8d8e91;
 }
 .PaymentIcon{
 transform: translateY(7px) !important;
