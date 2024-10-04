@@ -323,16 +323,21 @@ export default function ResetPassword() {
           >
             <Stack
               sx={{
-                height: "97vh",
-                backgroundImage: `url(${ImgLogin})`,
-                backgroundSize: "cover",
-                backgroundPosition: "100% 100%",
-                backgroundRepeat: "no-repeat",
-                margin: "10px",
-                borderRadius: "15px",
+                // height: "97vh",
+                // backgroundImage: `url(${ImgLogin})`,
+                // backgroundSize: "cover",
+                // backgroundPosition: "100% 100%",
+                // backgroundRepeat: "no-repeat",
+                // margin: "10px",
+                // borderRadius: "15px",
                 
               }}
-            ></Stack>
+       
+            >
+
+
+<img  src={ImgLogin} style={{width:"97%",margin: "10px"}}/>
+            </Stack>
           </Grid2>
         </Grid2>
       </Box>

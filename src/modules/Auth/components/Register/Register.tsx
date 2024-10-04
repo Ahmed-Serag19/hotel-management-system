@@ -419,16 +419,18 @@ export default function Register() {
           {/* Grid2 for Image */}
           <Grid2 display={{ xs: "none", md: "block" }} size={{ xs: 12, md: 6 }}>
             <Stack
-              sx={{
-                height: "97vh",
-                backgroundImage: `url(${RegisterImg})`,
-                backgroundSize: "cover",
-                backgroundPosition: "100% 100%",
-                backgroundRepeat: "no-repeat",
-                margin: "10px",
-                borderRadius: "15px",
-              }}
-            ></Stack>
+              // sx={{
+              //   height: "97vh",
+              //   backgroundImage: `url(${RegisterImg})`,
+              //   backgroundSize: "cover",
+              //   backgroundPosition: "100% 100%",
+              //   backgroundRepeat: "no-repeat",
+              //   margin: "10px",
+              //   borderRadius: "15px",
+              // }}
+            >
+              <img  src={RegisterImg} style={{width:"97%",margin: "10px"}}/>
+            </Stack>
           </Grid2>
         </Grid2>
       </Box>

@@ -12,23 +12,30 @@ import PaymentIcon from "@mui/icons-material/Payment";
 import axios from "axios";
 import { loadStripe } from "@stripe/stripe-js";
 import { toast } from "react-toastify";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
+interface Check{
+  bookingId : string |undefined
+}
 const stripe = loadStripe(
   "pk_test_51OTjURBQWp069pqTmqhKZHNNd3kMf9TTynJtLJQIJDOSYcGM7xz3DabzCzE7bTxvuYMY0IX96OHBjsysHEKIrwCK006Mu7mKw8"
 );
 
 export default function Payment() {
-    const {bookingId} = useParams();
+
+    const {bookingId}  = useParams();
     
   return (
     <Elements stripe={stripe}>
-      <CheckoutForm bookingId={bookingId}  />
+      <CheckoutForm bookingId ={bookingId}   />
     </Elements>
   );
 }
 
+
+
 const CheckoutForm = (bookingId: string) => {
+  const navigate= useNavigate()
   const stripe = useStripe();
   const elements = useElements();
   const handelSubmit = async (e: FormEvent) => {
@@ -43,7 +50,7 @@ const CheckoutForm = (bookingId: string) => {
         toast.error(result.error.message);
       return;
     }
-    await payBooking(result.token.id, bookingId);
+    await payBooking(result.token.id, bookingId,navigate);
   };
 
   return (
@@ -71,13 +78,18 @@ const CheckoutForm = (bookingId: string) => {
           </Box>
           <AddressElement options={{ mode: "billing" }} />
           <button className="submit-btn">Pay Booking</button>
+          
+        <button className="cancel-btn" onClick={()=>navigate(-1)}>Cancel</button>
+       
         </form>
+
       </Grid2>
     </>
   );
 };
 
-const payBooking = async (token: string, bookingId: string) => {
+const payBooking = async (token: string, bookingId:any,navigate:(path:string)=> void) => {
+
   try {
     const res = await axios.post(
       `${Base_Url}/portal/booking/${bookingId.bookingId}/pay`,
@@ -89,9 +101,9 @@ const payBooking = async (token: string, bookingId: string) => {
 
     if(res.data.success == true){
         toast.success(res.data.message);
-        window.location.href = `${window.location.hostname}/all-bookings`;
+        navigate("/dashboard/all-bookings")
     }    
-  } catch (error) {
+  } catch (error:any) {
     toast.error(error.response.data.message, {
       autoClose: 5000,
     });
