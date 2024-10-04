@@ -1,20 +1,6 @@
-import {
-  Base_Img_Url,
-  RoomsUrl,
-  favoriteUrl,
-} from "../../../../constants/End_Points";
-import {
-  Box,
-  Container,
-  Grid2,
-  ImageList,
-  ImageListItem,
-  ImageListItemBar,
-  Pagination,
-  Tooltip,
-  Typography,
-} from "@mui/material";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { RoomsUrl, favoriteUrl } from "../../../../constants/End_Points";
+import { Box, Container, Grid2, Tooltip, Typography } from "@mui/material";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useContext, useEffect, useState } from "react";
 
 import { AuthContext } from "../../../../context/authcontext";
@@ -31,7 +17,7 @@ export default function AllRooms() {
   let { loginData }: any = useContext(AuthContext);
   let navigate = useNavigate();
   let location = useLocation();
-  const[isLoading,setLoading] = useState(false);
+  const [isLoading, setLoading] = useState(false);
   // Handle the incoming values from location.state
   const { startDate, endDate, capacity } = location.state || {};
 
@@ -84,8 +70,6 @@ export default function AllRooms() {
     }
   };
 
-
-
   let addToFav = async (id: string) => {
     try {
       let response = await axios.post(
@@ -102,7 +86,7 @@ export default function AllRooms() {
       if (loginData?.role === "user") {
         toast.error("Failed to add to Favorites", {
           autoClose: 5000,
-      });
+        });
       } else {
         toast.error("You need to login to add a room to Favorites");
       }
@@ -119,80 +103,81 @@ export default function AllRooms() {
 
   return (
     <>
-     {!isLoading?   (
-      <Box>
-       {roomList.length >0 ? (      <Container>
-            <HeaderUserRoom
-              title={"Explore ALL Rooms"}
-              linkTo={"all-rooms"}
-              NameLink={"Explore"}
-              Name={"ALL Rooms"}
-            />
+      {!isLoading ? (
+        <Box>
+          {roomList.length > 0 ? (
+            <Container>
+              <HeaderUserRoom
+                title={"Explore ALL Rooms"}
+                linkTo={"all-rooms"}
+                NameLink={"Explore"}
+                Name={"ALL Rooms"}
+              />
 
-            <Grid2 container>
-              {roomList.map((room: any) => (
-                <Grid2
-                  size={{ xs: 12, sm: 6, md: 4 }}
-                  sx={{ my: 2 }}
-                  key={room._id}
-                >
-                  <Box
-                    className="ImgList "
-                    sx={{ height: "215px", width: "90%" }}
+              <Grid2 container>
+                {roomList.map((room: any) => (
+                  <Grid2
+                    size={{ xs: 12, sm: 6, md: 4 }}
+                    sx={{ my: 2 }}
+                    key={room._id}
                   >
-                    <Box sx={{ position: "relative" }}>
-                      <Box
-                        component="img"
-                        alt="img-room"
-                        src={room?.images[0]}
-                        sx={{
-                          height: "215px",
-                          borderRadius: "15px",
-                          width: "100%",
-                        }}
-                      />
-                      <Box className="headerImg">
-                        <Typography>
-                          {"$" + room.price + "" + " per night"}
-                        </Typography>
+                    <Box
+                      className="ImgList "
+                      sx={{ height: "215px", width: "90%" }}
+                    >
+                      <Box sx={{ position: "relative" }}>
+                        <Box
+                          component="img"
+                          alt="img-room"
+                          src={room?.images[0]}
+                          sx={{
+                            height: "215px",
+                            borderRadius: "15px",
+                            width: "100%",
+                          }}
+                        />
+                        <Box className="headerImg">
+                          <Typography>
+                            {"$" + room.price + "" + " per night"}
+                          </Typography>
+                        </Box>
+                      </Box>
+                      <Box className="LayerIcon">
+                        <Box className="IconsBar">
+                          <Tooltip title="Details Room">
+                            <VisibilityIcon
+                              fontSize="large"
+                              onClick={() =>
+                                handleRoomClick(
+                                  room._id,
+                                  capacity,
+                                  startDate,
+                                  endDate
+                                )
+                              }
+                            />
+                          </Tooltip>
+
+                          <Tooltip title="Add To Favorite">
+                            <FavoriteIcon
+                              fontSize="large"
+                              onClick={() => addToFav(room._id)}
+                              sx={{ marginLeft: "15px" }}
+                            />
+                          </Tooltip>
+                        </Box>
                       </Box>
                     </Box>
-                    <Box className="LayerIcon">
-                      <Box className="IconsBar">
-                        <Tooltip title="Details Room">
-                          <VisibilityIcon
-                            fontSize="large"
-                            onClick={() =>
-                              handleRoomClick(
-                                room._id,
-                                capacity,
-                                startDate,
-                                endDate
-                              )
-                            }
-                          />
-                        </Tooltip>
-
-                        <Tooltip title="Add To Favorite">
-                          <FavoriteIcon
-                            fontSize="large"
-                            onClick={() => addToFav(room._id)}
-                            sx={{ marginLeft: "15px" }}
-                          />
-                        </Tooltip>
-                      </Box>
-                    </Box>
-                  </Box>
-                </Grid2>
-              ))}
-            </Grid2>
-
-        
-          </Container>): <NoData/>}
-    
-      
-      </Box>  ) : (
-        <LoadingScreen/>
+                  </Grid2>
+                ))}
+              </Grid2>
+            </Container>
+          ) : (
+            <NoData />
+          )}
+        </Box>
+      ) : (
+        <LoadingScreen />
       )}
     </>
   );

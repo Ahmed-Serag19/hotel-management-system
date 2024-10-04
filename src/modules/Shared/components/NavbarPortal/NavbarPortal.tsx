@@ -27,17 +27,18 @@ interface Props {
   window?: () => Window;
 }
 const drawerWidth = 240;
-const StyledNavLink = styled(NavLink)<{ isActive: boolean }>(({ isActive }) => ({
-  textDecoration: "none",
-  borderBottom: isActive ? "2px solid #3252df" : "2px solid #fff",
-  marginRight: "40px",
-  color: "#152C5B",
-  "&:hover": {
-    color: "#FF498B",
-  },
-}))
+const StyledNavLink = styled(NavLink)<{ isActive: boolean }>(
+  ({ isActive }) => ({
+    textDecoration: "none",
+    borderBottom: isActive ? "2px solid #3252df" : "2px solid #fff",
+    marginRight: "40px",
+    color: "#152C5B",
+    "&:hover": {
+      color: "#FF498B",
+    },
+  })
+);
 export default function NavbarPortal(props: Props) {
-
   const navigate = useNavigate();
   const { loginData }: any = useContext(AuthContext);
 
@@ -74,7 +75,8 @@ export default function NavbarPortal(props: Props) {
             >
               <MenuIcon />
             </IconButton>
-            <Typography  onClick={() => navigate("/dashboard/homepage")}
+            <Typography
+              onClick={() => navigate("/dashboard/homepage")}
               variant="h5"
               color="primary"
               sx={{
@@ -86,11 +88,11 @@ export default function NavbarPortal(props: Props) {
                 flexGrow: 1,
                 display: { xs: "none", md: "block" },
                 width: "50%",
-                cursor:"pointer",
+                cursor: "pointer",
               }}
             >
               Stay
-              <Box 
+              <Box
                 sx={{
                   color: "#152c5b",
                   display: "inline",
@@ -104,16 +106,14 @@ export default function NavbarPortal(props: Props) {
             </Typography>
             <Box sx={{ display: { xs: "none", md: "block" }, me: 4 }}>
               <StyledNavLink
-               isActive={location.pathname === "/dashboard/homepage"}
-
+                isActive={location.pathname === "/dashboard/homepage"}
                 to={"/dashboard/homepage"}
               >
                 Home
               </StyledNavLink>
 
               <StyledNavLink
-               isActive={location.pathname === "/dashboard/all-rooms"}
-            
+                isActive={location.pathname === "/dashboard/all-rooms"}
                 to={"/dashboard/all-rooms"}
               >
                 Explore
@@ -122,16 +122,14 @@ export default function NavbarPortal(props: Props) {
               {loginData?.role ? (
                 <>
                   <StyledNavLink
-                    isActive={location.pathname === "/dashboard/favorite-room"}
-                    
-                    to={"/dashboard/favorite-room"}
+                    isActive={location.pathname === "/dashboard/favorites"}
+                    to={"/dashboard/favorites"}
                   >
                     Favorites
                   </StyledNavLink>
 
                   <StyledNavLink
                     isActive={location.pathname === "/dashboard/all-bookings"}
-                    
                     to={"/dashboard/all-bookings"}
                   >
                     All Bookings
@@ -166,7 +164,7 @@ export default function NavbarPortal(props: Props) {
                 </>
               ) : (
                 <>
-                     <NavLink
+                  <NavLink
                     className="nav-button"
                     style={{
                       textDecoration: "none",
@@ -182,13 +180,11 @@ export default function NavbarPortal(props: Props) {
                     style={{
                       textDecoration: "none",
                       color: "#152C5B",
-                    
                     }}
                     to={"/login"}
                   >
                     Login Now
                   </NavLink>
-             
                 </>
               )}
             </Box>
@@ -250,7 +246,7 @@ export default function NavbarPortal(props: Props) {
                       <ListItemButton sx={{ textAlign: "center" }}>
                         <ListItemText
                           primary="Favorites"
-                          onClick={() => navigate("/dashboard/favorite-room")}
+                          onClick={() => navigate("/dashboard/favorites")}
                         />
                       </ListItemButton>
                     </ListItem>
@@ -284,8 +280,6 @@ export default function NavbarPortal(props: Props) {
                   </>
                 ) : (
                   <>
-               
-
                     <ListItem disablePadding>
                       <ListItemButton sx={{ textAlign: "center" }}>
                         <ListItemText
