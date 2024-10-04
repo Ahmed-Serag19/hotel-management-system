@@ -98,6 +98,7 @@ export default function Register() {
       >
         <Grid2 container>
           <Grid2
+          className="sideLeft"
             width={{ xs: "85%", sm: "95%", md: "50%" }}
             size={{ xs: 12, md: 6 }}
           >
@@ -172,6 +173,7 @@ export default function Register() {
                   Username
                 </label>
                 <TextField
+                className="inputRegister"
                   sx={{
                     marginTop: 1,
                     marginBottom: 1,
@@ -205,6 +207,7 @@ export default function Register() {
                       Phone Number
                     </label>
                     <TextField
+                             className="inputRegister"
                       sx={{
                         marginTop: 1,
                         marginBottom: 1,
@@ -234,6 +237,7 @@ export default function Register() {
                       Country
                     </label>
                     <TextField
+                             className="inputRegister"
                       sx={{
                         marginTop: 1,
                         marginBottom: 1,
@@ -264,6 +268,7 @@ export default function Register() {
                   Email Address
                 </label>
                 <TextField
+                         className="inputRegister"
                   sx={{
                     marginTop: 1,
                     marginBottom: 1,
@@ -290,6 +295,7 @@ export default function Register() {
                   Password
                 </label>
                 <TextField
+                         className="inputRegister"
                   sx={{
                     marginTop: 1,
                     marginBottom: 1,
@@ -330,6 +336,7 @@ export default function Register() {
                   Confirm Password
                 </label>
                 <TextField
+                         className="inputRegister"
                   sx={{
                     marginTop: 1,
                     marginBottom: 1,
@@ -385,6 +392,7 @@ export default function Register() {
                 >
                   {/* Upload a Image */}
                   <input
+                           className="inputRegister"
                     type="file"
                     id="profileImage"
                     {...register("profileImage", {
@@ -417,19 +425,20 @@ export default function Register() {
             </Stack>
           </Grid2>
           {/* Grid2 for Image */}
-          <Grid2 display={{ xs: "none", md: "block" }} size={{ xs: 12, md: 6 }}>
+          <Grid2 display={{ xs: "none", md: "block" }} size={{ xs: 12, md: 6 }} >
             <Stack
-              // sx={{
-              //   height: "97vh",
-              //   backgroundImage: `url(${RegisterImg})`,
-              //   backgroundSize: "cover",
-              //   backgroundPosition: "100% 100%",
-              //   backgroundRepeat: "no-repeat",
-              //   margin: "10px",
-              //   borderRadius: "15px",
-              // }}
+            className="img-Register"
+              sx={{
+                height:{md:"130vh"},
+                backgroundImage: `url(${RegisterImg})`,
+                backgroundSize: " cover",
+                backgroundRepeat: "no-repeat",
+                margin: "10px",
+                borderRadius: "15px",            
+                backgroundPosition: "100% 100%",
+              }}
             >
-              <img  src={RegisterImg} style={{width:"97%",margin: "10px"}}/>
+              {/* <img  src={RegisterImg} style={{width:"97%",margin: "10px"}}/> */}
             </Stack>
           </Grid2>
         </Grid2>

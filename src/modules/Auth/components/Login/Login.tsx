@@ -76,7 +76,9 @@ export default function Login() {
   };
 
   return (
-    <div>
+    <>
+    
+             
       <Box
         sx={{
           height: "100vh",
@@ -160,6 +162,7 @@ export default function Login() {
                   Email Address
                 </label>
                 <TextField
+                className="inputLogin"
                   sx={{
                     marginTop: 1,
                     marginBottom: 1,
@@ -191,6 +194,7 @@ export default function Login() {
                   Password
                 </label>
                 <OutlinedInput
+                className="inputLogin"
                   sx={{
                     marginTop: 1,
                     marginBottom: 1,
@@ -277,6 +281,6 @@ export default function Login() {
           </Grid2>
         </Grid2>
       </Box>
-    </div>
+    </>
   );
 }
