@@ -51,7 +51,7 @@ function App() {
         { path: "homepage", element: <Homepage /> },
         { path: "all-rooms", element: <AllRooms /> },
         { path: "room-details/:roomId", element: <RoomDetail /> },
-        { path: "all-bookings", element: <AllBookings /> },
+        { path: "dashboard/all-bookings", element: <AllBookings /> },
         { path: "payment/:bookingId ", element: <Payment /> },
         // Protected Routes: Only accessible to admins
         {
@@ -141,7 +141,6 @@ function App() {
           ),
         },
 
-        
         {
           path: "dashboard/change-password",
           element: (
@@ -164,7 +163,7 @@ function App() {
         { path: "reset-password", element: <ResetPassword /> },
       ],
     },
-  ]); 
+  ]);
 
   return <RouterProvider router={routes} />;
 }
