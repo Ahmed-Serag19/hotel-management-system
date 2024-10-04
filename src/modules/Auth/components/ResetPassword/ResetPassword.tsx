@@ -29,14 +29,7 @@ type DataForget = {
   password: string;
   confirmPassword: string;
 };
-const css = `
- .css-1jk99ih-MuiInputBase-input-MuiOutlinedInput-input,
- .css-lc42l8-MuiInputBase-input-MuiOutlinedInput-input {
-height: 12px !important;
-padding:  12px !important;
-}
 
-`
 export default function ResetPassword() {
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
@@ -73,7 +66,6 @@ export default function ResetPassword() {
   return (
     
     <div>
-        <style type="text/css">{css}</style>
       <Box
         sx={{
           height: "100vh",

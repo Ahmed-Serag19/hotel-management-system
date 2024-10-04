@@ -164,7 +164,7 @@ function App() {
         { path: "reset-password", element: <ResetPassword /> },
       ],
     },
-  ]);
+  ]); 
 
   return <RouterProvider router={routes} />;
 }
