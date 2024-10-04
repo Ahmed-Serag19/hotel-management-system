@@ -1,5 +1,6 @@
 import { Box, Typography } from '@mui/material'
 import { Link, NavLink, } from 'react-router-dom'
+
 interface DataRoom{
     title:string
     linkTo:any
@@ -19,7 +20,7 @@ export default function HeaderUserRoom({title,linkTo,NameLink,Name}:DataRoom) {
           {/* Explore ALL Rooms */} {title}
         </Typography>
         <Box sx={{ mb:5,fontWeight: "300", marginTop:{xs:3,md:0}, fontSize:{xs:"13px" , md:"16px"} }}>
-          <Link style={{textDecoration:"none", color: "#B0B0B0"}} to={"/dashBoard"} >Home</Link>
+          <Link style={{textDecoration:"none", color: "#B0B0B0"}} to={"/dashBoard/homepage"} >Home</Link>
           <Typography component="span" sx={{mx:2,color: "#B0B0B0" }}>/</Typography>
           <NavLink  style={{textDecoration:"none", color: "#B0B0B0"}} to={`/dashBoard/${linkTo}`} >{NameLink}</NavLink>
         </Box>

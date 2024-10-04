@@ -8,27 +8,26 @@ const Footer: React.FC = () => {
 
     <Box
       sx={{
-     ps:2,
+      
       mt:2,
-        py: 4,
-       
-        borderTop: "1px solid #e2e2e0",
+      py: 4,
+      borderTop: "1px solid #e2e2e0",
       }}
     >
-          <Container >
+     <Container >
       
   
-      {/* Container grid */}
+
       <Grid2
         container
-        sx={{ display: "flex", justifyContent: "center" }}
+        
       >
 
-      <Grid2 size={{xs:12, sm:6,md:3}} >
-      <Box >
-          <Typography
+      <Grid2 size={{xs:12,sm:6,md:3}} sx={{mb:2}} >
+      <Box  textAlign="center" >
+          <Typography 
             variant="h5"
-            sx={{ color: "#4252df", fontWeight: "bold", mb: 2 }}
+            sx={{ color: "#4252df", fontWeight: "bold", mb: 1 ,}}
           >
             Stay
             <Box component="span" sx={{ color: "#152c5b" }}>
@@ -37,19 +36,20 @@ const Footer: React.FC = () => {
           </Typography>
           <Typography
             variant="body2"
-            sx={{ color: "#9e9e9e", maxWidth: "200px" }}
+            align="center"
+            sx={{ color: "#9e9e9e"}}
           >
-            We kaboom your beauty holiday instantly and memorable.
+            We kaboom your beauty holiday <br/>instantly and memorable.
           </Typography>
         </Box>
         </Grid2>  
         {/* Brand Section */}
   
 
-      <Grid2 size={{xs:12, sm:6,md:3}}>    <Box sx={{fontFamily:"Poppins"}}>
+      <Grid2 size={{xs:12,sm:6,md:3}} sx={{mb:2}}>    <Box  textAlign="center">
           <Typography
             variant="h6"
-            sx={{ color: "#152c5b", fontWeight: 500, mb: 2 ,fontFamily:"Poppins",}}
+            sx={{ color: "#152c5b", fontWeight: 500, mb: 1 ,fontFamily:"Poppins",}}
           >
             For Beginners
           </Typography>
@@ -67,10 +67,10 @@ const Footer: React.FC = () => {
         </Box></Grid2> 
         {/* For Beginners */}
     
-        <Grid2 size={{xs:12, sm:6,md:3}}>        <Box >
+        <Grid2 size={{xs:12,sm:6,md:3}} sx={{mb:2}}>        <Box  textAlign="center" >
           <Typography 
             variant="h6"
-            sx={{ color: "#152c5b", fontWeight: 500, mb: 2 ,fontFamily:"Poppins"}}
+            sx={{ color: "#152c5b", fontWeight: 500, mb: 1 ,fontFamily:"Poppins"}}
           >
             Explore Us
           </Typography>
@@ -84,36 +84,37 @@ const Footer: React.FC = () => {
           Terms & Conditions
           </Typography>
         </Box></Grid2> 
-        {/* Explore Us */}
 
-        <Grid2 size={{xs:12, sm:6,md:3}}>  <Box >
-          <Typography
+        <Grid2 size={{xs:12,sm:6,md:3}} sx={{mb:2}}>        <Box  textAlign="center">
+          <Typography 
             variant="h6"
-            sx={{ color: "#152c5b", fontWeight: 500, mb: 2,fontFamily:"Poppins"}}
+            sx={{ color: "#152c5b", fontWeight: 500, mb:1 ,fontFamily:"Poppins"}}
           >
-            Contact Us
+             Contact Us
           </Typography>
           <Typography variant="body2" sx={{ color: "#9e9e9e" }}>
-            support@staycation.id
+          support@staycation.id
           </Typography>
           <Typography variant="body2" sx={{ color: "#9e9e9e" }}>
-            021 - 2208 - 1996
+          021 - 2208 - 1996
           </Typography>
           <Typography variant="body2" sx={{ color: "#9e9e9e" }}>
-            Staycation, Kemang, Jakarta
+          Staycation, Kemang, Jakarta
           </Typography>
         </Box></Grid2> 
-        {/* Connect Us */}
-      
-      </Grid2>
+       {/* Connect Us */}
 
-      {/* Copyright */}
-      <Box mt={4} textAlign="center">
+    
+      </Grid2>
+       {/* Copyright */}
+       <Box mt={4} textAlign="center">
         <Typography variant="body2" sx={{ color: "#9e9e9e" }}>
           Copyright © 2024 - All rights reserved - Staycation.
         </Typography>
       </Box>
       </Container>
+
+    
     </Box>
   );
 };

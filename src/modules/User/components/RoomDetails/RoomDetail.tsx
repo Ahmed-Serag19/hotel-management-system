@@ -11,6 +11,7 @@ import {
 } from "@mui/material";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid2";
+// import Reviews from "./Reviews";
 import RoomImg2 from "../../../../assets/images/room img.png";
 import RoomImg3 from "../../../../assets/images/room img2.png";
 import ic_bedroom from "../../../../assets/images/ic_bedroom.png";
@@ -546,6 +547,7 @@ function RoomDetail() {
           </Typography>
           <Button
             variant="contained"
+        
             sx={{ backgroundColor: "green", marginX: 3 }}
             onClick={() => {
               navigate("/login");

@@ -114,6 +114,7 @@ body {
     font-weight: 700;
     padding-block: 15px;
     border-radius: 5px;
+    cursor: pointer;
 }
 
 .submit-btn:hover{
@@ -125,3 +126,6 @@ margin-left: 5px;
 
 }
 
+.h{
+  background-color: #f5f1f1;
+}

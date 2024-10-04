@@ -1,19 +1,14 @@
 import {AddressElement, CardElement, Elements, useElements, useStripe} from "@stripe/react-stripe-js"
 import { Box, Grid2, Typography } from "@mui/material"
-
-import { Base_Url } from "../../../../constants/End_Points"
 import { FormEvent, useContext } from 'react'
+
+import { AuthContext } from "../../../../context/authcontext";
+import { Base_Url } from "../../../../constants/End_Points"
 import PaymentIcon from '@mui/icons-material/Payment';
 import axios from "axios"
 import { loadStripe } from "@stripe/stripe-js"
-import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { AuthContext } from "../../../../context/authcontext";
 
-// let { loginData }: any = useContext(AuthContext);
-// if (loginData?.role != "user") {
-//   navigate("/NotFound");
-// }
 const stripe = loadStripe("pk_test_51OTjURBQWp069pqTmqhKZHNNd3kMf9TTynJtLJQIJDOSYcGM7xz3DabzCzE7bTxvuYMY0IX96OHBjsysHEKIrwCK006Mu7mKw8")
 export default function Payment() {
     return <Elements stripe={stripe}>
@@ -71,17 +66,18 @@ const CheckoutForm =()=>{
 const payBooking= async(token:string )=>{
 
     try {
-await axios.post(`${Base_Url}/portal/booking/65aa684cdb75ac49803569e5/pay`,  //  id booking
+   await axios.post(`${Base_Url}/portal/booking/66faa1596475e2d50da9e3f6/pay`,  //  id booking
         {token},
         {
             headers: { Authorization: localStorage.getItem("token") }
         }
     )
     toast.success("Successfully Payment")
-
-    
+        
     } catch (error:any) {
         console.log(error.response.data.message)
-        
+        toast.error(error.response.data.message, {
+            autoClose: 5000,
+        })
     }
 }
