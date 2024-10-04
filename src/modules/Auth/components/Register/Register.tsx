@@ -2,6 +2,7 @@ import {
   Box,
   Button,
   FormControl,
+  FormHelperText,
   Grid2,
   IconButton,
   InputAdornment,
@@ -10,7 +11,7 @@ import {
   Typography,
 } from "@mui/material";
 import { Link, useNavigate } from "react-router-dom";
-
+import { styled } from "@mui/material/styles";
 import RegisterImg from "../../../../assets/images/register.png";
 import { User_URls } from "../../../../constants/End_Points";
 import Visibility from "@mui/icons-material/Visibility";
@@ -19,8 +20,6 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
-
-// import defaultUserImage from "../../../../assets/images/default-user.jpg";
 
 export default function Register() {
   const [showPassword, setShowPassword] = useState(false);
@@ -38,36 +37,19 @@ export default function Register() {
     profileImage: FileList;
     role: string;
   }
-  const css = `
-  .css-1jk99ih-MuiInputBase-input-MuiOutlinedInput-input,
-  .css-lc42l8-MuiInputBase-input-MuiOutlinedInput-input {
- height: 12px !important;
- padding:  12px !important;
- }
- 
- `
+
   const convertToFormData = (data: FormValue): FormData => {
+    console.log(data);
+
     const inputFormData = new FormData();
     inputFormData.append("userName", data.userName);
     inputFormData.append("email", data.email);
     inputFormData.append("country", data.country);
     inputFormData.append("phoneNumber", data.phoneNumber);
-
-    // If user uploaded a profile image, use it; otherwise, use a default image URL
-    if (data.profileImage && data.profileImage.length > 0) {
-      inputFormData.append("profileImage", data.profileImage[0]);
-    } else {
-      // Use the default image URL
-      inputFormData.append(
-        "profileImage",
-        "http://localhost:5173/assets/images/default-user.jpg"
-      );
-    }
-
+    inputFormData.append("profileImage", data.profileImage[0]);
     inputFormData.append("password", data.password);
     inputFormData.append("confirmPassword", data.confirmPassword);
     inputFormData.append("role", data.role || "user");
-
     return inputFormData;
   };
 
@@ -89,6 +71,8 @@ export default function Register() {
   });
 
   const onSubmit = async (data: FormValue) => {
+    console.log(data);
+
     try {
       const formData = convertToFormData(data);
       await axios.post(User_URls.register, formData, {
@@ -106,43 +90,38 @@ export default function Register() {
 
   return (
     <div>
-      <style type="text/css">{css}</style>
       <Box
-          sx={{
-            height: "100vh",
-            overflow: { xs: "auto"},
-          }}
+        sx={{
+          height: "100vh",
+          overflow: { xs: "auto" },
+        }}
       >
-        <Grid2 container >
-       <Grid2
-           width={{ xs: "85%", sm: "95%", md: "50%" }}
+        <Grid2 container>
+          <Grid2
+            width={{ xs: "85%", sm: "95%", md: "50%" }}
             size={{ xs: 12, md: 6 }}
-            
           >
-
-<Stack
-       sx={{ marginLeft: "3%", marginTop: "20px" }}
-       height={{ xs: "6%", sm: "9%" }}
-     >
-       <Typography
-         variant="h5"
-         style={{ fontSize: "26px", fontWeight: "600" }}
-         component="p"
-       >
-         <span style={{ color: "#3252DF" }}>Stay</span>
-         <span style={{ color: "#152C5B" }}>cation.</span>
-       </Typography>
-     </Stack>
-
-            <Stack sx={{
+            <Stack
+              sx={{ marginLeft: "3%", marginTop: "20px" }}
+              height={{ xs: "6%", sm: "9%" }}
+            >
+              <Typography
+                variant="h5"
+                style={{ fontSize: "26px", fontWeight: "600" }}
+                component="p"
+              >
+                <span style={{ color: "#3252DF" }}>Stay</span>
+                <span style={{ color: "#152C5B" }}>cation.</span>
+              </Typography>
+            </Stack>
+            <Stack
+              sx={{
                 display: "flex",
                 flexDirection: "column",
                 width: { xs: "100%", sm: "80%", md: "70%" },
                 margin: { xs: "10%", sm: "auto" },
-              }}>
-
-
-
+              }}
+            >
               <Stack>
                 <Typography
                   variant="h2"
@@ -154,19 +133,19 @@ export default function Register() {
                   component="p"
                   sx={{
                     fontFamily: "Poppins",
-                    fontSize: "13px",
+                    fontSize: "16px",
                     fontWeight: "500",
-                    marginY: 2,
+                    marginY: 3,
                   }}
                 >
-                  <span>If you already have an account, you can</span>
+                   <span>If you already have an account, you can</span>
                   <br />
                   <span>
                     You can {""}
                     <Link
                       to={"/login"}
                       style={{
-                        color: "#d50000",
+                        color: "#eb5148",
                         textDecoration: "none",
                         fontWeight: "600",
                       }}
@@ -194,6 +173,7 @@ export default function Register() {
                 </label>
                 <TextField
                   sx={{
+                    marginTop: 1,
                     marginBottom: 1,
                     bgcolor: "#f5f6f8",
                     border: "none",
@@ -226,6 +206,7 @@ export default function Register() {
                     </label>
                     <TextField
                       sx={{
+                        marginTop: 1,
                         marginBottom: 1,
                         bgcolor: "#f5f6f8",
                         border: "none",
@@ -254,6 +235,7 @@ export default function Register() {
                     </label>
                     <TextField
                       sx={{
+                        marginTop: 1,
                         marginBottom: 1,
                         bgcolor: "#f5f6f8",
                         border: "none",
@@ -283,6 +265,7 @@ export default function Register() {
                 </label>
                 <TextField
                   sx={{
+                    marginTop: 1,
                     marginBottom: 1,
                     bgcolor: "#f5f6f8",
                     border: "none",
@@ -308,6 +291,7 @@ export default function Register() {
                 </label>
                 <TextField
                   sx={{
+                    marginTop: 1,
                     marginBottom: 1,
                     bgcolor: "#f5f6f8",
                     border: "none",
@@ -347,6 +331,7 @@ export default function Register() {
                 </label>
                 <TextField
                   sx={{
+                    marginTop: 1,
                     marginBottom: 1,
                     bgcolor: "#f5f6f8",
                     border: "none",
@@ -374,7 +359,7 @@ export default function Register() {
                 />
 
                 {/* Profile Image */}
-                {/* <label
+                <label
                   htmlFor="profileImage"
                   style={{
                     fontSize: "15px",
@@ -384,50 +369,67 @@ export default function Register() {
                 >
                   Profile Image
                 </label>
-                <input
-                  type="file"
-                  id="profileImage"
-                  {...register("profileImage")}
-                /> */}
-
+                <Button
+                  component="label"
+                  role={undefined}
+                  tabIndex={-1}
+                  variant="outlined"
+                  sx={{
+                    textTransform: "none",
+                    marginTop: 1,
+                    marginBottom: 1,
+                    bgcolor: "#f5f6f8",
+                    border: "none",
+                    padding: 1.5
+                  }}
+                >
+                  {/* Upload a Image */}
+                  <input
+                    type="file"
+                    id="profileImage"
+                    {...register("profileImage", {
+                      required: "profileImage is required",
+                    })}
+                  />
+                </Button>
+                {errors.profileImage && (
+                  <FormHelperText style={{ color: "#d32f2f" }}>
+                    {errors.profileImage?.message}
+                  </FormHelperText>
+                )}
                 {/* Submit Button */}
                 <Button
                   disabled={isSubmitting}
-                  sx={{ mt: 2 }}
+                  sx={{                      
+                    width: "100%",
+                    backgroundColor: "#3252DF",
+                    textTransform: "none",
+                    fontSize: "17px",
+                    fontWeight: 500, 
+                    marginTop: 3
+                  }}
                   type="submit"
                   variant="contained"
                 >
                   Sign Up
                 </Button>
               </FormControl>
-                
-              </Stack>
-
-       
-             </Grid2>
-
-
-
+            </Stack>
+          </Grid2>
           {/* Grid2 for Image */}
-            <Grid2
-            display={{ xs: "none", md: "block" }}
-            size={{ xs: 12, md: 6 }}
-
-           >
-
-            <Stack             
-            sx={{
-              height: "97vh",
-              backgroundImage: `url(${RegisterImg})`,
-              backgroundSize: "cover",
-              backgroundPosition: "100% 100%",
-              backgroundRepeat: "no-repeat",
-              margin: "10px",
-              borderRadius: "15px",
-              
-            }}></Stack>
-            
-           </Grid2>
+          <Grid2 display={{ xs: "none", md: "block" }} size={{ xs: 12, md: 6 }}>
+            <Stack
+              sx={{
+                height: "97vh",
+                backgroundImage: `url(${RegisterImg})`,
+                backgroundSize: "cover",
+                backgroundPosition: "100% 100%",
+                backgroundRepeat: "no-repeat",
+                margin: "10px",
+                borderRadius: "15px",
+              }}
+            ></Stack>
+          </Grid2>
         </Grid2>
       </Box>
     </div>
