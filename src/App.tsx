@@ -52,7 +52,7 @@ function App() {
         { path: "all-rooms", element: <AllRooms /> },
         { path: "room-details/:roomId", element: <RoomDetail /> },
         { path: "all-bookings", element: <AllBookings /> },
-        { path: "payment ", element: <Payment /> },
+        { path: "payment/:bookingId ", element: <Payment /> },
         // Protected Routes: Only accessible to admins
         {
           index: true,
@@ -71,7 +71,7 @@ function App() {
         },
         { path: "dashboard/all-rooms", element: <AllRooms /> },
         { path: "dashboard/room-details/:roomId", element: <RoomDetail /> },
-        { path: "dashboard/payment", element: <Payment /> },
+        { path: "dashboard/payment/:bookingId", element: <Payment /> },
 
         // Protected Routes for Admin
         {
@@ -164,7 +164,7 @@ function App() {
         { path: "reset-password", element: <ResetPassword /> },
       ],
     },
-  ]);
+  ]); 
 
   return <RouterProvider router={routes} />;
 }
