@@ -65,7 +65,6 @@ export default function ResetPassword() {
   const onSubmit = async (data: DataForget) => {
     try {
       const response = await axios.post(User_URls.resetPassword, data);
-      console.log(response);
       toast.success(response.data.message);
       navigate("/login");
     } catch (error: any) {

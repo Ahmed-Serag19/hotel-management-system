@@ -1,6 +1,5 @@
 import { Box, Container, Grid2, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
-
 import { Base_Url } from "../../../../constants/End_Points";
 import HeaderUserRoom from "../../../Shared/components/HeaderUserRoom/HeaderUserRoom";
 import HourglassEmptyIcon from "@mui/icons-material/HourglassEmpty";
@@ -8,6 +7,7 @@ import ReceiptLongIcon from "@mui/icons-material/ReceiptLong";
 import axios from "axios";
 import NoData from "../../../Shared/components/NoData/NoData";
 import LoadingScreen from "../../../Shared/components/LoadingScreen/LoadingScreen";
+import { toast } from "react-toastify";
 export default function AllBooking() {
   const [isLoading, setLoading] = useState(false);
   const [AllBookingList, setAllBookingList] = useState([]);
@@ -18,10 +18,8 @@ export default function AllBooking() {
       });
 
       setAllBookingList(response.data.data.myBooking);
-
-      //console.log(response.data.data.myBooking);
     } catch (error: any) {
-      console.log(error.response.data.message);
+      toast.error(error.response.data.message);
     }
   };
 

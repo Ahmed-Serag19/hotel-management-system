@@ -115,9 +115,9 @@ function RoomDetail() {
         );
 
         // Handle success response
-        if(response.data.success == true){
+        if (response.data.success == true) {
           toast.success(response.data.message);
-          navigate(`/dashboard/payment/${response.data.data.booking._id}`) // Redirect user after booking
+          navigate(`/dashboard/payment/${response.data.data.booking._id}`); // Redirect user after booking
         }
       } catch (error) {
         // Handle error during booking
@@ -131,7 +131,6 @@ function RoomDetail() {
     // Fetch room details using roomId
     const fetchRoomDetails = async () => {
       try {
-        console.log("Fetching room details for ID:", roomId);
         const response = await axios.get(RoomsUrl.getRoomDetails(roomId!));
 
         if (response.data && response.data.data && response.data.data.room) {
@@ -143,7 +142,7 @@ function RoomDetail() {
       } catch (error) {
         console.error("Error fetching room details:", error);
         setError("Error fetching room details. Please try again later.");
-        setLoading(false); // Turn off loading state
+        setLoading(false);
       }
     };
 
@@ -544,7 +543,6 @@ function RoomDetail() {
           </Typography>
           <Button
             variant="contained"
-        
             sx={{ backgroundColor: "green", marginX: 3 }}
             onClick={() => {
               navigate("/login");
