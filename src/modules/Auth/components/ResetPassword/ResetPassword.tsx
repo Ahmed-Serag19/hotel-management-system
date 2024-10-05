@@ -73,24 +73,23 @@ export default function ResetPassword() {
     }
   };
 
-  
-// const css = `
-//   input: {
-//     '& input': {
-//       '@media (min-width: 610px) and (max-width: 899px)': {
-//         height: '16px !important',
-//         padding: '16px !important',
-//       },
-//       '@media (min-width: 900px) and (max-width: 1366px)': {
-//         height: '15px !important',
-//         padding: '14px !important',
-//       },
+  // const css = `
+  //   input: {
+  //     '& input': {
+  //       '@media (min-width: 610px) and (max-width: 899px)': {
+  //         height: '16px !important',
+  //         padding: '16px !important',
+  //       },
+  //       '@media (min-width: 900px) and (max-width: 1366px)': {
+  //         height: '15px !important',
+  //         padding: '14px !important',
+  //       },
 
-//     },
-//   },
-// `
+  //     },
+  //   },
+  // `
 
-  return (   
+  return (
     <div>
       <Box
         sx={{
@@ -132,7 +131,7 @@ export default function ResetPassword() {
                 >
                   Reset Password
                 </Typography>
-                <Typography 
+                <Typography
                   component="p"
                   sx={{
                     fontFamily: "Poppins",
@@ -171,13 +170,12 @@ export default function ResetPassword() {
                     fontSize: "15px",
                     fontWeight: 400,
                     color: "#152C5B",
-
                   }}
                 >
                   Email
                 </label>
                 <TextField
-                className="inputReset"
+                  className="inputReset"
                   sx={{
                     marginTop: 1,
                     marginBottom: 1,
@@ -207,7 +205,7 @@ export default function ResetPassword() {
                   OTP
                 </label>
                 <TextField
-                className="inputReset"
+                  className="inputReset"
                   sx={{
                     marginTop: 1,
                     marginBottom: 1,
@@ -244,7 +242,7 @@ export default function ResetPassword() {
                   Password
                 </label>
                 <OutlinedInput
-                className="inputReset"
+                  className="inputReset"
                   sx={{
                     marginTop: 1,
                     marginBottom: 1,
@@ -289,7 +287,7 @@ export default function ResetPassword() {
                   Confirm Password
                 </label>
                 <OutlinedInput
-                className="inputReset"
+                  className="inputReset"
                   sx={{
                     marginTop: 1,
                     marginBottom: 1,
@@ -358,14 +356,14 @@ export default function ResetPassword() {
                 backgroundPosition: "100% 100%",
                 backgroundRepeat: "no-repeat",
                 margin: "10px",
-                borderRadius: "15px",        
+                borderRadius: "15px",
               }}
             >
-{/* <img  src={ImgLogin} style={{width:"97%",margin: "10px"}}/> */}
+              {/* <img  src={ImgLogin} style={{width:"97%",margin: "10px"}}/> */}
             </Stack>
           </Grid2>
         </Grid2>
       </Box>
-    </>
+    </div>
   );
 }
