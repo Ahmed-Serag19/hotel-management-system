@@ -33,23 +33,7 @@ import { Box, CircularProgress } from "@mui/material";
 
 function App() {
   const { loginData } = useContext(AuthContext) || {};
-
   const getDefaultRouteElement = () => {
-    if (loginData === null) {
-      return (
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            height: "100vh",
-          }}
-        >
-          <CircularProgress />
-        </Box>
-      );
-    }
-
     if (loginData?.role === "admin") {
       return <Navigate to="dashboard/home" replace />;
     } else {

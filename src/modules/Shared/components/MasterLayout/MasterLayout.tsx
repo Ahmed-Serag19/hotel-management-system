@@ -24,8 +24,6 @@ export default function MasterLayout() {
 
   const { loginData } = authContext;
 
-  console.log(loginData);
-
   return (
     <Box
       sx={{

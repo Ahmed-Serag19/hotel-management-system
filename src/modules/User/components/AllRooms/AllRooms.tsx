@@ -39,13 +39,13 @@ export default function AllRooms() {
     navigate(`/dashboard/room-details/${roomId}`, {
       state: {
         capacity: capacity || 2, // Default to 2 if not provided
-        startDate: startDate ||  defaultStartDate || format(new Date(), "yyyy-MM-dd") ,
-        endDate: endDate || defaultEndDate ||format(new Date(), "yyyy-MM-dd"), 
+        startDate:
+          startDate || defaultStartDate || format(new Date(), "yyyy-MM-dd"),
+        endDate: endDate || defaultEndDate || format(new Date(), "yyyy-MM-dd"),
       },
     });
   };
 
- 
   //Fetch all rooms with optional startDate, endDate, and capacity
   let getAllRoom = async (page: number) => {
     try {
@@ -55,10 +55,10 @@ export default function AllRooms() {
           size: pageSize,
           startDate: startDate
             ? format(new Date(startDate), "yyyy-MM-dd")
-            : defaultStartDate || format(new Date(), "yyyy-MM-dd")  ,
+            : defaultStartDate || format(new Date(), "yyyy-MM-dd"),
           endDate: endDate
             ? format(new Date(endDate), "yyyy-MM-dd")
-            : defaultEndDate || format(new Date(), "yyyy-MM-dd") ,
+            : defaultEndDate || format(new Date(), "yyyy-MM-dd"),
           capacity: capacity || 2, // Default capacity to 2
         },
       });
@@ -66,15 +66,13 @@ export default function AllRooms() {
       setRoomList(response.data.data.rooms);
       setTotalCount(response.data.data.totalCount);
       setTotalPages(Math.ceil(response.data.data.totalCount / pageSize));
-
-      //console.log(response.data.data.rooms);
     } catch (error: any) {
-      console.log("Failed to fetch rooms", error);
+      toast.error("Failed to fetch rooms", error);
     }
- };
+  };
   let addToFav = async (id: string) => {
     try {
-      let response = await axios.post(
+      await axios.post(
         favoriteUrl.add,
         { roomId: id },
         {
@@ -83,7 +81,6 @@ export default function AllRooms() {
       );
 
       toast.success(" Successfully Added To Favorites ");
-      console.log(response);
     } catch (error: any) {
       if (loginData?.role === "user") {
         toast.error("Failed to add to Favorites", {
