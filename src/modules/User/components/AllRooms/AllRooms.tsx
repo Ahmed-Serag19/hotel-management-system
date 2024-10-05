@@ -22,9 +22,10 @@ export default function AllRooms() {
   const { startDate, endDate, capacity } = location.state || {};
 
   const [roomList, setRoomList] = useState([]);
-  const [totalCount, setTotalCount] = useState(0);
-  const [page, setPage] = useState(0);
-  const [totalPages, setTotalPages] = useState(1);
+
+  const [, setTotalCount] = useState(0);
+  const [page] = useState(0);
+  const [, setTotalPages] = useState(1);
   const pageSize = 10;
   const defaultStartDate = "2023-01-20";
   const defaultEndDate = "2023-09-30";

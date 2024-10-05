@@ -20,7 +20,7 @@ export default function FavoriteRoom() {
     navigate("/NotFound");
   }
   let location = useLocation();
-  const [totalCount, setTotalCount] = useState(0);
+  const [, setTotalCount] = useState(0);
   const { startDate, endDate, capacity } = location.state || {};
   const [favoriteList, setFavoriteList] = useState([]);
   const handleRoomClick = (
@@ -51,7 +51,7 @@ export default function FavoriteRoom() {
 
   let removeFavorite = async (roomId: string) => {
     try {
-      let response = await axios.delete(
+      await axios.delete(
         favoriteUrl.delete(roomId),
 
         {

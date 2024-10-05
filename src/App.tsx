@@ -27,9 +27,7 @@ import RoomDetail from "./modules/User/components/RoomDetails/RoomDetail";
 import Rooms from "./modules/Admin/components/Rooms/Rooms";
 import Users from "./modules/Admin/components/Users/Users";
 import { useContext } from "react";
-
 import { AuthContext } from "./context/authcontext";
-import { Box, CircularProgress } from "@mui/material";
 
 function App() {
   const { loginData } = useContext(AuthContext) || {};
