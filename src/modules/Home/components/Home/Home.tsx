@@ -2,8 +2,6 @@ import { Box, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 
 import CircleChart from "../Chart/Chart";
-import Footer from "../../../Shared/components/Footer/Footer";
-import Layout from "../../../Shared/components/NavbarPortal/NavbarPortal";
 import UsersChart from "../Chart/UsersChart";
 import WorkTwoToneIcon from "@mui/icons-material/WorkTwoTone";
 import axios from "axios";

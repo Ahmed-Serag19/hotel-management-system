@@ -26,7 +26,7 @@ export default function AuthContextProvider(props: any) {
     if (localStorage.getItem("token")) {
       saveLoginData();
     }
-  }, []);
+  }, [loginData]);
 
   const logout = () => {
     localStorage.removeItem("token");

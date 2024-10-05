@@ -3,7 +3,6 @@ import {
   Divider,
   FormHelperText,
   MenuItem,
-  Paper,
   Select,
   Stack,
   styled,
@@ -11,7 +10,6 @@ import {
   TableBody,
   TableCell,
   tableCellClasses,
-  TableContainer,
   TableHead,
   TableRow,
   TextField,
@@ -192,81 +190,77 @@ function AdsList() {
 
   return (
     <Box component="section">
-
-<TitleTables
-        titleTable="Ads"
-        btn="Ads"
-        onClick={handleOpenAdd}
-      />
+      <TitleTables titleTable="Ads" btn="Ads" onClick={handleOpenAdd} />
 
       <Stack sx={{ padding: 1.5 }}>
         {ads.length > 0 ? (
-        
-            <Table  sx={{
-                minWidth: 350,
-                [`& .${tableCellClasses.root}`]: {
-                  borderBottom: "none",
-                },
-            
-              }}
-               aria-label="simple table">
-              <TableHead sx={{ backgroundColor: "#E2E5EB" }}>
-                <TableRow>
-                  <TableCell sx={ FirstCell}>Room Number</TableCell>
-                  <TableCell align="center">Price</TableCell>
-                  <TableCell align="center">Discount</TableCell>
-                  <TableCell align="center">Capacity</TableCell>
-                  <TableCell align="center">Active</TableCell>
-                  <TableCell sx={ LastCell} align="center">Action</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {ads.map((ad) => (
-                  <StyledTableRow
-                    key={ad.room.roomNumber}
-                    sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                  >
-                    <TableCell component="th" scope="row">
-                      Room {ad.room.roomNumber}
-                    </TableCell>
-                    <TableCell align="center">{ad.room.price}</TableCell>
-                    <TableCell align="center">{ad.room.discount}</TableCell>
-                    <TableCell align="center">{ad.room.capacity}</TableCell>
-                    <TableCell align="center">
-                      {ad.isActive ? "Yes" : "No"}
-                    </TableCell>
-                    <TableCell align="center">
-                      <Select
-                        sx={{
-                          color: "#1F263E",
-                          fontFamily: "Poppins",
-                          fontSize: "14px",
-                          boxShadow: "none",
-                          ".MuiOutlinedInput-notchedOutline": { border: 0 },
-                        }}
-                        value=""
-                        displayEmpty
-                        IconComponent={MoreHorizIcon}
-                      >
-                        <MenuItem onClick={() => handleOpenUpdate(ad._id)}>
-                          <FaRegEdit
-                            style={{ color: "#203FC7", marginRight: "10px" }}
-                          />
-                          Edit
-                        </MenuItem>
-                        <MenuItem onClick={() => handleOpenDelete(ad._id)}>
-                          <RiDeleteBin6Line
-                            style={{ color: "#203FC7", marginRight: "10px" }}
-                          />
-                          Delete
-                        </MenuItem>
-                      </Select>
-                    </TableCell>
-                  </StyledTableRow>
-                ))}
-              </TableBody>
-            </Table>
-        
+          <Table
+            sx={{
+              minWidth: 350,
+              [`& .${tableCellClasses.root}`]: {
+                borderBottom: "none",
+              },
+            }}
+            aria-label="simple table"
+          >
+            <TableHead sx={{ backgroundColor: "#E2E5EB" }}>
+              <TableRow>
+                <TableCell sx={FirstCell}>Room Number</TableCell>
+                <TableCell align="center">Price</TableCell>
+                <TableCell align="center">Discount</TableCell>
+                <TableCell align="center">Capacity</TableCell>
+                <TableCell align="center">Active</TableCell>
+                <TableCell sx={LastCell} align="center">
+                  Action
+                </TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {ads.map((ad) => (
+                <StyledTableRow
+                  key={ad.room.roomNumber}
+                  sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                >
+                  <TableCell component="th" scope="row">
+                    Room {ad.room.roomNumber}
+                  </TableCell>
+                  <TableCell align="center">{ad.room.price}</TableCell>
+                  <TableCell align="center">{ad.room.discount}</TableCell>
+                  <TableCell align="center">{ad.room.capacity}</TableCell>
+                  <TableCell align="center">
+                    {ad.isActive ? "Yes" : "No"}
+                  </TableCell>
+                  <TableCell align="center">
+                    <Select
+                      sx={{
+                        color: "#1F263E",
+                        fontFamily: "Poppins",
+                        fontSize: "14px",
+                        boxShadow: "none",
+                        ".MuiOutlinedInput-notchedOutline": { border: 0 },
+                      }}
+                      value=""
+                      displayEmpty
+                      IconComponent={MoreHorizIcon}
+                    >
+                      <MenuItem onClick={() => handleOpenUpdate(ad._id)}>
+                        <FaRegEdit
+                          style={{ color: "#203FC7", marginRight: "10px" }}
+                        />
+                        Edit
+                      </MenuItem>
+                      <MenuItem onClick={() => handleOpenDelete(ad._id)}>
+                        <RiDeleteBin6Line
+                          style={{ color: "#203FC7", marginRight: "10px" }}
+                        />
+                        Delete
+                      </MenuItem>
+                    </Select>
+                  </TableCell>
+                </StyledTableRow>
+              ))}
+            </TableBody>
+          </Table>
         ) : (
           <NoData />
         )}

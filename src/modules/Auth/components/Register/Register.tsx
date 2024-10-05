@@ -11,7 +11,6 @@ import {
   Typography,
 } from "@mui/material";
 import { Link, useNavigate } from "react-router-dom";
-import { styled } from "@mui/material/styles";
 import RegisterImg from "../../../../assets/images/register.png";
 import { User_URls } from "../../../../constants/End_Points";
 import Visibility from "@mui/icons-material/Visibility";
@@ -89,20 +88,22 @@ export default function Register() {
   };
 
   return (
-    <div>
+    <>
       <Box
         sx={{
           height: "100vh",
-          overflow: { xs: "auto" },
+          maxHeight: "100vh",
+          overflow: { xs: "auto", md: "hidden" },
         }}
       >
         <Grid2 container>
           <Grid2
             width={{ xs: "85%", sm: "95%", md: "50%" }}
             size={{ xs: 12, md: 6 }}
+            maxHeight={"97vh"}
           >
             <Stack
-              sx={{ marginLeft: "3%", marginTop: "20px" }}
+              sx={{ marginLeft: "3%", marginTop: "10px" }}
               height={{ xs: "6%", sm: "9%" }}
             >
               <Typography
@@ -119,13 +120,13 @@ export default function Register() {
                 display: "flex",
                 flexDirection: "column",
                 width: { xs: "100%", sm: "80%", md: "70%" },
-                margin: { xs: "10%", sm: "auto" },
+                margin: { xs: "5%", sm: "auto" },
               }}
             >
               <Stack>
                 <Typography
                   variant="h2"
-                  style={{ fontSize: "20px", fontWeight: "600" }}
+                  style={{ fontSize: "24px", fontWeight: "600" }}
                 >
                   Sign Up
                 </Typography>
@@ -135,10 +136,10 @@ export default function Register() {
                     fontFamily: "Poppins",
                     fontSize: "16px",
                     fontWeight: "500",
-                    marginY: 3,
+                    marginY: 1,
                   }}
                 >
-                   <span>If you already have an account, you can</span>
+                  <span>If you already have an account, you can</span>
                   <br />
                   <span>
                     You can {""}
@@ -173,7 +174,6 @@ export default function Register() {
                 </label>
                 <TextField
                   sx={{
-                    marginTop: 1,
                     marginBottom: 1,
                     bgcolor: "#f5f6f8",
                     border: "none",
@@ -206,7 +206,6 @@ export default function Register() {
                     </label>
                     <TextField
                       sx={{
-                        marginTop: 1,
                         marginBottom: 1,
                         bgcolor: "#f5f6f8",
                         border: "none",
@@ -235,7 +234,6 @@ export default function Register() {
                     </label>
                     <TextField
                       sx={{
-                        marginTop: 1,
                         marginBottom: 1,
                         bgcolor: "#f5f6f8",
                         border: "none",
@@ -265,7 +263,6 @@ export default function Register() {
                 </label>
                 <TextField
                   sx={{
-                    marginTop: 1,
                     marginBottom: 1,
                     bgcolor: "#f5f6f8",
                     border: "none",
@@ -291,7 +288,6 @@ export default function Register() {
                 </label>
                 <TextField
                   sx={{
-                    marginTop: 1,
                     marginBottom: 1,
                     bgcolor: "#f5f6f8",
                     border: "none",
@@ -331,7 +327,6 @@ export default function Register() {
                 </label>
                 <TextField
                   sx={{
-                    marginTop: 1,
                     marginBottom: 1,
                     bgcolor: "#f5f6f8",
                     border: "none",
@@ -376,11 +371,10 @@ export default function Register() {
                   variant="outlined"
                   sx={{
                     textTransform: "none",
-                    marginTop: 1,
                     marginBottom: 1,
                     bgcolor: "#f5f6f8",
                     border: "none",
-                    padding: 1.5
+                    padding: 1.5,
                   }}
                 >
                   {/* Upload a Image */}
@@ -400,13 +394,13 @@ export default function Register() {
                 {/* Submit Button */}
                 <Button
                   disabled={isSubmitting}
-                  sx={{                      
+                  sx={{
                     width: "100%",
                     backgroundColor: "#3252DF",
                     textTransform: "none",
                     fontSize: "17px",
-                    fontWeight: 500, 
-                    marginTop: 3
+                    fontWeight: 500,
+                    marginTop: 3,
                   }}
                   type="submit"
                   variant="contained"
@@ -419,21 +413,19 @@ export default function Register() {
           {/* Grid2 for Image */}
           <Grid2 display={{ xs: "none", md: "block" }} size={{ xs: 12, md: 6 }}>
             <Stack
-              // sx={{
-              //   height: "97vh",
-              //   backgroundImage: `url(${RegisterImg})`,
-              //   backgroundSize: "cover",
-              //   backgroundPosition: "100% 100%",
-              //   backgroundRepeat: "no-repeat",
-              //   margin: "10px",
-              //   borderRadius: "15px",
-              // }}
-            >
-              <img  src={RegisterImg} style={{width:"97%",margin: "10px"}}/>
-            </Stack>
+              sx={{
+                height: "90vh",
+                backgroundImage: `url(${RegisterImg})`,
+                backgroundSize: "contain",
+                backgroundPosition: "center center",
+                backgroundRepeat: "no-repeat",
+                borderRadius: "15px",
+                margin: "10px",
+              }}
+            ></Stack>
           </Grid2>
         </Grid2>
       </Box>
-    </div>
+    </>
   );
 }
