@@ -1,7 +1,6 @@
 import {
   Box,
   Button,
-  Card,
   CardContent,
   FormControl,
   FormHelperText,
@@ -44,19 +43,22 @@ export default function ChangePassword() {
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-         py:2,
-   
-      
-       
-        
+        py: 2,
       }}
     >
-      <Box sx={{ width:{xs:"100%",sm:"75%",md:"50%" },boxShadow:"2" ,p:3,borderRadius:"15px" }}>
+      <Box
+        sx={{
+          width: { xs: "100%", sm: "75%", md: "50%" },
+          boxShadow: "2",
+          p: 3,
+          borderRadius: "15px",
+        }}
+      >
         <CardContent>
           <Typography
             component="div"
-            variant="h5"           
-            sx={{ mb: 4 , color:"#3252df" }}
+            variant="h5"
+            sx={{ mb: 4, color: "#3252df" }}
           >
             Change Password
           </Typography>

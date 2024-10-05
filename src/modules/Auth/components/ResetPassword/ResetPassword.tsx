@@ -11,7 +11,11 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { ConfirmPasswordValidation, EmailValidation, PasswordValidation } from "../../../../constants/Validations";
+import {
+  ConfirmPasswordValidation,
+  EmailValidation,
+  PasswordValidation,
+} from "../../../../constants/Validations";
 import { Link, useNavigate } from "react-router-dom";
 
 import Button from "@mui/material/Button";
@@ -37,13 +41,18 @@ export default function ResetPassword() {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
-  const handleClickShowConfirmPassword = () => setShowConfirmPassword((show) => !show);
+  const handleClickShowConfirmPassword = () =>
+    setShowConfirmPassword((show) => !show);
 
-  const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement> ) => {
+  const handleMouseDownPassword = (
+    event: React.MouseEvent<HTMLButtonElement>
+  ) => {
     event.preventDefault();
   };
 
-  const handleMouseUpPassword = ( event: React.MouseEvent<HTMLButtonElement>) => {
+  const handleMouseUpPassword = (
+    event: React.MouseEvent<HTMLButtonElement>
+  ) => {
     event.preventDefault();
   };
 
@@ -53,7 +62,7 @@ export default function ResetPassword() {
     handleSubmit,
   } = useForm<DataForget>({ mode: "onChange" });
 
-  const onSubmit = async (data: DataForget) => {     
+  const onSubmit = async (data: DataForget) => {
     try {
       const response = await axios.post(User_URls.resetPassword, data);
       console.log(response);
@@ -81,14 +90,12 @@ export default function ResetPassword() {
 //   },
 // `
 
-  return (
-    
+  return (   
     <div>
-
       <Box
         sx={{
-          height: "100vh",
-          overflow: { xs: "auto"},
+          height: "97vh",
+          overflow: { xs: "auto", md: "hidden" },
         }}
       >
         <Grid2 container>
@@ -132,7 +139,6 @@ export default function ResetPassword() {
                     fontSize: "13px",
                     fontWeight: "500",
                     marginY: 2,
-                  
                   }}
                 >
                   <span>If you already have an account register</span>
@@ -145,10 +151,9 @@ export default function ResetPassword() {
                         color: "#eb5148",
                         textDecoration: "none",
                         fontWeight: "600",
-
                       }}
                     >
-                     Login here !
+                      Login here !
                     </Link>{" "}
                   </span>
                 </Typography>
@@ -306,7 +311,11 @@ export default function ResetPassword() {
                         onMouseUp={handleMouseUpPassword}
                         edge="end"
                       >
-                        {showConfirmPassword ? <VisibilityOff /> : <Visibility />}
+                        {showConfirmPassword ? (
+                          <VisibilityOff />
+                        ) : (
+                          <Visibility />
+                        )}
                       </IconButton>
                     </InputAdornment>
                   }
@@ -319,7 +328,7 @@ export default function ResetPassword() {
 
                 <Stack sx={{ my: 2 }} spacing={2} direction="row">
                   <Button
-                   variant="contained"
+                    variant="contained"
                     disabled={isSubmitting}
                     type="submit"
                     sx={{
@@ -329,7 +338,6 @@ export default function ResetPassword() {
                       fontSize: "17px",
                       fontWeight: 500,
                     }}
-                   
                   >
                     Reset
                   </Button>
@@ -338,12 +346,9 @@ export default function ResetPassword() {
             </Stack>
           </Grid2>
 
-
-
           <Grid2
             display={{ xs: "none", md: "inline" }}
             size={{ xs: 12, md: 6 }}
-          
           >
             <Stack
               sx={{
@@ -353,18 +358,14 @@ export default function ResetPassword() {
                 backgroundPosition: "100% 100%",
                 backgroundRepeat: "no-repeat",
                 margin: "10px",
-                borderRadius: "15px",
-                
+                borderRadius: "15px",        
               }}
-       
             >
-
-
 {/* <img  src={ImgLogin} style={{width:"97%",margin: "10px"}}/> */}
             </Stack>
           </Grid2>
         </Grid2>
       </Box>
-    </div>
+    </>
   );
 }

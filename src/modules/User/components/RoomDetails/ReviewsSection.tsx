@@ -12,10 +12,6 @@ import { FaStar } from "react-icons/fa";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 
-interface Params {
-  roomId: string;
-}
-
 interface CommentResponse {
   data: {
     comment: string;
@@ -173,7 +169,7 @@ const ReviewsSection: React.FC = () => {
               sx={{
                 backgroundColor: "#3252DF",
                 width: "25%",
-                  textTransform: "none"
+                textTransform: "none",
               }}
             >
               Submit Review
@@ -227,7 +223,7 @@ const ReviewsSection: React.FC = () => {
                   backgroundColor: "#3252DF",
                   width: "25%",
                   alignSelf: "end",
-                    textTransform: "none"
+                  textTransform: "none",
                 }}
               >
                 Send
