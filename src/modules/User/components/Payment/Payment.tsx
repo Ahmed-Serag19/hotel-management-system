@@ -112,8 +112,7 @@ const payBooking = async (
     );
 
     if (res.data.success === true) {
-      toast.success(res.data.message);
-      navigate("/dashboard/all-bookings");
+      navigate("/dashboard/payment-page");
     }
   } catch (error: any) {
     toast.error(error.response?.data?.message || "Payment failed", {

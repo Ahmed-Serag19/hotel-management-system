@@ -170,7 +170,7 @@ export default function UsersTable() {
       </Box>
 
       {/* Users Table */}
-      <Box sx={{ pb: 3, overflowX: "auto" }}>
+      <Box sx={{ pb: 3, overflowX:{xs:"visible",md:"hidden"}}}>
         {users.length > 0 ? (
           <Table
             sx={{

@@ -245,7 +245,7 @@ export default function Rooms() {
     <>
       <TitleTables titleTable="Rooms" btn="Room" onClick={handleAddRoomRoute} />
 
-      <Box sx={{ mx: 3, mb: 4 }}>
+      <Box sx={{ mx: 3, mb: 4 ,overflowX:{xs:"visible",md:"hidden"}}}>
         {rooms.length > 0 ? (
           <>
             <Table

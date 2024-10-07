@@ -192,7 +192,7 @@ function AdsList() {
     <Box component="section">
       <TitleTables titleTable="Ads" btn="Ads" onClick={handleOpenAdd} />
 
-      <Stack sx={{ padding: 1.5 }}>
+      <Stack sx={{ padding: 1.5,overflowX:{xs:"visible",md:"hidden"} }} >
         {ads.length > 0 ? (
           <Table
             sx={{

@@ -149,7 +149,7 @@ export default function Facilities() {
 
   return (
     <>
-      <TitleTables
+      <TitleTables 
         titleTable="Facilities"
         btn="Facility"
         onClick={openAddModal}
@@ -244,7 +244,7 @@ export default function Facilities() {
         FunctionBtn={deleteFacility}
       />
 
-      <Box sx={{ pb: 1 }}>
+      <Box sx={{ pb: 1 ,overflowX:{xs:"visible",md:"hidden"} }}>
         {facility.length > 0 ? (
           <Box>
             <Table

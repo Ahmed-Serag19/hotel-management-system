@@ -51,7 +51,7 @@ export default function MasterLayout() {
             position: "sticky",
             top: 0,
             left: 0,
-            width: collapsed ? "75px" : "243px",
+            width: collapsed ? "90px" : "280px",
             height: "100vh",
             transition: "width 0.3s",
             overflowX: "hidden",

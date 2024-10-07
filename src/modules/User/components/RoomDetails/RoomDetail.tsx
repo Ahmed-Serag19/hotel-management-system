@@ -471,10 +471,10 @@ function RoomDetail() {
                 size="large"
                 sx={{
                   backgroundColor: "#3252DF",
-                  padding: { xs: "10px 20px", md: "10px 30px" },
+                  padding: { xs: "10px ", sm: "10px 30px" },
                   textTransform: "none",
                   fontWeight: "bold",
-                  width: { xs: "200px", md: "300px" },
+                  width: { xs: "100px", sm: "300px" },
                 }}
                 onClick={handleBooking}
               >
@@ -543,7 +543,7 @@ function RoomDetail() {
           </Typography>
           <Button
             variant="contained"
-            sx={{ backgroundColor: "green", marginX: 3 }}
+            sx={{ backgroundColor: "green", marginX: 3,my:2 }}
             onClick={() => {
               navigate("/login");
             }}

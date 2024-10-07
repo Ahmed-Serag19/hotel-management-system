@@ -28,16 +28,17 @@ import Rooms from "./modules/Admin/components/Rooms/Rooms";
 import Users from "./modules/Admin/components/Users/Users";
 import { useContext } from "react";
 import { AuthContext } from "./context/authcontext";
+import PaymentPageNavigate from "./modules/User/components/PaymentPageNavigate/PaymentPageNavigate";
 
 function App() {
   const { loginData } = useContext(AuthContext) || {};
-  const getDefaultRouteElement = () => {
-    if (loginData?.role === "admin") {
-      return <Navigate to="dashboard/home" replace />;
-    } else {
-      return <Navigate to="dashboard/homepage" replace />;
-    }
-  };
+  // const getDefaultRouteElement = () => {
+  //   if (loginData?.role === "admin") {
+  //     return <Navigate to="dashboard/home" replace />;
+  //   } else {
+  //     return <Navigate to="dashboard/homepage" replace />;
+  //   }
+  // };
 
   const routes = createBrowserRouter([
     {
@@ -52,10 +53,10 @@ function App() {
         { path: "dashboard/all-bookings", element: <AllBookings /> },
         { path: "payment/:bookingId ", element: <Payment /> },
         // Protected Routes: Only accessible to admins
-        {
-          index: true,
-          element: getDefaultRouteElement(), // Decide where to redirect based on the role
-        },
+        // {
+        //   index: true,
+        //   element: getDefaultRouteElement(), // Decide where to redirect based on the role
+        // },
 
         // Public Routes
         {
@@ -70,7 +71,8 @@ function App() {
         { path: "dashboard/all-rooms", element: <AllRooms /> },
         { path: "dashboard/room-details/:roomId", element: <RoomDetail /> },
         { path: "dashboard/payment/:bookingId", element: <Payment /> },
-
+        { path: "dashboard/payment-page", element: <PaymentPageNavigate /> },
+        
         // Protected Routes for Admin
         {
           path: "dashboard/home",

@@ -97,7 +97,7 @@ export default function FavoriteRoom() {
                         key={room._id}
                       >
                         <Box
-                          sx={{ width: "90%", height: "215px" }}
+                          sx={{ width: "90%", height: {xs:"175px",sm:"215px"}}}
                           className="ImgList "
                         >
                           <Box
@@ -105,7 +105,7 @@ export default function FavoriteRoom() {
                             alt="img-room"
                             src={room?.images[0]}
                             sx={{
-                              height: "215px",
+                              height:{xs:"175px",sm:"215px"},
                               borderRadius: "15px",
                               width: "100%",
                             }}

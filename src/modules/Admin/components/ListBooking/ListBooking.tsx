@@ -201,7 +201,7 @@ export default function Facilities() {
        
       </Box>
       {/* Booking Table */}
-      <Box sx={{ pb: 3, overflowX: "auto" }}>
+      <Box sx={{ pb: 3, overflowX:{xs:"visible",md:"hidden"}}}>
         {booking.length > 0 ? (
           <>
             <Table

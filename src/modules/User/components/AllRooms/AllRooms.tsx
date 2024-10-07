@@ -153,7 +153,7 @@ export default function AllRooms() {
                   >
                     <Box
                       className="ImgList "
-                      sx={{ height: "215px", width: "90%" }}
+                      sx={{ height: {xs:"175px",sm:"215px"}, width: "90%" }}
                     >
                       <Box sx={{ position: "relative" }}>
                         <Box
@@ -161,7 +161,7 @@ export default function AllRooms() {
                           alt="img-room"
                           src={room?.images[0]}
                           sx={{
-                            height: "215px",
+                            height: {xs:"175px",sm:"215px"},
                             borderRadius: "15px",
                             width: "100%",
                           }}
