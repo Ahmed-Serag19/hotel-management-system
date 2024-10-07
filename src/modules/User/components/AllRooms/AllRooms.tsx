@@ -22,9 +22,10 @@ export default function AllRooms() {
   const { startDate, endDate, capacity } = location.state || {};
 
   const [roomList, setRoomList] = useState([]);
-  const [totalCount, setTotalCount] = useState(0);
-  const [page, setPage] = useState(0);
-  const [totalPages, setTotalPages] = useState(1);
+
+  const [, setTotalCount] = useState(0);
+  const [page] = useState(0);
+  const [, setTotalPages] = useState(1);
   const pageSize = 10;
   const defaultStartDate = "2023-01-20";
   const defaultEndDate = "2023-01-30";
@@ -39,13 +40,13 @@ export default function AllRooms() {
     navigate(`/dashboard/room-details/${roomId}`, {
       state: {
         capacity: capacity || 2, // Default to 2 if not provided
-        startDate: startDate ||  defaultStartDate || format(new Date(), "yyyy-MM-dd") ,
-        endDate: endDate || defaultEndDate ||format(new Date(), "yyyy-MM-dd"), 
+        startDate:
+          startDate || defaultStartDate || format(new Date(), "yyyy-MM-dd"),
+        endDate: endDate || defaultEndDate || format(new Date(), "yyyy-MM-dd"),
       },
     });
   };
 
- 
   //Fetch all rooms with optional startDate, endDate, and capacity
   // let getAllRoom = async (page: number) => {
   //   try {
@@ -97,12 +98,12 @@ export default function AllRooms() {
       setTotalCount(response.data.data.totalCount);
      //count={Math.ceil(totalCount / size)}
     } catch (error: any) {
-      console.log("Failed to fetch rooms", error);
+      toast.error("Failed to fetch rooms", error);
     }
- };
+  };
   let addToFav = async (id: string) => {
     try {
-      let response = await axios.post(
+      await axios.post(
         favoriteUrl.add,
         { roomId: id },
         {
@@ -111,7 +112,6 @@ export default function AllRooms() {
       );
 
       toast.success(" Successfully Added To Favorites ");
-      console.log(response);
     } catch (error: any) {
       if (loginData?.role === "user") {
         toast.error("Failed to add to Favorites", {

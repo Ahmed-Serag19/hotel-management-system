@@ -254,9 +254,9 @@ export default function AddRoomForm() {
               multiple
               displayEmpty
               value={field.value || selectedFacilities}
-              onChange={(e) =>{
+              onChange={(e) => {
                 field.onChange(e.target.value as string[]);
-                setSelectedFacilities(e.target.value as string[])
+                setSelectedFacilities(e.target.value as string[]);
               }}
               renderValue={(selected) => {
                 if (selected.length === 0) {
@@ -265,7 +265,7 @@ export default function AddRoomForm() {
 
                 return (
                   <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
-                    {selected.map((value) => {
+                    {selected.map((value: any) => {
                       const facility = facilities.find((f) => f._id === value);
                       return facility ? (
                         <Chip key={value} label={facility.name} />

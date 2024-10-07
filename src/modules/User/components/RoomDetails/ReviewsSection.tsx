@@ -11,10 +11,7 @@ import { CommentUrls, ReviewsUrls } from "../../../../constants/End_Points";
 import { FaStar } from "react-icons/fa";
 import axios from "axios";
 import { useParams } from "react-router-dom";
-
-interface Params {
-  roomId: string;
-}
+import { toast } from "react-toastify";
 
 interface CommentResponse {
   data: {
@@ -49,7 +46,7 @@ const ReviewsSection: React.FC = () => {
     }
 
     try {
-      const response = await axios.post<CommentResponse>(
+      await axios.post<CommentResponse>(
         CommentUrls.createComment,
         {
           comment: comment,
@@ -59,10 +56,10 @@ const ReviewsSection: React.FC = () => {
           headers: { Authorization: `Bearer ${token}` },
         }
       );
-      console.log(response.data);
       setComment(""); // Clear the comment input after successful submission
+      toast.success("Comment added succefully");
     } catch (error) {
-      console.error("Error creating comment:", error);
+      toast.error("Error creating comment");
     }
   };
 
@@ -74,24 +71,22 @@ const ReviewsSection: React.FC = () => {
     }
 
     if (rating === 0) {
-      console.error("Rating must be between 1 and 5");
+      toast.error("Rating must be between 1 and 5");
       return;
     }
 
     if (!review) {
-      console.error("Review cannot be empty");
+      toast.error("Review cannot be empty");
       return;
     }
 
     if (!roomId) {
-      console.error("Room ID is missing");
+      toast.error("Room ID is missing");
       return;
     }
 
     try {
-      console.log("Creating review with:", { rating, review, roomId, token });
-
-      const response = await axios.post(
+      await axios.post(
         ReviewsUrls.createReview,
         {
           roomId: roomId,
@@ -103,9 +98,9 @@ const ReviewsSection: React.FC = () => {
         }
       );
 
-      console.log("Review successfully created:", response.data);
+      toast.success("Review successfully created:");
       setReview("");
-      setRating(0); // Clear review and rating after successful submission
+      setRating(0);
     } catch (error: any) {
       if (axios.isAxiosError(error)) {
         console.error("Axios error:", error.response?.data || error.message);
@@ -173,7 +168,7 @@ const ReviewsSection: React.FC = () => {
               sx={{
                 backgroundColor: "#3252DF",
                 width: "25%",
-                  textTransform: "none"
+                textTransform: "none",
               }}
             >
               Submit Review
@@ -227,7 +222,7 @@ const ReviewsSection: React.FC = () => {
                   backgroundColor: "#3252DF",
                   width: "25%",
                   alignSelf: "end",
-                    textTransform: "none"
+                  textTransform: "none",
                 }}
               >
                 Send

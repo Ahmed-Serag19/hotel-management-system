@@ -11,7 +11,6 @@ import {
   Typography,
 } from "@mui/material";
 import { Link, useNavigate } from "react-router-dom";
-import { styled } from "@mui/material/styles";
 import RegisterImg from "../../../../assets/images/register.png";
 import { User_URls } from "../../../../constants/End_Points";
 import Visibility from "@mui/icons-material/Visibility";
@@ -39,8 +38,6 @@ export default function Register() {
   }
 
   const convertToFormData = (data: FormValue): FormData => {
-    console.log(data);
-
     const inputFormData = new FormData();
     inputFormData.append("userName", data.userName);
     inputFormData.append("email", data.email);
@@ -71,8 +68,6 @@ export default function Register() {
   });
 
   const onSubmit = async (data: FormValue) => {
-    console.log(data);
-
     try {
       const formData = convertToFormData(data);
       await axios.post(User_URls.register, formData, {
@@ -89,22 +84,23 @@ export default function Register() {
   };
 
   return (
-    <div>
+    <>
       <Box
         sx={{
           height: "100vh",
-          overflow: { xs: "auto" },
+          maxHeight: "100vh",
+ 
         }}
       >
         <Grid2 container>
           <Grid2
-          className="sideLeft"
+            className="sideLeft"
             width={{ xs: "85%", sm: "95%", md: "50%" }}
             size={{ xs: 12, md: 6 }}
             sx={{pb:2}}
           >
             <Stack
-              sx={{ marginLeft: "3%", marginTop: "20px" }}
+              sx={{ marginLeft: "3%", marginTop: "10px" }}
               height={{ xs: "6%", sm: "9%" }}
             >
               <Typography
@@ -121,13 +117,13 @@ export default function Register() {
                 display: "flex",
                 flexDirection: "column",
                 width: { xs: "100%", sm: "80%", md: "70%" },
-                margin: { xs: "10%", sm: "auto" },
+                margin: { xs: "5%", sm: "auto" },
               }}
             >
               <Stack>
                 <Typography
                   variant="h2"
-                  style={{ fontSize: "20px", fontWeight: "600" }}
+                  style={{ fontSize: "24px", fontWeight: "600" }}
                 >
                   Sign Up
                 </Typography>
@@ -137,10 +133,10 @@ export default function Register() {
                     fontFamily: "Poppins",
                     fontSize: "16px",
                     fontWeight: "500",
-                    marginY: 3,
+                    marginY: 1,
                   }}
                 >
-                   <span>If you already have an account, you can</span>
+                  <span>If you already have an account, you can</span>
                   <br />
                   <span>
                     You can {""}
@@ -174,9 +170,8 @@ export default function Register() {
                   Username
                 </label>
                 <TextField
-                className="inputRegister"
+                  className="inputRegister"
                   sx={{
-                    marginTop: 1,
                     marginBottom: 1,
                     bgcolor: "#f5f6f8",
                     border: "none",
@@ -208,9 +203,8 @@ export default function Register() {
                       Phone Number
                     </label>
                     <TextField
-                             className="inputRegister"
+                      className="inputRegister"
                       sx={{
-                        marginTop: 1,
                         marginBottom: 1,
                         bgcolor: "#f5f6f8",
                         border: "none",
@@ -238,9 +232,8 @@ export default function Register() {
                       Country
                     </label>
                     <TextField
-                             className="inputRegister"
+                      className="inputRegister"
                       sx={{
-                        marginTop: 1,
                         marginBottom: 1,
                         bgcolor: "#f5f6f8",
                         border: "none",
@@ -269,9 +262,8 @@ export default function Register() {
                   Email Address
                 </label>
                 <TextField
-                         className="inputRegister"
+                  className="inputRegister"
                   sx={{
-                    marginTop: 1,
                     marginBottom: 1,
                     bgcolor: "#f5f6f8",
                     border: "none",
@@ -296,9 +288,8 @@ export default function Register() {
                   Password
                 </label>
                 <TextField
-                         className="inputRegister"
+                  className="inputRegister"
                   sx={{
-                    marginTop: 1,
                     marginBottom: 1,
                     bgcolor: "#f5f6f8",
                     border: "none",
@@ -337,9 +328,8 @@ export default function Register() {
                   Confirm Password
                 </label>
                 <TextField
-                         className="inputRegister"
+                  className="inputRegister"
                   sx={{
-                    marginTop: 1,
                     marginBottom: 1,
                     bgcolor: "#f5f6f8",
                     border: "none",
@@ -384,16 +374,15 @@ export default function Register() {
                   variant="outlined"
                   sx={{
                     textTransform: "none",
-                    marginTop: 1,
                     marginBottom: 1,
                     bgcolor: "#f5f6f8",
                     border: "none",
-                    padding: 1.5
+                    padding: 1.5,
                   }}
                 >
                   {/* Upload a Image */}
                   <input
-                           className="inputRegister"
+                    className="inputRegister"
                     type="file"
                     id="profileImage"
                     {...register("profileImage", {
@@ -409,13 +398,13 @@ export default function Register() {
                 {/* Submit Button */}
                 <Button
                   disabled={isSubmitting}
-                  sx={{                      
+                  sx={{
                     width: "100%",
                     backgroundColor: "#3252DF",
                     textTransform: "none",
                     fontSize: "17px",
-                    fontWeight: 500, 
-                    marginTop: 3
+                    fontWeight: 500,
+                    marginTop: 3,
                   }}
                   type="submit"
                   variant="contained"
@@ -426,17 +415,17 @@ export default function Register() {
             </Stack>
           </Grid2>
           {/* Grid2 for Image */}
-          <Grid2 display={{ xs: "none", md: "block" }} size={{ xs: 12, md: 6 }} >
+          <Grid2 display={{ xs: "none", md: "block" }} size={{ xs: 12, md: 6 }}>
             <Stack
-            className="img-Register"
+              className="img-Register"
               sx={{
-                height:{md:"130vh", xl:"97vh"},
+                height: { md: "120vh", xl: "97vh" },
                 backgroundImage: `url(${RegisterImg})`,
                 backgroundSize: " cover",
                 backgroundRepeat: "no-repeat",
                 margin: "10px",
-                borderRadius: "15px",            
-                backgroundPosition: "100% 100%",
+                borderRadius: "15px",
+                backgroundPosition: "center center",
               }}
             >
               {/* <img  src={RegisterImg} style={{width:"97%",margin: "10px"}}/> */}
@@ -444,6 +433,6 @@ export default function Register() {
           </Grid2>
         </Grid2>
       </Box>
-    </div>
+    </>
   );
 }

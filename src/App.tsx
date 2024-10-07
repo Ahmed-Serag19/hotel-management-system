@@ -27,12 +27,10 @@ import RoomDetail from "./modules/User/components/RoomDetails/RoomDetail";
 import Rooms from "./modules/Admin/components/Rooms/Rooms";
 import Users from "./modules/Admin/components/Users/Users";
 import { useContext } from "react";
-
 import { AuthContext } from "./context/authcontext";
 
 function App() {
   const { loginData } = useContext(AuthContext) || {};
-
   const getDefaultRouteElement = () => {
     if (loginData?.role === "admin") {
       return <Navigate to="dashboard/home" replace />;
