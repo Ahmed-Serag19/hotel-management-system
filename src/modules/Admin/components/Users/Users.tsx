@@ -12,6 +12,7 @@ import {
   Select,
   Typography,
   TablePagination,
+  Stack,
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import axios from "axios";
@@ -145,6 +146,28 @@ export default function UsersTable() {
           )}
         </Box>
       </Modal>
+        
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          height:{xs:"30px",sm:"100px"},
+        }}
+      >
+        <Stack sx={{ color: "#1F263E" , }} >
+          <Typography variant="h6" sx={{ fontFamily: "Poppins" ,fontSize:{xs:"16px",md:"20px"} }}>
+           Users Table Details
+          </Typography>
+          <Typography
+            sx={{fontSize:{xs:"12px",md:"14px"},  lineHeight: "2px" }}
+          >
+            You can check all details
+          </Typography>
+        </Stack>
+
+       
+      </Box>
 
       {/* Users Table */}
       <Box sx={{ pb: 3, overflowX: "auto" }}>

@@ -101,6 +101,7 @@ export default function Register() {
           className="sideLeft"
             width={{ xs: "85%", sm: "95%", md: "50%" }}
             size={{ xs: 12, md: 6 }}
+            sx={{pb:2}}
           >
             <Stack
               sx={{ marginLeft: "3%", marginTop: "20px" }}

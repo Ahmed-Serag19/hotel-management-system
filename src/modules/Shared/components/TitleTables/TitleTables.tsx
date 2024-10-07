@@ -8,7 +8,7 @@ interface TitleData {
 }
 export default function TitleTables({ titleTable, onClick, btn }: TitleData) {
   return (
-    <div>
+    <>
       <Box
         sx={{
           display: "flex",
@@ -49,6 +49,6 @@ export default function TitleTables({ titleTable, onClick, btn }: TitleData) {
           </Button>
         </Stack>
       </Box>
-    </div>
+    </>
   );
 }

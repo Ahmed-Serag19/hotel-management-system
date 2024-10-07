@@ -61,7 +61,7 @@ const Navbar: React.FC = () => {
         {/* User Avatar and Name */}
         <Box sx={{ display: "flex", alignItems: "center", ml: 2 }}>
           <Avatar alt="User Photo" src="https://via.placeholder.com/150" />
-          <Typography sx={{ ml: 1, color: "black" }}>John Doe</Typography>
+          <Typography sx={{ ml: 1, color: "black" }}>Sara</Typography>
 
           {/* Dropdown Menu Trigger */}
           <IconButton onClick={handleMenuClick}>

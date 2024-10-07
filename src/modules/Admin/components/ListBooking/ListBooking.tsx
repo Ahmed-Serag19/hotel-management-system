@@ -178,7 +178,28 @@ export default function Facilities() {
           </Stack>
         </Box>
       </Modal>
+      
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          height:{xs:"30px",sm:"100px"},
+        }}
+      >
+        <Stack sx={{ color: "#1F263E" , }} >
+          <Typography variant="h6" sx={{ fontFamily: "Poppins" ,fontSize:{xs:"16px",md:"20px"} }}>
+           Booking Table Details
+          </Typography>
+          <Typography
+            sx={{fontSize:{xs:"12px",md:"14px"},  lineHeight: "2px" }}
+          >
+            You can check all details
+          </Typography>
+        </Stack>
 
+       
+      </Box>
       {/* Booking Table */}
       <Box sx={{ pb: 3, overflowX: "auto" }}>
         {booking.length > 0 ? (

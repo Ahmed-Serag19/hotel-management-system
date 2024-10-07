@@ -1,4 +1,4 @@
-import { RoomsUrl, favoriteUrl } from "../../../../constants/End_Points";
+import { Base_Url, RoomsUrl, favoriteUrl } from "../../../../constants/End_Points";
 import { Box, Container, Grid2, Tooltip, Typography } from "@mui/material";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useContext, useEffect, useState } from "react";
@@ -27,7 +27,7 @@ export default function AllRooms() {
   const [totalPages, setTotalPages] = useState(1);
   const pageSize = 10;
   const defaultStartDate = "2023-01-20";
-  const defaultEndDate = "2023-09-30";
+  const defaultEndDate = "2023-01-30";
 
   const handleRoomClick = (
     roomId: string,
@@ -47,27 +47,55 @@ export default function AllRooms() {
 
  
   //Fetch all rooms with optional startDate, endDate, and capacity
+  // let getAllRoom = async (page: number) => {
+  //   try {
+  //     let response = await axios.get(`${RoomsUrl.getAllRoom}/available`, {
+  //       params: {
+  //         page: page + 1,
+  //         size: pageSize,
+  //         startDate: startDate
+  //           ? format(new Date(startDate), "yyyy-MM-dd")
+  //           : defaultStartDate || format(new Date(), "yyyy-MM-dd")  ,
+  //         endDate: endDate
+  //           ? format(new Date(endDate), "yyyy-MM-dd")
+  //           : defaultEndDate || format(new Date(), "yyyy-MM-dd") ,
+  //         capacity: capacity || 2, // Default capacity to 2
+  //       },
+  //     });
+
   let getAllRoom = async (page: number) => {
     try {
-      let response = await axios.get(`${RoomsUrl.getAllRoom}/available`, {
-        params: {
-          page: page + 1,
-          size: pageSize,
-          startDate: startDate
-            ? format(new Date(startDate), "yyyy-MM-dd")
-            : defaultStartDate || format(new Date(), "yyyy-MM-dd")  ,
-          endDate: endDate
-            ? format(new Date(endDate), "yyyy-MM-dd")
-            : defaultEndDate || format(new Date(), "yyyy-MM-dd") ,
-          capacity: capacity || 2, // Default capacity to 2
-        },
-      });
-
+      let params: any = {
+        page: page + 1,
+        size: pageSize,
+      };
+      if (startDate) {
+        params.startDate = format(new Date(startDate), "yyyy-MM-dd") || format(new Date(), "yyyy-MM-dd") ;
+      }
+  
+      if (endDate) {
+        params.endDate = format(new Date(endDate), "yyyy-MM-dd")  || format(new Date(), "yyyy-MM-dd") ;
+      }
+  
+      if (capacity) {
+        params.capacity = capacity || 2;
+      }
+  
+      let response;
+  
+    
+      if (startDate || endDate || capacity) {
+        response = await axios.get(`${Base_Url}/portal/rooms/available`, {
+          params,
+        });
+      } 
+     
+      else {
+        response = await axios.get(RoomsUrl.getAllRoom);
+      }
       setRoomList(response.data.data.rooms);
       setTotalCount(response.data.data.totalCount);
-      setTotalPages(Math.ceil(response.data.data.totalCount / pageSize));
-
-      //console.log(response.data.data.rooms);
+     //count={Math.ceil(totalCount / size)}
     } catch (error: any) {
       console.log("Failed to fetch rooms", error);
     }
