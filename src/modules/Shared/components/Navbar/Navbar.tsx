@@ -28,7 +28,7 @@ const Navbar: React.FC = () => {
   };
   const handleLogout = () => {
     logout();
-    navigate("/login");
+    navigate("/dashboard/homepage");
   };
 
   return (

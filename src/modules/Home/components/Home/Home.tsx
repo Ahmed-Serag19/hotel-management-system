@@ -56,8 +56,11 @@ export default function Home() {
   return (
     <>
       {/* <Layout /> */}
+      <Box>
+
+      
 <Container sx={{margin:"auto"}}> 
-      <Grid2 container >
+      {/* <Grid2 container > */}
     
 
      
@@ -119,7 +122,9 @@ export default function Home() {
           justifyContent: "space-around",
         }}
       > */}
-        <Grid2 size={{xs:12,md:7}} sx={{mb:2}}>
+  <Box>
+    <Grid2 container>
+    <Grid2 size={{xs:12,md:7}} sx={{mb:2}}>
         <Box
           sx={{
             width: "350px",
@@ -166,10 +171,13 @@ export default function Home() {
         </Box>
 
         </Grid2>
+    </Grid2>
+  </Box>
 
       {/* </Box> */}
-      </Grid2>
+      {/* </Grid2> */}
       </Container>
+      </Box>
       {/* <Footer /> */}
     </>
   );

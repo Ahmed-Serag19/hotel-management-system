@@ -154,7 +154,7 @@ export default function NavbarPortal(props: Props) {
                       sx={{ color: "#1F263E", fontFamily: "Poppins" }}
                       onClick={() => {
                         localStorage.removeItem("token");
-                        navigate("/login");
+                        navigate("/dashboard/homepage");
                       }}
                       value={30}
                     >
@@ -272,7 +272,7 @@ export default function NavbarPortal(props: Props) {
                           primary="Logout"
                           onClick={() => {
                             localStorage.removeItem("token");
-                            navigate("/login");
+                            navigate("/dashboard/homepage");
                           }}
                         />
                       </ListItemButton>
