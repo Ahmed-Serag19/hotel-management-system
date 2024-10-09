@@ -30,7 +30,7 @@ import { DateRange } from "react-date-range";
 import { format } from "date-fns";
 import axios from "axios";
 import { RoomsUrl, UserBookingsUrl } from "../../../../constants/End_Points";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { Route, useLocation, useNavigate, useParams } from "react-router-dom";
 import ReviewsSection from "./ReviewsSection";
 import { toast } from "react-toastify";
 
@@ -118,6 +118,7 @@ function RoomDetail() {
         if (response.data.success == true) {
           toast.success(response.data.message);
           navigate(`/dashboard/payment/${response.data.data.booking._id}`); // Redirect user after booking
+        
         }
       } catch (error) {
         // Handle error during booking
@@ -310,7 +311,7 @@ function RoomDetail() {
                 <img src={ic_bedroom} alt="ic_bedroom" />
                 <Typography color="#B0B0B0">
                   <span style={{ fontWeight: "bold", color: "#152C5B" }}>
-                    {Math.ceil(Math.random() * 6)}
+                    {/* {Math.ceil(Math.random() * 6)} */} 3
                   </span>{" "}
                   beds
                 </Typography>

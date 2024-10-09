@@ -36,7 +36,7 @@ export default function Payment() {
 
 // Make sure that bookingId is properly passed as a prop
 const CheckoutForm = ({ bookingId }: CheckoutFormProps) => {
-  let navigate = useNavigate();
+   let navigate = useNavigate();
   let { loginData }: any = useContext(AuthContext);
   if (loginData?.role != "user") {
     navigate("/NotFound");
@@ -66,7 +66,7 @@ const CheckoutForm = ({ bookingId }: CheckoutFormProps) => {
 
   return (
 <>
-    {loginData?.role === "user" ?<Box>
+    {loginData?.role == "user" ?<Box>
       <Grid2 container>
       <form className="form-wrapper" onSubmit={handleSubmit}>
         <Typography
