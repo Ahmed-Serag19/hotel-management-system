@@ -1,5 +1,5 @@
 import { Box, Container, Grid2, Typography } from "@mui/material";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Base_Url } from "../../../../constants/End_Points";
 import HeaderUserRoom from "../../../Shared/components/HeaderUserRoom/HeaderUserRoom";
 import HourglassEmptyIcon from "@mui/icons-material/HourglassEmpty";
@@ -8,7 +8,14 @@ import axios from "axios";
 import NoData from "../../../Shared/components/NoData/NoData";
 import LoadingScreen from "../../../Shared/components/LoadingScreen/LoadingScreen";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../../../../context/authcontext";
 export default function AllBooking() {
+  let navigate = useNavigate();
+  let { loginData }: any = useContext(AuthContext);
+  if (loginData?.role != "user") {
+    navigate("/NotFound");
+  }
   const [isLoading, setLoading] = useState(false);
   const [AllBookingList, setAllBookingList] = useState([]);
   let getAllBooking = async () => {
@@ -32,7 +39,7 @@ export default function AllBooking() {
   }, []);
 
   return (
-    <>
+    <>  {loginData?.role === "user" ?<Box>
       {!isLoading ? (
         <Box>
           {AllBookingList.length > 0 ? (
@@ -128,6 +135,10 @@ export default function AllBooking() {
       ) : (
         <LoadingScreen />
       )}
+    </Box> : (
+        navigate("/NotFound")
+      )}
+
     </>
   );
 }

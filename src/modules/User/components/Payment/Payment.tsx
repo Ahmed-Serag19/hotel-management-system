@@ -5,14 +5,15 @@ import {
   useElements,
   useStripe,
 } from "@stripe/react-stripe-js";
-import { Box, Grid, Typography } from "@mui/material"; // Fixed the Grid import
-import { FormEvent } from "react";
+import { Box, Grid, Grid2, Typography } from "@mui/material"; // Fixed the Grid import
+import { FormEvent, useContext } from "react";
 import { Base_Url } from "../../../../constants/End_Points";
 import PaymentIcon from "@mui/icons-material/Payment";
 import axios from "axios";
 import { loadStripe } from "@stripe/stripe-js";
 import { toast } from "react-toastify";
 import { useNavigate, useParams } from "react-router-dom";
+import { AuthContext } from "../../../../context/authcontext";
 
 // Define the type for the params to be passed to the CheckoutForm
 interface CheckoutFormProps {
@@ -35,7 +36,12 @@ export default function Payment() {
 
 // Make sure that bookingId is properly passed as a prop
 const CheckoutForm = ({ bookingId }: CheckoutFormProps) => {
-  const navigate = useNavigate();
+  let navigate = useNavigate();
+  let { loginData }: any = useContext(AuthContext);
+  if (loginData?.role != "user") {
+    navigate("/NotFound");
+  }
+
   const stripe = useStripe();
   const elements = useElements();
 
@@ -59,7 +65,9 @@ const CheckoutForm = ({ bookingId }: CheckoutFormProps) => {
   };
 
   return (
-    <Grid container>
+<>
+    {loginData?.role === "user" ?<Box>
+      <Grid2 container>
       <form className="form-wrapper" onSubmit={handleSubmit}>
         <Typography
           sx={{
@@ -87,8 +95,11 @@ const CheckoutForm = ({ bookingId }: CheckoutFormProps) => {
           Cancel
         </button>
       </form>
-    </Grid>
+    </Grid2>
+      </Box> : navigate("/NotFound")}
+      </>
   );
+  
 };
 
 // Update the payBooking function to expect the correct bookingId structure

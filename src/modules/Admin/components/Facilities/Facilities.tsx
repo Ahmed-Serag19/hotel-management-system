@@ -18,7 +18,7 @@ import {
   selectStyle,
   style,
 } from "../Facilities/FacilitiesData";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 
 import { FaRegEdit } from "react-icons/fa";
 import ModalPop from "../../../Shared/components/ModalPop/ModalPop";
@@ -37,8 +37,17 @@ import { facility_Urls } from "../../../../constants/End_Points";
 import { tableCellClasses } from "@mui/material/TableCell"; // for table border
 import { toast } from "react-toastify";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../../../../context/authcontext";
+import LoadingScreenTable from "../../../Shared/components/LoadingScreenTables/LoadingScreenTables";
 
 export default function Facilities() {
+  let navigate = useNavigate();
+  let { loginData }: any = useContext(AuthContext);
+  if (loginData?.role != "admin") {
+    navigate("/NotFound");
+  }
+  const [isLoading, setLoading] = useState(false);
   const [facility, setFacility] = useState([]);
   const [modalOpen, setModalOpen] = useState(false); //add& update
   const [isUpdate, setIsUpdate] = useState(false); //add& update
@@ -144,12 +153,24 @@ export default function Facilities() {
   };
 
   useEffect(() => {
+
+    setLoading(true);
     getFacility();
+    setTimeout(() => {
+      setLoading(false);
+    }, 1200);
+
+
   }, [page, rowsPerPage]);
 
   return (
     <>
-      <TitleTables 
+
+{loginData?.role == "admin" ?<Box>
+
+  
+  {!isLoading ? (<Box>
+    <TitleTables 
         titleTable="Facilities"
         btn="Facility"
         onClick={openAddModal}
@@ -339,6 +360,15 @@ export default function Facilities() {
           <NoData />
         )}
       </Box>
+
+
+</Box>) : (
+        <LoadingScreenTable/>
+      )}
+
+
+</Box>: navigate("/NotFound")}
+
     </>
   );
 }

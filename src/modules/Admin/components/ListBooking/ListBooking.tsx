@@ -15,7 +15,7 @@ import {
   Typography,
   TablePagination,
 } from "@mui/material";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { bookingUrl } from "../../../../constants/End_Points";
 import { toast } from "react-toastify";
@@ -23,6 +23,9 @@ import styled from "@emotion/styled";
 import { tableCellClasses } from "@mui/material/TableCell"; // for border rows
 import NoData from "../../../Shared/components/NoData/NoData";
 import DeleteImg from "../../../../assets/images/delete.png";
+import { AuthContext } from "../../../../context/authcontext";
+import { useNavigate } from "react-router-dom";
+import LoadingScreenTable from "../../../Shared/components/LoadingScreenTables/LoadingScreenTables";
 
 // Type for bookingData
 interface BookingData {
@@ -38,7 +41,15 @@ interface BookingData {
   };
 }
 
-export default function Facilities() {
+export default function ListBooking() 
+{
+  let navigate = useNavigate();
+  let { loginData }: any = useContext(AuthContext);
+  if (loginData?.role != "admin") {
+    navigate("/NotFound");
+  }
+
+  const [isLoading, setLoading] = useState(false);
   const [booking, setBooking] = useState<BookingData[]>([]);
   const [openDelete, setOpenDelete] = useState(false); //delete modal
   const [bookingId, setBookingId] = useState<string>("");
@@ -70,7 +81,7 @@ export default function Facilities() {
   const getBooking = async () => {
     try {
       const response = await axios.get(
-        `${bookingUrl.getAllBooking}?page=${page}&limit=${rowsPerPage}`,
+        `${bookingUrl.getAllBooking}?page=${page + 1}&size=${rowsPerPage}`,
         {
           headers: { Authorization: localStorage.getItem("token") || "" },
         }
@@ -117,7 +128,13 @@ export default function Facilities() {
   };
 
   useEffect(() => {
+
+    setLoading(true);
     getBooking();
+    setTimeout(() => {
+      setLoading(false);
+    }, 1200);
+    
   }, [page, rowsPerPage]);
 
   return (
@@ -179,7 +196,11 @@ export default function Facilities() {
         </Box>
       </Modal>
       
-      <Box
+      {loginData?.role === "admin" ?<Box>
+
+        
+      {!isLoading ? (<Box>
+        <Box
         sx={{
           display: "flex",
           justifyContent: "space-between",
@@ -301,6 +322,13 @@ export default function Facilities() {
           <NoData />
         )}
       </Box>
+
+</Box>) : (
+        <LoadingScreenTable/>
+      )}
+
+</Box> : navigate("/NotFound")}
+
     </>
   );
 }

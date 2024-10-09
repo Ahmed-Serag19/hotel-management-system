@@ -51,10 +51,17 @@ function App() {
         { path: "homepage", element: <Homepage /> },
         { path: "all-rooms", element: <AllRooms /> },
         { path: "room-details/:roomId", element: <RoomDetail /> },
-
-        // { path: "dashboard/all-bookings", element: <AllBookings /> },
-        // { path: "payment/:bookingId ", element: <Payment /> },
+        //  { path: "dashboard/all-bookings", element: <AllBookings /> },
+        // { path: "dashboard/payment/:bookingId", element: <Payment /> },
         // { path: "dashboard/payment-page", element: <PaymentPageNavigate /> },
+ 
+        // { path: "dashboard/favorites", element: <FavoriteRooms/> },
+    
+        
+
+      //   { path: "dashboard/all-bookings", element: <AllBookings /> },
+      //  { path: "dashboard/payment/:bookingId ", element: <Payment /> },
+      //   { path: "dashboard/payment-page", element: <PaymentPageNavigate /> },
         // Protected Routes: Only accessible to admins
         // {
         //   index: true,
@@ -74,9 +81,9 @@ function App() {
         { path: "dashboard/all-rooms", element: <AllRooms /> },
         { path: "dashboard/room-details/:roomId", element: <RoomDetail /> },
 
-        { path: "dashboard/all-bookings", element: <AllBookings /> },
+        // { path: "dashboard/all-bookings", element: <AllBookings /> },
         { path: "dashboard/payment/:bookingId ", element: <Payment /> },
-        { path: "dashboard/payment-page", element: <PaymentPageNavigate /> },
+        // { path: "dashboard/payment-page", element: <PaymentPageNavigate /> },
  
         // { path: "dashboard/favorites", element: <FavoriteRooms/> },
         
@@ -101,15 +108,16 @@ function App() {
           path: "dashboard/all-bookings",
           element: (
             <ProtectedRoute >
-           <Payment />
+                 <AllBookings />
+           
             </ProtectedRoute>
           ),
         },
         {
-          path: "dashboard/payment/:bookingId ",
+          path: "dashboard/payment/:bookingId",
           element: (
             <ProtectedRoute >
-           <AllBookings />
+             <Payment />
             </ProtectedRoute>
           ),
         },
@@ -118,6 +126,16 @@ function App() {
           element: (
             <ProtectedRoute >
           <PaymentPageNavigate />
+            </ProtectedRoute>
+          ),
+        },
+        
+     
+        {
+          path: "dashboard/favorites",
+          element: (
+            <ProtectedRoute >
+              <FavoriteRooms />
             </ProtectedRoute>
           ),
         },
@@ -162,15 +180,6 @@ function App() {
           ),
         },
 
-        // User-specific routes for logged-in users
-        // {
-        //   path: "dashboard/favorites",
-        //   element: (
-        //     <ProtectedRoute allowedRoles={["user", "admin"]}>
-        //       <FavoriteRooms />
-        //     </ProtectedRoute>
-        //   ),
-        // },
 
         {
           path: "dashboard/change-password",

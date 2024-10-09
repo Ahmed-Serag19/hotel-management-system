@@ -16,7 +16,7 @@ import {
   TableRow,
   Typography,
 } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 
 import CloseIcon from "@mui/icons-material/Close";
 import DeleteImg from "../../../../assets/images/delete.png";
@@ -32,6 +32,9 @@ import styled from "@emotion/styled";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { FirstCell, LastCell } from "../Facilities/FacilitiesData";
+import { AuthContext } from "../../../../context/authcontext";
+import LoadingScreen from "../../../Shared/components/LoadingScreen/LoadingScreen";
+import LoadingScreenTable from "../../../Shared/components/LoadingScreenTables/LoadingScreenTables";
 
 const StyledTableRow = styled(TableRow)`
   &:nth-of-type(even) {
@@ -154,6 +157,12 @@ const RoomDetailsModal = ({
 };
 
 export default function Rooms() {
+  const navigate = useNavigate();
+  let { loginData }: any = useContext(AuthContext);
+  if (loginData?.role != "admin") {
+    navigate("/NotFound");
+  }
+  const [isLoading, setLoading] = useState(false);
   const [rooms, setRooms] = useState<Room[]>([]);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
@@ -164,7 +173,7 @@ export default function Rooms() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [viewOpen, setViewOpen] = useState(false); // State to control view modal
 
-  const navigate = useNavigate();
+
 
   const getRooms = async () => {
     try {
@@ -180,7 +189,12 @@ export default function Rooms() {
   };
 
   useEffect(() => {
+    setLoading(true);
     getRooms();
+    setTimeout(() => {
+      setLoading(false);
+    }, 1500);
+
   }, [page, rowsPerPage]);
 
   const handleOpenDelete = (roomId: string) => {
@@ -243,151 +257,162 @@ export default function Rooms() {
 
   return (
     <>
-      <TitleTables titleTable="Rooms" btn="Room" onClick={handleAddRoomRoute} />
+     {loginData?.role === "admin" ?<Box>
+      {!isLoading ? <Box>
 
-      <Box sx={{ mx: 3, mb: 4 ,overflowX:{xs:"visible",md:"hidden"}}}>
-        {rooms.length > 0 ? (
-          <>
-            <Table
-              sx={{
-                minWidth: 350,
-                [`& .MuiTableCell-root`]: {
-                  borderBottom: "none",
-                },
-                mt: "50px",
-              }}
-              aria-label="rooms table"
-            >
-              <TableHead>
-                <TableRow
+
+        <TitleTables titleTable="Rooms" btn="Room" onClick={handleAddRoomRoute} />
+
+<Box sx={{ mx: 3, mb: 4 ,overflowX:{xs:"visible",md:"hidden"}}}>
+  {rooms.length > 0 ? (
+    <>
+      <Table
+        sx={{
+          minWidth: 350,
+          [`& .MuiTableCell-root`]: {
+            borderBottom: "none",
+          },
+          mt: "50px",
+        }}
+        aria-label="rooms table"
+      >
+        <TableHead>
+          <TableRow
+            sx={{
+              bgcolor: "#E2E5EB",
+              "&:last-child td, &:last-child th": { border: 0 },
+            }}
+          >
+            <TableCell sx={FirstCell || { fontWeight: "bold", fontFamily: "Poppins" }}>
+              Name
+            </TableCell>
+            <TableCell sx={{ fontWeight: "bold", fontFamily: "Poppins" }}>
+              Image
+            </TableCell>
+            <TableCell sx={{ fontWeight: "bold", fontFamily: "Poppins" }}>
+              Price
+            </TableCell>
+            <TableCell sx={{ fontWeight: "bold", fontFamily: "Poppins" }}>
+              Discount
+            </TableCell>
+            <TableCell sx={{ fontWeight: "bold", fontFamily: "Poppins" }}>
+              Capacity
+            </TableCell>
+            <TableCell sx={{ fontWeight: "bold", fontFamily: "Poppins" }}>
+              Facilities
+            </TableCell>
+            <TableCell sx={LastCell || { fontWeight: "bold", fontFamily: "Poppins" }}>
+              Action
+            </TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {rooms.map((room: Room) => (
+            <StyledTableRow key={room._id}>
+              <TableCell>{room.roomNumber}</TableCell>
+              <TableCell>
+                {room.images.length > 0 ? (
+                  <img
+                    src={room.images[0]}
+                    alt="Room"
+                    style={{ width: "50px", height: "50px" }}
+                  />
+                ) : (
+                  "No Image"
+                )}
+              </TableCell>
+              <TableCell>{room.price}</TableCell>
+              <TableCell>{room.discount}</TableCell>
+              <TableCell>{room.capacity}</TableCell>
+              <TableCell>
+                <Box p={1}>
+                  {room.facilities.length > 0 ? (
+                    room.facilities.map((facility: any) => (
+                      <li key={facility._id}>{facility.name}</li>
+                    ))
+                  ) : (
+                    <p>No facilities</p>
+                  )}
+                </Box>
+              </TableCell>
+              <TableCell>
+                <Select
                   sx={{
-                    bgcolor: "#E2E5EB",
-                    "&:last-child td, &:last-child th": { border: 0 },
+                    color: "#1F263E",
+                    fontFamily: "Poppins",
+                    fontSize: "14px",
+                    boxShadow: "none",
+                    ".MuiOutlinedInput-notchedOutline": { border: 0 },
+                    "&.MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline":
+                      {
+                        border: 0,
+                      },
+                    "&.MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline":
+                      {
+                        border: 0,
+                      },
                   }}
+                  value=""
+                  displayEmpty
+                  inputProps={{ "aria-label": "Without label" }}
+                  IconComponent={MoreHorizIcon}
                 >
-                  <TableCell sx={FirstCell || { fontWeight: "bold", fontFamily: "Poppins" }}>
-                    Name
-                  </TableCell>
-                  <TableCell sx={{ fontWeight: "bold", fontFamily: "Poppins" }}>
-                    Image
-                  </TableCell>
-                  <TableCell sx={{ fontWeight: "bold", fontFamily: "Poppins" }}>
-                    Price
-                  </TableCell>
-                  <TableCell sx={{ fontWeight: "bold", fontFamily: "Poppins" }}>
-                    Discount
-                  </TableCell>
-                  <TableCell sx={{ fontWeight: "bold", fontFamily: "Poppins" }}>
-                    Capacity
-                  </TableCell>
-                  <TableCell sx={{ fontWeight: "bold", fontFamily: "Poppins" }}>
-                    Facilities
-                  </TableCell>
-                  <TableCell sx={LastCell || { fontWeight: "bold", fontFamily: "Poppins" }}>
-                    Action
-                  </TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {rooms.map((room: Room) => (
-                  <StyledTableRow key={room._id}>
-                    <TableCell>{room.roomNumber}</TableCell>
-                    <TableCell>
-                      {room.images.length > 0 ? (
-                        <img
-                          src={room.images[0]}
-                          alt="Room"
-                          style={{ width: "50px", height: "50px" }}
-                        />
-                      ) : (
-                        "No Image"
-                      )}
-                    </TableCell>
-                    <TableCell>{room.price}</TableCell>
-                    <TableCell>{room.discount}</TableCell>
-                    <TableCell>{room.capacity}</TableCell>
-                    <TableCell>
-                      <Box p={1}>
-                        {room.facilities.length > 0 ? (
-                          room.facilities.map((facility: any) => (
-                            <li key={facility._id}>{facility.name}</li>
-                          ))
-                        ) : (
-                          <p>No facilities</p>
-                        )}
-                      </Box>
-                    </TableCell>
-                    <TableCell>
-                      <Select
-                        sx={{
-                          color: "#1F263E",
-                          fontFamily: "Poppins",
-                          fontSize: "14px",
-                          boxShadow: "none",
-                          ".MuiOutlinedInput-notchedOutline": { border: 0 },
-                          "&.MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline":
-                            {
-                              border: 0,
-                            },
-                          "&.MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline":
-                            {
-                              border: 0,
-                            },
-                        }}
-                        value=""
-                        displayEmpty
-                        inputProps={{ "aria-label": "Without label" }}
-                        IconComponent={MoreHorizIcon}
-                      >
-                        <MenuItem
-                          sx={{ color: "#1F263E", fontFamily: "Poppins" }}
-                          value="view"
-                          onClick={() => handleViewClick(room)}
-                        >
-                          <FaRegEye
-                            style={{ color: "#203FC7", marginRight: "10px" }}
-                          />{" "}
-                          View
-                        </MenuItem>
-                        <MenuItem
-                          sx={{ color: "#1F263E", fontFamily: "Poppins" }}
-                          value="edit"
-                          onClick={() => handleEditClick(room)}
-                        >
-                          <FaRegEdit
-                            style={{ color: "#203FC7", marginRight: "10px" }}
-                          />{" "}
-                          Edit
-                        </MenuItem>
-                        <MenuItem
-                          sx={{ color: "#1F263E", fontFamily: "Poppins" }}
-                          onClick={() => handleOpenDelete(room._id)}
-                          value="delete"
-                        >
-                          <RiDeleteBin6Line
-                            style={{ color: "#203FC7", marginRight: "10px" }}
-                          />{" "}
-                          Delete
-                        </MenuItem>
-                      </Select>
-                    </TableCell>
-                  </StyledTableRow>
-                ))}
-              </TableBody>
-            </Table>
-            <TablePagination
-              component="div"
-              count={totalCount}
-              page={page}
-              onPageChange={handleChangePage}
-              rowsPerPage={rowsPerPage}
-              onRowsPerPageChange={handleChangeRowsPerPage}
-            />
-          </>
-        ) : (
-          <NoData />
-        )}
-      </Box>
+                  <MenuItem
+                    sx={{ color: "#1F263E", fontFamily: "Poppins" }}
+                    value="view"
+                    onClick={() => handleViewClick(room)}
+                  >
+                    <FaRegEye
+                      style={{ color: "#203FC7", marginRight: "10px" }}
+                    />{" "}
+                    View
+                  </MenuItem>
+                  <MenuItem
+                    sx={{ color: "#1F263E", fontFamily: "Poppins" }}
+                    value="edit"
+                    onClick={() => handleEditClick(room)}
+                  >
+                    <FaRegEdit
+                      style={{ color: "#203FC7", marginRight: "10px" }}
+                    />{" "}
+                    Edit
+                  </MenuItem>
+                  <MenuItem
+                    sx={{ color: "#1F263E", fontFamily: "Poppins" }}
+                    onClick={() => handleOpenDelete(room._id)}
+                    value="delete"
+                  >
+                    <RiDeleteBin6Line
+                      style={{ color: "#203FC7", marginRight: "10px" }}
+                    />{" "}
+                    Delete
+                  </MenuItem>
+                </Select>
+              </TableCell>
+            </StyledTableRow>
+          ))}
+        </TableBody>
+      </Table>
+      <TablePagination
+        component="div"
+        count={totalCount}
+        page={page}
+        onPageChange={handleChangePage}
+        rowsPerPage={rowsPerPage}
+        onRowsPerPageChange={handleChangeRowsPerPage}
+      />
+    </>
+  ) : (
+    <NoData />
+  )}
+</Box>
+      </Box> : (
+        <LoadingScreenTable />
+      )}
+
+ 
+
+     </Box>: navigate("/NotFound")}
 
       {/* View Room Modal */}
       <RoomDetailsModal

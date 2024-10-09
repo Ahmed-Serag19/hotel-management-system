@@ -24,7 +24,7 @@ export default function TitleTables({ titleTable, onClick, btn }: TitleData) {
             {titleTable} Table Details
           </Typography>
           <Typography
-            sx={{fontSize:{xs:"12px",md:"14px"},  lineHeight: "2px" }}
+            sx={{fontSize:{xs:"12px",md:"14px"},  lineHeight: {xs:"14px",md:"2px"} }}
           >
             You can check all details
           </Typography>

@@ -1,14 +1,20 @@
 import { Box, Button, CardContent, Grid2, Typography } from '@mui/material'
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import React, { useContext } from 'react'
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../../../context/authcontext';
 import ReceiptLongIcon from "@mui/icons-material/ReceiptLong";
 export default function PaymentPageNavigate() {
-    
+  let navigate = useNavigate();
+  let { loginData }: any = useContext(AuthContext);
+  if (loginData?.role != "user") {
+    navigate("/NotFound");
+  }
   return (
+
     <>
-        <Box
+    {loginData?.role === "user" ?<Box>
+      <Box
       sx={{
         display: "flex",
         justifyContent: "center",
@@ -102,6 +108,8 @@ export default function PaymentPageNavigate() {
         </CardContent>
       </Box>
     </Box>
+</Box> : navigate("/NotFound")}
+
       
     </>
   )

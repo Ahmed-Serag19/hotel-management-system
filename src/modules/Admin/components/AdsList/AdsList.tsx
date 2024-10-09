@@ -18,7 +18,7 @@ import {
 import Button from "@mui/material/Button";
 import axios from "axios";
 import { Ads_URls, roomsUrl } from "../../../../constants/End_Points";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Modal from "@mui/material/Modal";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
@@ -29,6 +29,9 @@ import { FaRegEdit } from "react-icons/fa";
 import DeleteImg from "../../../../assets/images/delete.png";
 import TitleTables from "../../../Shared/components/TitleTables/TitleTables";
 import { FirstCell, LastCell } from "../Facilities/FacilitiesData";
+import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../../../../context/authcontext";
+import LoadingScreenTable from "../../../Shared/components/LoadingScreenTables/LoadingScreenTables";
 
 interface AdsTypes {
   room: {
@@ -80,6 +83,11 @@ const modalStyle = {
 };
 
 function AdsList() {
+  let navigate = useNavigate();
+  let { loginData }: any = useContext(AuthContext);
+  if (loginData?.role != "admin") {
+    navigate("/NotFound");
+  }
   const [ads, setAds] = useState<AdsTypes[]>([]);
   const [rooms, setRooms] = useState<RoomsTypes[]>([]);
   const {
@@ -94,7 +102,7 @@ function AdsList() {
   const [isUpdate, setIsUpdate] = useState(false);
   const [OpenConfirmDelete, setOpenConfirmDelete] = useState(false);
   const [adsId, setAdsId] = useState("");
-
+  const [isLoading, setLoading] = useState(false);
   const handleOpenAdd = () => {
     setOpen(true);
     setIsUpdate(false);
@@ -183,12 +191,23 @@ function AdsList() {
   };
 
   useEffect(() => {
+    
+
+    setLoading(true);
     if (isUpdate) {
       unregister("room");
     }
+    setTimeout(() => {
+      setLoading(false);
+    }, 1200);
+
   }, [isUpdate, unregister]);
 
   return (
+<>
+    {loginData?.role === "admin" ?<Box>
+
+      {!isLoading ?
     <Box component="section">
       <TitleTables titleTable="Ads" btn="Ads" onClick={handleOpenAdd} />
 
@@ -427,6 +446,13 @@ function AdsList() {
         </Box>
       </Modal>
     </Box>
+
+: (
+  <LoadingScreenTable/>
+)}
+
+      </Box> : navigate("/NotFound")}
+      </> 
   );
 }
 

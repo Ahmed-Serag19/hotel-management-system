@@ -26,7 +26,7 @@ export default function AllRooms() {
   const [, setTotalCount] = useState(0);
   const [page] = useState(0);
   const [, setTotalPages] = useState(1);
-  const pageSize = 10;
+  const pageSize = 12;
   const defaultStartDate = "2023-01-20";
   const defaultEndDate = "2023-01-30";
 

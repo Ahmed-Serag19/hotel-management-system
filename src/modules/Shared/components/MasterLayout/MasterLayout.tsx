@@ -1,11 +1,11 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext,  useState } from "react";
 
 import { AuthContext } from "../../../../context/authcontext";
 import { Box } from "@mui/material";
 import Footer from "../Footer/Footer";
 import NavbarPortal from "../NavbarPortal/NavbarPortal";
 import Navbar from "../Navbar/Navbar";
-import { Outlet, replace, useNavigate } from "react-router-dom";
+import { Outlet, } from "react-router-dom";
 import SidebarComponent from "../Sidebar/Sidebar";
 import LoadingScreen from "../LoadingScreen/LoadingScreen";
 
@@ -13,8 +13,7 @@ export default function MasterLayout() {
   const [isLoading, setLoading] = useState(true);
   setTimeout(() => {
     setLoading(false);
-  }, 2000);
-  const navigate = useNavigate()
+  }, 1500);
   const {loginData} = useContext(AuthContext) || {};
 
 
@@ -64,9 +63,9 @@ export default function MasterLayout() {
             position: "sticky",
             top: 0,
             left: 0,
-             width: {xs:"250px",sm:"80px", md: collapsed ? "100px" : "250px"},
+             width: {xs:"150px",sm:"80px", md: collapsed ? "100px" : "250px"},
             height: "100vh",
-            transition: "width 0.3s",
+            transition: "width 0.2s",
             overflowX: "hidden",
             bgcolor: "#f0f0f0",
             zIndex: 1000,
@@ -96,7 +95,7 @@ export default function MasterLayout() {
           sx={{
             padding: loginData?.role === "admin" ? 2 : 2,
             paddingX: loginData?.role === "admin" ? 2 : 6,
-            // minHeight: "calc(100vh - 290px)",
+             minHeight: "calc(100vh - 290px)",
           }}
         >
           <Outlet />
