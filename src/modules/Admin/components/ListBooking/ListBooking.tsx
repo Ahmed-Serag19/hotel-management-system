@@ -15,7 +15,7 @@ import {
   Typography,
   TablePagination,
 } from "@mui/material";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { bookingUrl } from "../../../../constants/End_Points";
 import { toast } from "react-toastify";
@@ -23,6 +23,9 @@ import styled from "@emotion/styled";
 import { tableCellClasses } from "@mui/material/TableCell"; // for border rows
 import NoData from "../../../Shared/components/NoData/NoData";
 import DeleteImg from "../../../../assets/images/delete.png";
+import { AuthContext } from "../../../../context/authcontext";
+import { useNavigate } from "react-router-dom";
+import LoadingScreenTable from "../../../Shared/components/LoadingScreenTables/LoadingScreenTables";
 
 // Type for bookingData
 interface BookingData {
@@ -38,7 +41,14 @@ interface BookingData {
   };
 }
 
-export default function Facilities() {
+export default function ListBooking() 
+{
+  let navigate = useNavigate();
+  let { loginData }: any = useContext(AuthContext);
+  if (loginData?.role != "admin") {
+    navigate("/NotFound");
+  }
+
   const [booking, setBooking] = useState<BookingData[]>([]);
   const [openDelete, setOpenDelete] = useState(false); //delete modal
   const [bookingId, setBookingId] = useState<string>("");
@@ -70,7 +80,7 @@ export default function Facilities() {
   const getBooking = async () => {
     try {
       const response = await axios.get(
-        `${bookingUrl.getAllBooking}?page=${page}&limit=${rowsPerPage}`,
+        `${bookingUrl.getAllBooking}?page=${page + 1}&size=${rowsPerPage}`,
         {
           headers: { Authorization: localStorage.getItem("token") || "" },
         }
@@ -117,7 +127,11 @@ export default function Facilities() {
   };
 
   useEffect(() => {
+
+
     getBooking();
+
+    
   }, [page, rowsPerPage]);
 
   return (
@@ -178,9 +192,34 @@ export default function Facilities() {
           </Stack>
         </Box>
       </Modal>
+      
+      {loginData?.role === "admin" ?<Box>
 
+        
+     <Box>
+        <Box
+        sx={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          height:{xs:"30px",sm:"100px"},
+        }}
+      >
+        <Stack sx={{ color: "#1F263E" , }} >
+          <Typography variant="h6" sx={{ fontFamily: "Poppins" ,fontSize:{xs:"16px",md:"20px"} }}>
+           Booking Table Details
+          </Typography>
+          <Typography
+            sx={{fontSize:{xs:"12px",md:"14px"},  lineHeight: "2px" }}
+          >
+            You can check all details
+          </Typography>
+        </Stack>
+
+       
+      </Box>
       {/* Booking Table */}
-      <Box sx={{ pb: 3, overflowX: "auto" }}>
+      <Box sx={{ pb: 3, overflowX:{xs:"visible",md:"hidden"}}}>
         {booking.length > 0 ? (
           <>
             <Table
@@ -277,9 +316,13 @@ export default function Facilities() {
             />
           </>
         ) : (
-          <NoData />
+          <LoadingScreenTable/>
         )}
       </Box>
+
+</Box>
+</Box> : navigate("/NotFound")}
+
     </>
   );
 }

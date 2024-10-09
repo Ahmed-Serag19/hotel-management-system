@@ -10,31 +10,60 @@ import LockOpenTwoToneIcon from "@mui/icons-material/LockOpenTwoTone";
 import LogoutTwoToneIcon from "@mui/icons-material/LogoutTwoTone";
 import DoubleArrowIcon from "@mui/icons-material/DoubleArrow";
 import { Box, IconButton } from "@mui/material";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { AuthContext } from "../../../../context/authcontext";
 
 interface SidebarProps {
-  onToggle: () => void;
-  collapsed: boolean;
+  onToggle?: () => void;
+  collapsed?: boolean;
 }
 
 export default function SidebarComponent({
+
+
+  
   onToggle,
   collapsed,
 }: SidebarProps) {
   const { logout }: any = useContext(AuthContext);
   const navigate = useNavigate();
   const location = useLocation(); // Get the current path
+  // const [isCollapse, setIsCollapse] = useState(() => {
+  //   const storedValue = localStorage.getItem("isCollapse");
+  //   if (!storedValue) return false;
 
+  //   return JSON.parse(storedValue);
+  // });
+  // let togglerCollapse = () => {
+  //   setIsCollapse(!isCollapse);
+
+  //   localStorage.setItem("isCollapse", !isCollapse);
+  // };
   const handleLogout = () => {
     logout();
-    navigate("/login");
+    navigate("/dashboard/homepage");
   };
 
   // Helper function to determine if the path is active
   const isActive = (path: string) => location.pathname === path;
 
   return (
+    <>
+    {/* <Box
+
+            sx={{
+            position: "sticky",
+            top: 0,
+            left: 0,
+            //width: collapsed ? "100px" : "280px",
+            height: "100vh",
+            transition: "width 0.3s",
+            overflowX: "hidden",
+            bgcolor: "#f0f0f0",
+            zIndex: 1000,
+          }}
+    
+    > */}
     <Sidebar
       rootStyles={{
         height: "100vh",
@@ -50,7 +79,10 @@ export default function SidebarComponent({
           color: "white",
         }}
       >
-        <DoubleArrowIcon />
+        <Box sx={{display:{xs:"none",md:"inline"}}}>
+        <DoubleArrowIcon />       
+              </Box>
+
       </IconButton>
       <Menu
         rootStyles={{
@@ -77,9 +109,13 @@ export default function SidebarComponent({
               marginBottom: "1rem",
               paddingTop: "1rem",
             }}
+            
           >
             <HomeTwoToneIcon />
+            <Box sx={{display:{xs:"none",md:"inline"} ,fontSize:{md:"14px",lg:"16px"}}}>
             {!collapsed && <span style={{ marginLeft: "1rem" }}>Home</span>}
+              </Box>
+       
           </Box>
         </MenuItem>
 
@@ -103,7 +139,10 @@ export default function SidebarComponent({
             }}
           >
             <PeopleAltTwoToneIcon />
-            {!collapsed && <span style={{ marginLeft: "1rem" }}>Users</span>}
+            <Box sx={{display:{xs:"none",md:"inline"} ,fontSize:{md:"14px",lg:"16px"}}}>
+            {!collapsed && <span style={{ marginLeft: "1rem" }}>Users</span>}    
+              </Box>
+         
           </Box>
         </MenuItem>
 
@@ -127,7 +166,10 @@ export default function SidebarComponent({
             }}
           >
             <DashboardTwoToneIcon />
+            <Box sx={{display:{xs:"none",md:"inline"} ,fontSize:{md:"14px",lg:"16px"}}}>
             {!collapsed && <span style={{ marginLeft: "1rem" }}>Rooms</span>}
+              </Box>
+         
           </Box>
         </MenuItem>
 
@@ -151,7 +193,10 @@ export default function SidebarComponent({
             }}
           >
             <CalendarMonthTwoToneIcon />
+            <Box sx={{display:{xs:"none",md:"inline"}}}>
             {!collapsed && <span style={{ marginLeft: "1rem" }}>Ads</span>}
+            </Box>
+           
           </Box>
         </MenuItem>
 
@@ -175,7 +220,10 @@ export default function SidebarComponent({
             }}
           >
             <BookOnlineTwoToneIcon />
+            <Box sx={{display:{xs:"none",md:"inline"} ,fontSize:{md:"14px",lg:"16px"}}}>
             {!collapsed && <span style={{ marginLeft: "1rem" }}>Bookings</span>}
+              </Box>
+    
           </Box>
         </MenuItem>
 
@@ -199,9 +247,12 @@ export default function SidebarComponent({
             }}
           >
             <PrecisionManufacturingTwoToneIcon />
+            <Box sx={{display:{xs:"none",md:"inline"} ,fontSize:{md:"14px",lg:"16px"}}}>
             {!collapsed && (
               <span style={{ marginLeft: "1rem" }}>Facilities</span>
             )}
+              </Box>
+        
           </Box>
         </MenuItem>
 
@@ -222,12 +273,16 @@ export default function SidebarComponent({
               transition: "all 0.3s",
               marginBottom: "1rem",
               paddingTop: "1rem",
+             
             }}
           >
             <LockOpenTwoToneIcon />
+            <Box sx={{display:{xs:"none",md:"inline"} ,fontSize:{md:"13px",lg:"16px"}}}>
             {!collapsed && (
               <span style={{ marginLeft: "1rem" }}>Change Password</span>
             )}
+              </Box>
+         
           </Box>
         </MenuItem>
 
@@ -244,10 +299,15 @@ export default function SidebarComponent({
             }}
           >
             <LogoutTwoToneIcon />
+            <Box sx={{display:{xs:"none",md:"inline"} ,fontSize:{md:"14px",lg:"16px"}}}>
             {!collapsed && <span style={{ marginLeft: "1rem" }}>Logout</span>}
+              </Box>
+           
           </Box>
         </MenuItem>
       </Menu>
     </Sidebar>
+    {/* </Box> */}
+    </>
   );
 }

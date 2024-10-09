@@ -18,7 +18,7 @@ import {
 import Button from "@mui/material/Button";
 import axios from "axios";
 import { Ads_URls, roomsUrl } from "../../../../constants/End_Points";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Modal from "@mui/material/Modal";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
@@ -29,6 +29,9 @@ import { FaRegEdit } from "react-icons/fa";
 import DeleteImg from "../../../../assets/images/delete.png";
 import TitleTables from "../../../Shared/components/TitleTables/TitleTables";
 import { FirstCell, LastCell } from "../Facilities/FacilitiesData";
+import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../../../../context/authcontext";
+import LoadingScreenTable from "../../../Shared/components/LoadingScreenTables/LoadingScreenTables";
 
 interface AdsTypes {
   room: {
@@ -80,6 +83,11 @@ const modalStyle = {
 };
 
 function AdsList() {
+  let navigate = useNavigate();
+  let { loginData }: any = useContext(AuthContext);
+  if (loginData?.role != "admin") {
+    navigate("/NotFound");
+  }
   const [ads, setAds] = useState<AdsTypes[]>([]);
   const [rooms, setRooms] = useState<RoomsTypes[]>([]);
   const {
@@ -183,16 +191,24 @@ function AdsList() {
   };
 
   useEffect(() => {
+    
+
+   
     if (isUpdate) {
       unregister("room");
     }
+
   }, [isUpdate, unregister]);
 
   return (
+<>
+    {loginData?.role === "admin" ?<Box>
+
+      
     <Box component="section">
       <TitleTables titleTable="Ads" btn="Ads" onClick={handleOpenAdd} />
 
-      <Stack sx={{ padding: 1.5 }}>
+      <Stack sx={{ padding: 1.5,overflowX:{xs:"visible",md:"hidden"} }} >
         {ads.length > 0 ? (
           <Table
             sx={{
@@ -262,7 +278,7 @@ function AdsList() {
             </TableBody>
           </Table>
         ) : (
-          <NoData />
+          <LoadingScreenTable/> 
         )}
       </Stack>
       <Modal
@@ -427,6 +443,10 @@ function AdsList() {
         </Box>
       </Modal>
     </Box>
+
+
+      </Box> : navigate("/NotFound")}
+      </> 
   );
 }
 

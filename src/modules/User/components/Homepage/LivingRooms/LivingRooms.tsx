@@ -3,6 +3,7 @@ import Pic4 from "../../../../../assets/images/pic.png";
 import Pic5 from "../../../../../assets/images/pic (1).png";
 import Pic6 from "../../../../../assets/images/pic (2).png";
 import Pic7 from "../../../../../assets/images/pic (3).png";
+import { useNavigate } from "react-router-dom";
 
 // Static dummy data
 const dummyLivingRooms = [
@@ -34,6 +35,7 @@ const dummyLivingRooms = [
 ];
 
 const LivingRooms = () => {
+
   return (
     <Box sx={{ padding: "20px", paddingTop: "100px", color: "#152c5b" }}>
       <Typography variant="h5" sx={{ paddingBottom: "20px" }}>
@@ -101,6 +103,7 @@ const LivingRooms = () => {
               image={room.image}
               alt={room.roomName}
               sx={{ objectFit: "cover", borderRadius: "8px" }}
+              
             />
 
             {/* Room Info */}
