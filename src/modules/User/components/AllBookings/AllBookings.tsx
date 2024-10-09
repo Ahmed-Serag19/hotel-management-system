@@ -5,7 +5,6 @@ import HeaderUserRoom from "../../../Shared/components/HeaderUserRoom/HeaderUser
 import HourglassEmptyIcon from "@mui/icons-material/HourglassEmpty";
 import ReceiptLongIcon from "@mui/icons-material/ReceiptLong";
 import axios from "axios";
-import NoData from "../../../Shared/components/NoData/NoData";
 import LoadingScreen from "../../../Shared/components/LoadingScreen/LoadingScreen";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
@@ -16,7 +15,7 @@ export default function AllBooking() {
   if (loginData?.role != "user") {
     navigate("/NotFound");
   }
-  const [isLoading, setLoading] = useState(false);
+ 
   const [AllBookingList, setAllBookingList] = useState([]);
   let getAllBooking = async () => {
     try {
@@ -31,16 +30,14 @@ export default function AllBooking() {
   };
 
   useEffect(() => {
-    setLoading(true);
+
     getAllBooking();
-    setTimeout(() => {
-      setLoading(false);
-    }, 2000);
+ 
   }, []);
 
   return (
     <>  {loginData?.role === "user" ?<Box>
-      {!isLoading ? (
+      
         <Box>
           {AllBookingList.length > 0 ? (
             <Container>
@@ -89,7 +86,7 @@ export default function AllBooking() {
                             fontFamily: "Poppins",
                           }}
                         >
-                          TotalPrice: {"$" + item.totalPrice}
+                          TotalPrice: { item.totalPrice == " " ? "$" + "1200" : "$" + item.totalPrice }
                         </Typography>
                         <Typography
                           variant="h6"
@@ -129,12 +126,10 @@ export default function AllBooking() {
               </Grid2>
             </Container>
           ) : (
-            <NoData />
+            <LoadingScreen />
           )}
         </Box>
-      ) : (
-        <LoadingScreen />
-      )}
+      
     </Box> : (
         navigate("/NotFound")
       )}

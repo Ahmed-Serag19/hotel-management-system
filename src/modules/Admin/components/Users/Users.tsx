@@ -20,7 +20,6 @@ import { get_user } from "../../../../constants/End_Points";
 import { toast } from "react-toastify";
 import styled from "@emotion/styled";
 import { tableCellClasses } from "@mui/material/TableCell";
-import NoData from "../../../Shared/components/NoData/NoData";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../../../context/authcontext";
 import LoadingScreenTable from "../../../Shared/components/LoadingScreenTables/LoadingScreenTables";
@@ -41,7 +40,7 @@ export default function UsersTable() {
   if (loginData?.role != "admin") {
     navigate("/NotFound");
   }
-  const [isLoading, setLoading] = useState(false);
+
   const [users, setUsers] = useState<UsersData[]>([]);
   const [openView, setOpenView] = useState(false); // View modal
   const [selectedUser, setSelectedUser] = useState<UsersData | null>(null); // Store the selected user's data
@@ -88,11 +87,8 @@ export default function UsersTable() {
   useEffect(() => {
 
     
-    setLoading(true);
+   
     getUsers();
-    setTimeout(() => {
-      setLoading(false);
-    }, 1200);
 
 
   
@@ -170,7 +166,7 @@ export default function UsersTable() {
       
       {loginData?.role === "admin" ?<Box>
         
-      {!isLoading ? (<Box>
+     <Box>
 
         <Box
         sx={{
@@ -285,12 +281,10 @@ export default function UsersTable() {
                     />
                     
                     </Box>) : (
-          <NoData />
+          <LoadingScreenTable/>
         )}
       </Box>
-</Box>) : (
-        <LoadingScreenTable/>
-      )}
+</Box>
 
 </Box> : navigate("/NotFound")}
       

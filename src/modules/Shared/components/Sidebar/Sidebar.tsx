@@ -112,7 +112,7 @@ export default function SidebarComponent({
             
           >
             <HomeTwoToneIcon />
-            <Box sx={{display:{xs:"none",md:"inline"}}}>
+            <Box sx={{display:{xs:"none",md:"inline"} ,fontSize:{md:"14px",lg:"16px"}}}>
             {!collapsed && <span style={{ marginLeft: "1rem" }}>Home</span>}
               </Box>
        
@@ -139,7 +139,7 @@ export default function SidebarComponent({
             }}
           >
             <PeopleAltTwoToneIcon />
-            <Box sx={{display:{xs:"none",md:"inline"}}}>
+            <Box sx={{display:{xs:"none",md:"inline"} ,fontSize:{md:"14px",lg:"16px"}}}>
             {!collapsed && <span style={{ marginLeft: "1rem" }}>Users</span>}    
               </Box>
          
@@ -166,7 +166,7 @@ export default function SidebarComponent({
             }}
           >
             <DashboardTwoToneIcon />
-            <Box sx={{display:{xs:"none",md:"inline"}}}>
+            <Box sx={{display:{xs:"none",md:"inline"} ,fontSize:{md:"14px",lg:"16px"}}}>
             {!collapsed && <span style={{ marginLeft: "1rem" }}>Rooms</span>}
               </Box>
          
@@ -220,7 +220,7 @@ export default function SidebarComponent({
             }}
           >
             <BookOnlineTwoToneIcon />
-            <Box sx={{display:{xs:"none",md:"inline"}}}>
+            <Box sx={{display:{xs:"none",md:"inline"} ,fontSize:{md:"14px",lg:"16px"}}}>
             {!collapsed && <span style={{ marginLeft: "1rem" }}>Bookings</span>}
               </Box>
     
@@ -247,7 +247,7 @@ export default function SidebarComponent({
             }}
           >
             <PrecisionManufacturingTwoToneIcon />
-            <Box sx={{display:{xs:"none",md:"inline"}}}>
+            <Box sx={{display:{xs:"none",md:"inline"} ,fontSize:{md:"14px",lg:"16px"}}}>
             {!collapsed && (
               <span style={{ marginLeft: "1rem" }}>Facilities</span>
             )}
@@ -273,10 +273,11 @@ export default function SidebarComponent({
               transition: "all 0.3s",
               marginBottom: "1rem",
               paddingTop: "1rem",
+             
             }}
           >
             <LockOpenTwoToneIcon />
-            <Box sx={{display:{xs:"none",md:"inline"}}}>
+            <Box sx={{display:{xs:"none",md:"inline"} ,fontSize:{md:"13px",lg:"16px"}}}>
             {!collapsed && (
               <span style={{ marginLeft: "1rem" }}>Change Password</span>
             )}
@@ -298,7 +299,7 @@ export default function SidebarComponent({
             }}
           >
             <LogoutTwoToneIcon />
-            <Box sx={{display:{xs:"none",md:"inline"}}}>
+            <Box sx={{display:{xs:"none",md:"inline"} ,fontSize:{md:"14px",lg:"16px"}}}>
             {!collapsed && <span style={{ marginLeft: "1rem" }}>Logout</span>}
               </Box>
            

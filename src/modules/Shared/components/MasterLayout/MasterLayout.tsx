@@ -13,7 +13,7 @@ export default function MasterLayout() {
   const [isLoading, setLoading] = useState(true);
   setTimeout(() => {
     setLoading(false);
-  }, 1500);
+  }, 1200);
   const {loginData} = useContext(AuthContext) || {};
 
 
@@ -63,7 +63,7 @@ export default function MasterLayout() {
             position: "sticky",
             top: 0,
             left: 0,
-             width: {xs:"150px",sm:"80px", md: collapsed ? "100px" : "250px"},
+             width: {xs:"170px",sm:"80px", md: collapsed ? "100px" : "250px"},
             height: "100vh",
             transition: "width 0.2s",
             overflowX: "hidden",

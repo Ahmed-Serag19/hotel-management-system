@@ -5,7 +5,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../../../context/authcontext";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import HeaderUserRoom from "../../../Shared/components/HeaderUserRoom/HeaderUserRoom";
-import NoData from "../../../Shared/components/NoData/NoData";
+
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import axios from "axios";
 import { favoriteUrl } from "../../../../constants/End_Points";
@@ -13,7 +13,6 @@ import { format } from "date-fns";
 import { toast } from "react-toastify";
 import LoadingScreen from "../../../Shared/components/LoadingScreen/LoadingScreen";
 export default function FavoriteRoom() {
-  const [isLoading, setLoading] = useState(false);
   let navigate = useNavigate();
   let { loginData }: any = useContext(AuthContext);
   if (loginData?.role != "user") {
@@ -67,18 +66,16 @@ export default function FavoriteRoom() {
     }
   };
   useEffect(() => {
-    setLoading(true);
+   
     getAllFavorite();
-    setTimeout(() => {
-      setLoading(false);
-    }, 2500);
+   
   }, []);
 
   return (
     <>
       {loginData?.role === "user" ? (
         <Box>
-          {!isLoading ? (
+          
             <Box>
               {favoriteList.length > 0 ? (
                 <Container>
@@ -140,12 +137,10 @@ export default function FavoriteRoom() {
                   </Grid2>
                 </Container>
               ) : (
-                <NoData />
+                <LoadingScreen />
               )}
             </Box>
-          ) : (
-            <LoadingScreen />
-          )}
+          
         </Box>
       ) : (
         navigate("/NotFound")

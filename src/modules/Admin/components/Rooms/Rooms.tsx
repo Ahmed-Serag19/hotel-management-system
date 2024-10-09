@@ -23,7 +23,6 @@ import DeleteImg from "../../../../assets/images/delete.png";
 import { FaRegEdit } from "react-icons/fa";
 import { FaRegEye } from "react-icons/fa6";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
-import NoData from "../../../Shared/components/NoData/NoData";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import TitleTables from "../../../Shared/components/TitleTables/TitleTables";
 import axios from "axios";
@@ -33,7 +32,6 @@ import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { FirstCell, LastCell } from "../Facilities/FacilitiesData";
 import { AuthContext } from "../../../../context/authcontext";
-import LoadingScreen from "../../../Shared/components/LoadingScreen/LoadingScreen";
 import LoadingScreenTable from "../../../Shared/components/LoadingScreenTables/LoadingScreenTables";
 
 const StyledTableRow = styled(TableRow)`
@@ -162,7 +160,6 @@ export default function Rooms() {
   if (loginData?.role != "admin") {
     navigate("/NotFound");
   }
-  const [isLoading, setLoading] = useState(false);
   const [rooms, setRooms] = useState<Room[]>([]);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
@@ -189,11 +186,9 @@ export default function Rooms() {
   };
 
   useEffect(() => {
-    setLoading(true);
+   
     getRooms();
-    setTimeout(() => {
-      setLoading(false);
-    }, 1500);
+  
 
   }, [page, rowsPerPage]);
 
@@ -258,7 +253,7 @@ export default function Rooms() {
   return (
     <>
      {loginData?.role === "admin" ?<Box>
-      {!isLoading ? <Box>
+      <Box>
 
 
         <TitleTables titleTable="Rooms" btn="Room" onClick={handleAddRoomRoute} />
@@ -403,12 +398,10 @@ export default function Rooms() {
       />
     </>
   ) : (
-    <NoData />
+    <LoadingScreenTable />
   )}
 </Box>
-      </Box> : (
-        <LoadingScreenTable />
-      )}
+      </Box> 
 
  
 

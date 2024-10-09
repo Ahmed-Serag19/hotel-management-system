@@ -23,7 +23,6 @@ import { useContext, useEffect, useState } from "react";
 import { FaRegEdit } from "react-icons/fa";
 import ModalPop from "../../../Shared/components/ModalPop/ModalPop";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
-import NoData from "../../../Shared/components/NoData/NoData";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -153,12 +152,12 @@ export default function Facilities() {
   };
 
   useEffect(() => {
-
-    setLoading(true);
     getFacility();
-    setTimeout(() => {
-      setLoading(false);
-    }, 1200);
+    // setLoading(true);
+    
+    // setTimeout(() => {
+    //   setLoading(false);
+    // }, 1000);
 
 
   }, [page, rowsPerPage]);
@@ -169,7 +168,7 @@ export default function Facilities() {
 {loginData?.role == "admin" ?<Box>
 
   
-  {!isLoading ? (<Box>
+  {/* {!isLoading ? (<Box> */}
     <TitleTables 
         titleTable="Facilities"
         btn="Facility"
@@ -357,14 +356,12 @@ export default function Facilities() {
             />
           </Box>
         ) : (
-          <NoData />
+          <LoadingScreenTable/>
         )}
       </Box>
 
 
-</Box>) : (
-        <LoadingScreenTable/>
-      )}
+
 
 
 </Box>: navigate("/NotFound")}

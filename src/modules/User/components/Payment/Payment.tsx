@@ -17,7 +17,7 @@ import { AuthContext } from "../../../../context/authcontext";
 
 // Define the type for the params to be passed to the CheckoutForm
 interface CheckoutFormProps {
-  bookingId: string | undefined;
+  bookingId: any;
 }
 
 const stripePromise = loadStripe(
@@ -105,7 +105,7 @@ const CheckoutForm = ({ bookingId }: CheckoutFormProps) => {
 // Update the payBooking function to expect the correct bookingId structure
 const payBooking = async (
   token: string,
-  bookingId: string | undefined,
+  bookingId:any,
   navigate: (path: string) => void
 ) => {
   if (!bookingId) {

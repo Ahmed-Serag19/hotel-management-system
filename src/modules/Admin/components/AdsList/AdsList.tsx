@@ -102,7 +102,7 @@ function AdsList() {
   const [isUpdate, setIsUpdate] = useState(false);
   const [OpenConfirmDelete, setOpenConfirmDelete] = useState(false);
   const [adsId, setAdsId] = useState("");
-  const [isLoading, setLoading] = useState(false);
+
   const handleOpenAdd = () => {
     setOpen(true);
     setIsUpdate(false);
@@ -193,13 +193,10 @@ function AdsList() {
   useEffect(() => {
     
 
-    setLoading(true);
+   
     if (isUpdate) {
       unregister("room");
     }
-    setTimeout(() => {
-      setLoading(false);
-    }, 1200);
 
   }, [isUpdate, unregister]);
 
@@ -207,7 +204,7 @@ function AdsList() {
 <>
     {loginData?.role === "admin" ?<Box>
 
-      {!isLoading ?
+      
     <Box component="section">
       <TitleTables titleTable="Ads" btn="Ads" onClick={handleOpenAdd} />
 
@@ -281,7 +278,7 @@ function AdsList() {
             </TableBody>
           </Table>
         ) : (
-          <NoData />
+          <LoadingScreenTable/> 
         )}
       </Stack>
       <Modal
@@ -447,9 +444,6 @@ function AdsList() {
       </Modal>
     </Box>
 
-: (
-  <LoadingScreenTable/>
-)}
 
       </Box> : navigate("/NotFound")}
       </> 

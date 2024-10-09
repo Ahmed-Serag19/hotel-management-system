@@ -3,6 +3,7 @@ import {
   RouterProvider,
   createBrowserRouter,
   Navigate,
+  createHashRouter,
 } from "react-router-dom";
 import AddRoom from "./modules/Admin/components/Rooms/AddRoom";
 import AdsList from "./modules/Admin/components/AdsList/AdsList";
@@ -41,7 +42,7 @@ function App() {
   //   }
   // };
 
-  const routes = createBrowserRouter([
+  const routes = createHashRouter([
     {
       path: "",
       element: <MasterLayout />,
@@ -51,22 +52,7 @@ function App() {
         { path: "homepage", element: <Homepage /> },
         { path: "all-rooms", element: <AllRooms /> },
         { path: "room-details/:roomId", element: <RoomDetail /> },
-        //  { path: "dashboard/all-bookings", element: <AllBookings /> },
-        // { path: "dashboard/payment/:bookingId", element: <Payment /> },
-        // { path: "dashboard/payment-page", element: <PaymentPageNavigate /> },
- 
-        // { path: "dashboard/favorites", element: <FavoriteRooms/> },
-    
-        
 
-      //   { path: "dashboard/all-bookings", element: <AllBookings /> },
-      //  { path: "dashboard/payment/:bookingId ", element: <Payment /> },
-      //   { path: "dashboard/payment-page", element: <PaymentPageNavigate /> },
-        // Protected Routes: Only accessible to admins
-        // {
-        //   index: true,
-        //   element: getDefaultRouteElement(), // Decide where to redirect based on the role
-        // },
 
         // Public Routes
         {
@@ -81,11 +67,7 @@ function App() {
         { path: "dashboard/all-rooms", element: <AllRooms /> },
         { path: "dashboard/room-details/:roomId", element: <RoomDetail /> },
 
-        // { path: "dashboard/all-bookings", element: <AllBookings /> },
-        { path: "dashboard/payment/:bookingId ", element: <Payment /> },
-        // { path: "dashboard/payment-page", element: <PaymentPageNavigate /> },
- 
-        // { path: "dashboard/favorites", element: <FavoriteRooms/> },
+   
         
         // Protected Routes for Admin
         {

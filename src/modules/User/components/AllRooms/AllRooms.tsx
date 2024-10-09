@@ -7,7 +7,7 @@ import { AuthContext } from "../../../../context/authcontext";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import HeaderUserRoom from "../../../Shared/components/HeaderUserRoom/HeaderUserRoom";
 import LoadingScreen from "../../../Shared/components/LoadingScreen/LoadingScreen";
-import NoData from "../../../Shared/components/NoData/NoData";
+
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import axios from "axios";
 import { format } from "date-fns";
@@ -17,7 +17,7 @@ export default function AllRooms() {
   let { loginData }: any = useContext(AuthContext);
   let navigate = useNavigate();
   let location = useLocation();
-  const [isLoading, setLoading] = useState(false);
+
   // Handle the incoming values from location.state
   const { startDate, endDate, capacity } = location.state || {};
 
@@ -124,16 +124,14 @@ export default function AllRooms() {
   };
 
   useEffect(() => {
-    setLoading(true);
+   
     getAllRoom(page);
-    setTimeout(() => {
-      setLoading(false);
-    }, 2500);
+ 
   }, [page, startDate, endDate, capacity]);
 
   return (
     <>
-      {!isLoading ? (
+      
         <Box>
           {roomList.length > 0 ? (
             <Container>
@@ -203,12 +201,9 @@ export default function AllRooms() {
               </Grid2>
             </Container>
           ) : (
-            <NoData />
-          )}
+            <LoadingScreen />)}
         </Box>
-      ) : (
-        <LoadingScreen />
-      )}
+      
     </>
   );
 }

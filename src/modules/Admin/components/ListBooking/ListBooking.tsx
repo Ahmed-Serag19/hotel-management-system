@@ -49,7 +49,6 @@ export default function ListBooking()
     navigate("/NotFound");
   }
 
-  const [isLoading, setLoading] = useState(false);
   const [booking, setBooking] = useState<BookingData[]>([]);
   const [openDelete, setOpenDelete] = useState(false); //delete modal
   const [bookingId, setBookingId] = useState<string>("");
@@ -129,11 +128,9 @@ export default function ListBooking()
 
   useEffect(() => {
 
-    setLoading(true);
+
     getBooking();
-    setTimeout(() => {
-      setLoading(false);
-    }, 1200);
+
     
   }, [page, rowsPerPage]);
 
@@ -199,7 +196,7 @@ export default function ListBooking()
       {loginData?.role === "admin" ?<Box>
 
         
-      {!isLoading ? (<Box>
+     <Box>
         <Box
         sx={{
           display: "flex",
@@ -319,14 +316,11 @@ export default function ListBooking()
             />
           </>
         ) : (
-          <NoData />
+          <LoadingScreenTable/>
         )}
       </Box>
 
-</Box>) : (
-        <LoadingScreenTable/>
-      )}
-
+</Box>
 </Box> : navigate("/NotFound")}
 
     </>
