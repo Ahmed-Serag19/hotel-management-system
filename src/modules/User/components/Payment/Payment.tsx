@@ -5,7 +5,7 @@ import {
   useElements,
   useStripe,
 } from "@stripe/react-stripe-js";
-import { Box, Grid, Grid2, Typography } from "@mui/material"; // Fixed the Grid import
+import { Box, Grid2, Typography } from "@mui/material"; // Fixed the Grid import
 import { FormEvent, useContext } from "react";
 import { Base_Url } from "../../../../constants/End_Points";
 import PaymentIcon from "@mui/icons-material/Payment";
@@ -36,7 +36,7 @@ export default function Payment() {
 
 // Make sure that bookingId is properly passed as a prop
 const CheckoutForm = ({ bookingId }: CheckoutFormProps) => {
-   let navigate = useNavigate();
+  let navigate = useNavigate();
   let { loginData }: any = useContext(AuthContext);
   if (loginData?.role != "user") {
     navigate("/NotFound");
@@ -65,47 +65,50 @@ const CheckoutForm = ({ bookingId }: CheckoutFormProps) => {
   };
 
   return (
-<>
-    {loginData?.role == "user" ?<Box>
-      <Grid2 container>
-      <form className="form-wrapper" onSubmit={handleSubmit}>
-        <Typography
-          sx={{
-            color: "#152C5B",
-            fontFamily: "Poppins",
-            fontSize: "28px",
-            textAlign: "center",
-          }}
-        >
-          Payment
-          <PaymentIcon
-            fontSize="large"
-            sx={{ color: "#FF498B" }}
-            className="PaymentIcon"
-          />
-        </Typography>
+    <>
+      {loginData?.role == "user" ? (
+        <Box>
+          <Grid2 container>
+            <form className="form-wrapper" onSubmit={handleSubmit}>
+              <Typography
+                sx={{
+                  color: "#152C5B",
+                  fontFamily: "Poppins",
+                  fontSize: "28px",
+                  textAlign: "center",
+                }}
+              >
+                Payment
+                <PaymentIcon
+                  fontSize="large"
+                  sx={{ color: "#FF498B" }}
+                  className="PaymentIcon"
+                />
+              </Typography>
 
-        <Box className="card">
-          <CardElement />
+              <Box className="card">
+                <CardElement />
+              </Box>
+              <AddressElement options={{ mode: "billing" }} />
+              <button className="submit-btn">Pay Booking</button>
+
+              <button className="cancel-btn" onClick={() => navigate(-1)}>
+                Cancel
+              </button>
+            </form>
+          </Grid2>
         </Box>
-        <AddressElement options={{ mode: "billing" }} />
-        <button className="submit-btn">Pay Booking</button>
-
-        <button className="cancel-btn" onClick={() => navigate(-1)}>
-          Cancel
-        </button>
-      </form>
-    </Grid2>
-      </Box> : navigate("/NotFound")}
-      </>
+      ) : (
+        navigate("/NotFound")
+      )}
+    </>
   );
-  
 };
 
 // Update the payBooking function to expect the correct bookingId structure
 const payBooking = async (
   token: string,
-  bookingId:any,
+  bookingId: any,
   navigate: (path: string) => void
 ) => {
   if (!bookingId) {
