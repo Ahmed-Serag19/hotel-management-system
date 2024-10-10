@@ -1,50 +1,84 @@
-# React + TypeScript + Vite
+Introduction
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Our hotel management application makes it easy for both admins and users to manage rooms, bookings, and offers. It's built with TypeScript to help catch errors early and make the code more reliable. We use modern tools like React, Vite, and MUI to create a fast and user-friendly experience.
 
-Currently, two official plugins are available:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## Expanding the ESLint configuration
+Admin Panel
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+Features:
 
-- Configure the top-level `parserOptions` property like this:
+Valid Authorization: Secure access control to protect sensitive data.
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+Dashboard: Provides a comprehensive view of room availability, user data, and booking status at a glance.
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+Room Control: Allows full CRUD (Create, Read, Update, Delete) management for room details, including pricing, capacity, and available amenities.
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+Booking & Users Management: Seamless management of guest bookings and user profiles.
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+Ads-Offers Section: Admins can create, edit, and display special offers, including detailed descriptions and pricing.
+
+
+
+---
+
+User Panel
+
+Guest Users:
+
+Room Search: Users can search for available rooms by providing check-in and check-out dates.
+
+Current Offers: View special offers directly from the platform.
+
+
+Registered Users:
+
+Room Booking: Registered users can book rooms and manage their reservations.
+
+Favorite Listings: Save and manage favorite room listings.
+
+Reviews & Feedback: Write reviews for their stay.
+
+Payment: Seamless payment process integrated with Stripe.
+
+Dashboard Access: Users can track room availability and view bookings from their dashboard.
+
+
+
+---
+
+Features and Tools
+
+Our platform is powered by the following tools and libraries:
+
+React, Vite, MUI (Material UI): For a modern, responsive, and interactive UI.
+
+React Router DOM, React Hook Form: Facilitates easy navigation and form handling.
+
+React-Slick: For dynamic carousels.
+
+Stripe: Secure payment processing.
+
+Chart.js: Data visualization for tracking and reports.
+
+React Sidebar Pro, React Toastify: Provides easy-to-use sidebars and notifications.
+
+
+
+---
+
+Getting Started
+
+To begin using our hotel management application, follow these steps:
+
+1. Clone the Repository: https://github.com/Ahmed-Serag19/hotel-management-system.git
+
+
+2. Install Dependencies: Run npm install to install the required packages and libraries.
+
+
+3. Run the Application: Use npm run dev to start the development server.
+
+
+4. Access the Admin and User Panels: Log in with admin credentials to access room and booking management, or create a user account to start booking rooms.
