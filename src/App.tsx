@@ -1,8 +1,9 @@
 import "./App.css";
 import {
   RouterProvider,
-  createBrowserRouter,
+  // createBrowserRouter,
   Navigate,
+  createHashRouter,
 } from "react-router-dom";
 import AddRoom from "./modules/Admin/components/Rooms/AddRoom";
 import AdsList from "./modules/Admin/components/AdsList/AdsList";
@@ -39,7 +40,7 @@ function App() {
     }
   };
 
-  const routes = createBrowserRouter([
+  const routes = createHashRouter([
     {
       path: "",
       element: <MasterLayout />,
@@ -50,7 +51,6 @@ function App() {
         { path: "all-rooms", element: <AllRooms /> },
         { path: "room-details/:roomId", element: <RoomDetail /> },
         { path: "dashboard/all-bookings", element: <AllBookings /> },
-        { path: "payment/:bookingId ", element: <Payment /> },
         // Protected Routes: Only accessible to admins
         {
           index: true,

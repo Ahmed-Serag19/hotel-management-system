@@ -117,7 +117,7 @@ function RoomDetail() {
         // Handle success response
         if (response.data.success == true) {
           toast.success(response.data.message);
-          navigate(`/dashboard/payment/${response.data.data.booking._id}`); // Redirect user after booking
+          navigate(`/dashboard/payment/${response.data.data.booking._id}`);
         }
       } catch (error) {
         // Handle error during booking
@@ -474,7 +474,7 @@ function RoomDetail() {
                   padding: { xs: "10px 20px", md: "10px 30px" },
                   textTransform: "none",
                   fontWeight: "bold",
-                  width: { xs: "200px", md: "300px" },
+                  width: { xs: "200px", md: "200px", lg: "300px" },
                 }}
                 onClick={handleBooking}
               >

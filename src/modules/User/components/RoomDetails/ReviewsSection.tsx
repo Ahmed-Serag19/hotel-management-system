@@ -116,7 +116,7 @@ const ReviewsSection: React.FC = () => {
         paddingY: 5,
         paddingX: 2,
         display: "flex",
-        flexDirection: { md: "row", sm: "column" },
+        flexDirection: { md: "row", sm: "column", xs: "column" },
         justifyContent: "center",
         alignItems: "center",
         gap: "50px",

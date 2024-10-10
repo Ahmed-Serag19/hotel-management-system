@@ -67,9 +67,8 @@ export default function HeroSection() {
         display: "flex",
         justifyContent: "space-between",
         alignItems: "center",
-        height: {xs:"auto",md:"50vh"},
-        mb:"5%",
-          
+        height: { xs: "auto", md: "50vh" },
+        mb: "5%",
       }}
     >
       {/* Left side: Text and Inputs */}
@@ -238,7 +237,7 @@ export default function HeroSection() {
                 padding: "10px 30px",
                 textTransform: "none",
                 fontWeight: "bold",
-                width: "300px",
+                width: { md: "300px", sm: "250px", xs: "150px" },
               }}
               onClick={handleExplore}
             >
