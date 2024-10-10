@@ -18,17 +18,19 @@ import {
 import Button from "@mui/material/Button";
 import axios from "axios";
 import { Ads_URls, roomsUrl } from "../../../../constants/End_Points";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Modal from "@mui/material/Modal";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
-import NoData from "../../../Shared/components/NoData/NoData";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import { FaRegEdit } from "react-icons/fa";
 import DeleteImg from "../../../../assets/images/delete.png";
 import TitleTables from "../../../Shared/components/TitleTables/TitleTables";
 import { FirstCell, LastCell } from "../Facilities/FacilitiesData";
+import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../../../../context/authcontext";
+import LoadingScreenTable from "../../../Shared/components/LoadingScreenTables/LoadingScreenTables";
 
 interface AdsTypes {
   room: {
@@ -80,6 +82,11 @@ const modalStyle = {
 };
 
 function AdsList() {
+  let navigate = useNavigate();
+  let { loginData }: any = useContext(AuthContext);
+  if (loginData?.role != "admin") {
+    navigate("/NotFound");
+  }
   const [ads, setAds] = useState<AdsTypes[]>([]);
   const [rooms, setRooms] = useState<RoomsTypes[]>([]);
   const {
@@ -189,244 +196,277 @@ function AdsList() {
   }, [isUpdate, unregister]);
 
   return (
-    <Box component="section">
-      <TitleTables titleTable="Ads" btn="Ads" onClick={handleOpenAdd} />
+    <>
+      {loginData?.role === "admin" ? (
+        <Box>
+          <Box component="section">
+            <TitleTables titleTable="Ads" btn="Ads" onClick={handleOpenAdd} />
 
-      <Stack sx={{ padding: 1.5 }}>
-        {ads.length > 0 ? (
-          <Table
-            sx={{
-              minWidth: 350,
-              [`& .${tableCellClasses.root}`]: {
-                borderBottom: "none",
-              },
-            }}
-            aria-label="simple table"
-          >
-            <TableHead sx={{ backgroundColor: "#E2E5EB" }}>
-              <TableRow>
-                <TableCell sx={FirstCell}>Room Number</TableCell>
-                <TableCell align="center">Price</TableCell>
-                <TableCell align="center">Discount</TableCell>
-                <TableCell align="center">Capacity</TableCell>
-                <TableCell align="center">Active</TableCell>
-                <TableCell sx={LastCell} align="center">
-                  Action
-                </TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {ads.map((ad) => (
-                <StyledTableRow
-                  key={ad.room.roomNumber}
-                  sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+            <Stack
+              sx={{ padding: 1.5, overflowX: { xs: "visible", md: "hidden" } }}
+            >
+              {ads.length > 0 ? (
+                <Table
+                  sx={{
+                    minWidth: 350,
+                    [`& .${tableCellClasses.root}`]: {
+                      borderBottom: "none",
+                    },
+                  }}
+                  aria-label="simple table"
                 >
-                  <TableCell component="th" scope="row">
-                    Room {ad.room.roomNumber}
-                  </TableCell>
-                  <TableCell align="center">{ad.room.price}</TableCell>
-                  <TableCell align="center">{ad.room.discount}</TableCell>
-                  <TableCell align="center">{ad.room.capacity}</TableCell>
-                  <TableCell align="center">
-                    {ad.isActive ? "Yes" : "No"}
-                  </TableCell>
-                  <TableCell align="center">
-                    <Select
-                      sx={{
-                        color: "#1F263E",
-                        fontFamily: "Poppins",
-                        fontSize: "14px",
-                        boxShadow: "none",
-                        ".MuiOutlinedInput-notchedOutline": { border: 0 },
-                      }}
-                      value=""
-                      displayEmpty
-                      IconComponent={MoreHorizIcon}
+                  <TableHead sx={{ backgroundColor: "#E2E5EB" }}>
+                    <TableRow>
+                      <TableCell sx={FirstCell}>Room Number</TableCell>
+                      <TableCell align="center">Price</TableCell>
+                      <TableCell align="center">Discount</TableCell>
+                      <TableCell align="center">Capacity</TableCell>
+                      <TableCell align="center">Active</TableCell>
+                      <TableCell sx={LastCell} align="center">
+                        Action
+                      </TableCell>
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    {ads.map((ad) => (
+                      <StyledTableRow
+                        key={ad.room.roomNumber}
+                        sx={{
+                          "&:last-child td, &:last-child th": { border: 0 },
+                        }}
+                      >
+                        <TableCell component="th" scope="row">
+                          Room {ad.room.roomNumber}
+                        </TableCell>
+                        <TableCell align="center">{ad.room.price}</TableCell>
+                        <TableCell align="center">{ad.room.discount}</TableCell>
+                        <TableCell align="center">{ad.room.capacity}</TableCell>
+                        <TableCell align="center">
+                          {ad.isActive ? "Yes" : "No"}
+                        </TableCell>
+                        <TableCell align="center">
+                          <Select
+                            sx={{
+                              color: "#1F263E",
+                              fontFamily: "Poppins",
+                              fontSize: "14px",
+                              boxShadow: "none",
+                              ".MuiOutlinedInput-notchedOutline": { border: 0 },
+                            }}
+                            value=""
+                            displayEmpty
+                            IconComponent={MoreHorizIcon}
+                          >
+                            <MenuItem onClick={() => handleOpenUpdate(ad._id)}>
+                              <FaRegEdit
+                                style={{
+                                  color: "#203FC7",
+                                  marginRight: "10px",
+                                }}
+                              />
+                              Edit
+                            </MenuItem>
+                            <MenuItem onClick={() => handleOpenDelete(ad._id)}>
+                              <RiDeleteBin6Line
+                                style={{
+                                  color: "#203FC7",
+                                  marginRight: "10px",
+                                }}
+                              />
+                              Delete
+                            </MenuItem>
+                          </Select>
+                        </TableCell>
+                      </StyledTableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              ) : (
+                <LoadingScreenTable />
+              )}
+            </Stack>
+            <Modal
+              open={open}
+              onClose={handleClose}
+              aria-labelledby="modal-modal-title"
+              aria-describedby="modal-modal-description"
+            >
+              <Box
+                onSubmit={handleSubmit(onSubmit)}
+                component="form"
+                sx={style}
+              >
+                <Typography variant="h4" fontWeight={"bold"}>
+                  Ads
+                </Typography>
+                {/* text field for room number */}
+                {!isUpdate && (
+                  <TextField
+                    id="outlined-select"
+                    select
+                    fullWidth
+                    label="Room Number"
+                    margin="normal"
+                    variant="filled"
+                    {...register("room", {
+                      required: !isUpdate ? "Room Number is Required" : false,
+                    })}
+                  >
+                    {rooms.map((option) => (
+                      <MenuItem key={option._id} value={option._id}>
+                        {option.roomNumber}
+                      </MenuItem>
+                    ))}
+                  </TextField>
+                )}
+
+                {errors.room && typeof errors.room.message === "string" && (
+                  <FormHelperText
+                    sx={{ color: "#d32f2f" }}
+                    id="component-error-text"
+                  >
+                    {errors.room.message}
+                  </FormHelperText>
+                )}
+                {/* text field for Discount */}
+                <TextField
+                  fullWidth
+                  id="filled-basic"
+                  label="Discount"
+                  variant="filled"
+                  margin="normal"
+                  {...register("discount", {
+                    required: "Discount is Required",
+                  })}
+                />
+                {errors.discount &&
+                  typeof errors.discount.message === "string" && (
+                    <FormHelperText
+                      sx={{ color: "#d32f2f" }}
+                      id="component-error-text"
                     >
-                      <MenuItem onClick={() => handleOpenUpdate(ad._id)}>
-                        <FaRegEdit
-                          style={{ color: "#203FC7", marginRight: "10px" }}
-                        />
-                        Edit
-                      </MenuItem>
-                      <MenuItem onClick={() => handleOpenDelete(ad._id)}>
-                        <RiDeleteBin6Line
-                          style={{ color: "#203FC7", marginRight: "10px" }}
-                        />
-                        Delete
-                      </MenuItem>
-                    </Select>
-                  </TableCell>
-                </StyledTableRow>
-              ))}
-            </TableBody>
-          </Table>
-        ) : (
-          <NoData />
-        )}
-      </Stack>
-      <Modal
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-        <Box onSubmit={handleSubmit(onSubmit)} component="form" sx={style}>
-          <Typography variant="h4" fontWeight={"bold"}>
-            Ads
-          </Typography>
-          {/* text field for room number */}
-          {!isUpdate && (
-            <TextField
-              id="outlined-select"
-              select
-              fullWidth
-              label="Room Number"
-              margin="normal"
-              variant="filled"
-              {...register("room", {
-                required: !isUpdate ? "Room Number is Required" : false,
-              })}
+                      {errors.discount.message}
+                    </FormHelperText>
+                  )}
+                {/* text field for isActive */}
+                <TextField
+                  id="outlined-select-active"
+                  select
+                  fullWidth
+                  label="Active"
+                  margin="normal"
+                  variant="filled"
+                  {...register("isActive", {
+                    required: "isActive is Required",
+                  })}
+                >
+                  <MenuItem value={"true"}>Yes</MenuItem>
+                  <MenuItem value={"false"}>No</MenuItem>
+                </TextField>
+                {errors.isActive &&
+                  typeof errors.isActive.message === "string" && (
+                    <FormHelperText
+                      sx={{ color: "#d32f2f" }}
+                      id="component-error-text"
+                    >
+                      {errors.isActive.message}
+                    </FormHelperText>
+                  )}
+                <Divider sx={{ marginY: 2 }} />
+                <Button type="submit" size="large" variant="contained">
+                  Save
+                </Button>
+              </Box>
+            </Modal>
+            {/* Modal comfirm delete */}
+            <Modal
+              open={OpenConfirmDelete}
+              onClose={handleCloseDelete}
+              aria-labelledby="parent-modal-title"
+              aria-describedby="parent-modal-description"
+              sx={{ fontFamily: "Poppins", padding: "60px" }}
             >
-              {rooms.map((option) => (
-                <MenuItem key={option._id} value={option._id}>
-                  {option.roomNumber}
-                </MenuItem>
-              ))}
-            </TextField>
-          )}
+              <Box sx={modalStyle}>
+                <Box
+                  sx={{
+                    display: "flex",
+                    justifyContent: "end",
+                    mb: "60px",
+                  }}
+                >
+                  <i
+                    onClick={handleCloseDelete}
+                    style={{
+                      color: "#CC0000",
+                      textAlign: "right",
+                      cursor: "pointer",
+                    }}
+                    className="fa-regular fa-xl fa-circle-xmark"
+                  ></i>
+                </Box>
+                <Box sx={{ textAlign: "center", mt: 5, mb: 2 }}>
+                  <img src={DeleteImg} alt="" />
+                </Box>
 
-          {errors.room && typeof errors.room.message === "string" && (
-            <FormHelperText sx={{ color: "#d32f2f" }} id="component-error-text">
-              {errors.room.message}
-            </FormHelperText>
-          )}
-          {/* text field for Discount */}
-          <TextField
-            fullWidth
-            id="filled-basic"
-            label="Discount"
-            variant="filled"
-            margin="normal"
-            {...register("discount", {
-              required: "Discount is Required",
-            })}
-          />
-          {errors.discount && typeof errors.discount.message === "string" && (
-            <FormHelperText sx={{ color: "#d32f2f" }} id="component-error-text">
-              {errors.discount.message}
-            </FormHelperText>
-          )}
-          {/* text field for isActive */}
-          <TextField
-            id="outlined-select-active"
-            select
-            fullWidth
-            label="Active"
-            margin="normal"
-            variant="filled"
-            {...register("isActive", {
-              required: "isActive is Required",
-            })}
-          >
-            <MenuItem value={"true"}>Yes</MenuItem>
-            <MenuItem value={"false"}>No</MenuItem>
-          </TextField>
-          {errors.isActive && typeof errors.isActive.message === "string" && (
-            <FormHelperText sx={{ color: "#d32f2f" }} id="component-error-text">
-              {errors.isActive.message}
-            </FormHelperText>
-          )}
-          <Divider sx={{ marginY: 2 }} />
-          <Button type="submit" size="large" variant="contained">
-            Save
-          </Button>
-        </Box>
-      </Modal>
-      {/* Modal comfirm delete */}
-      <Modal
-        open={OpenConfirmDelete}
-        onClose={handleCloseDelete}
-        aria-labelledby="parent-modal-title"
-        aria-describedby="parent-modal-description"
-        sx={{ fontFamily: "Poppins", padding: "60px" }}
-      >
-        <Box sx={modalStyle}>
-          <Box
-            sx={{
-              display: "flex",
-              justifyContent: "end",
-              mb: "60px",
-            }}
-          >
-            <i
-              onClick={handleCloseDelete}
-              style={{
-                color: "#CC0000",
-                textAlign: "right",
-                cursor: "pointer",
-              }}
-              className="fa-regular fa-xl fa-circle-xmark"
-            ></i>
+                <Typography
+                  variant="h6"
+                  sx={{
+                    color: "#494949",
+                    fontWeight: 700,
+                    fontSize: "20px",
+                    textAlign: "center",
+                  }}
+                >
+                  Delete This AD?
+                </Typography>
+                <Typography
+                  sx={{
+                    color: "#494949",
+                    fontSize: "14.5px",
+                    textAlign: "center",
+                    opacity: "60%",
+                    mt: 2,
+                    mb: 5,
+                  }}
+                >
+                  Are you sure you want to delete this Ads Room? If you are
+                  sure, just click on delete it.
+                </Typography>
+
+                <Stack
+                  sx={{
+                    mt: 5,
+                    width: "100%",
+                    display: "flex",
+                    justifyContent: "end",
+                  }}
+                  spacing={2}
+                  direction="row"
+                >
+                  <Button
+                    onClick={deleteAds}
+                    // disabled={isSubmitting}
+                    type="submit"
+                    sx={{
+                      backgroundColor: "#203FC7",
+                      textTransform: "none",
+                      fontSize: "17px",
+                      fontWeight: 500,
+                      mt: 3,
+                    }}
+                    variant="contained"
+                  >
+                    Delete
+                  </Button>
+                </Stack>
+              </Box>
+            </Modal>
           </Box>
-          <Box sx={{ textAlign: "center", mt: 5, mb: 2 }}>
-            <img src={DeleteImg} alt="" />
-          </Box>
-
-          <Typography
-            variant="h6"
-            sx={{
-              color: "#494949",
-              fontWeight: 700,
-              fontSize: "20px",
-              textAlign: "center",
-            }}
-          >
-            Delete This AD?
-          </Typography>
-          <Typography
-            sx={{
-              color: "#494949",
-              fontSize: "14.5px",
-              textAlign: "center",
-              opacity: "60%",
-              mt: 2,
-              mb: 5,
-            }}
-          >
-            Are you sure you want to delete this Ads Room? If you are sure, just
-            click on delete it.
-          </Typography>
-
-          <Stack
-            sx={{
-              mt: 5,
-              width: "100%",
-              display: "flex",
-              justifyContent: "end",
-            }}
-            spacing={2}
-            direction="row"
-          >
-            <Button
-              onClick={deleteAds}
-              // disabled={isSubmitting}
-              type="submit"
-              sx={{
-                backgroundColor: "#203FC7",
-                textTransform: "none",
-                fontSize: "17px",
-                fontWeight: 500,
-                mt: 3,
-              }}
-              variant="contained"
-            >
-              Delete
-            </Button>
-          </Stack>
         </Box>
-      </Modal>
-    </Box>
+      ) : (
+        navigate("/NotFound")
+      )}
+    </>
   );
 }
 

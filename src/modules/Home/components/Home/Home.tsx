@@ -1,4 +1,4 @@
-import { Box, Typography } from "@mui/material";
+import { Box, Container, Grid2, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 
 import CircleChart from "../Chart/Chart";
@@ -56,15 +56,25 @@ export default function Home() {
   return (
     <>
       {/* <Layout /> */}
+      <Box>
+
+      
+<Container sx={{margin:"auto"}}> 
+      {/* <Grid2 container > */}
+    
+
+     
       <Box
         sx={{
-          display: "flex",
-          justifyContent: "space-between",
-          padding: 2,
-          marginTop: "35px",
+        
+          
+          marginTop: "10px",
+          width:"100%"
         }}
       >
+        <Grid2  container sx={{mb:2}}>
         {["Rooms", "Facilities", "Ads"].map((ele) => (
+          <Grid2 size={{xs:12,md:4}}>
           <Box
             key={ele}
             sx={{
@@ -74,7 +84,7 @@ export default function Home() {
               backgroundColor: "#1A1B1E",
               color: "white",
               padding: "3rem 2rem",
-              width: "30%",
+                 m:1,
               borderRadius: "15px",
             }}
           >
@@ -100,20 +110,25 @@ export default function Home() {
               color="primary"
             />
           </Box>
+          </Grid2>
         ))}
+        </Grid2>
       </Box>
 
-      <Box
+      {/* <Box
         sx={{
           display: "flex",
           alignItems: "center",
           justifyContent: "space-around",
         }}
-      >
+      > */}
+  <Box>
+    <Grid2 container>
+    <Grid2 size={{xs:12,md:7}} sx={{mb:2}}>
         <Box
           sx={{
             width: "350px",
-            margin: "0 2rem",
+            margin: {xs:0 ,md:"0 2rem"},
             boxShadow: "0 8px 30px rgba(0, 0, 0, 0.2)",
             borderRadius: "15px",
             paddingBlock: "5px",
@@ -131,11 +146,12 @@ export default function Home() {
           </Typography>
           <CircleChart booking={booking} />
         </Box>
-
+        </Grid2>
+        <Grid2 size={{xs:12,md:4}}>
         <Box
           sx={{
             width: "350px",
-            margin: "0 2rem",
+            margin: {xs:0 ,md:"0 2rem"},
             boxShadow: "0 8px 30px rgba(0, 0, 0, 0.2)",
             borderRadius: "15px",
             paddingBlock: "5px",
@@ -153,6 +169,14 @@ export default function Home() {
           </Typography>
           <UsersChart users={users} />
         </Box>
+
+        </Grid2>
+    </Grid2>
+  </Box>
+
+      {/* </Box> */}
+      {/* </Grid2> */}
+      </Container>
       </Box>
       {/* <Footer /> */}
     </>

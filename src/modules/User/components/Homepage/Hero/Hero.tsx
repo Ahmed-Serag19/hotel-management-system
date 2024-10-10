@@ -234,10 +234,10 @@ export default function HeroSection() {
               sx={{
                 mt: 4,
                 backgroundColor: "#3252DF",
-                padding: "10px 30px",
+                padding: { xs: "10px 15px", sm: "10px 30px" },
                 textTransform: "none",
                 fontWeight: "bold",
-                width: { md: "300px", sm: "250px", xs: "150px" },
+                width: { xs: "150px", sm: "300px" },
               }}
               onClick={handleExplore}
             >

@@ -89,7 +89,7 @@ export default function Register() {
         sx={{
           height: "100vh",
           maxHeight: "100vh",
-          overflow: { xs: "auto", md: "hidden" },
+ 
         }}
       >
         <Grid2 container>
@@ -97,7 +97,7 @@ export default function Register() {
             className="sideLeft"
             width={{ xs: "85%", sm: "95%", md: "50%" }}
             size={{ xs: 12, md: 6 }}
-            maxHeight={"97vh"}
+            sx={{pb:2}}
           >
             <Stack
               sx={{ marginLeft: "3%", marginTop: "10px" }}
@@ -419,7 +419,7 @@ export default function Register() {
             <Stack
               className="img-Register"
               sx={{
-                height: { md: "130vh", xl: "97vh" },
+                height: { md: "120vh", xl: "97vh" },
                 backgroundImage: `url(${RegisterImg})`,
                 backgroundSize: " cover",
                 backgroundRepeat: "no-repeat",

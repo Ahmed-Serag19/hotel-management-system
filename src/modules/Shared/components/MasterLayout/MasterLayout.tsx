@@ -1,14 +1,22 @@
-import { useContext, useState } from "react";
+import { useContext,  useState } from "react";
 
 import { AuthContext } from "../../../../context/authcontext";
 import { Box } from "@mui/material";
 import Footer from "../Footer/Footer";
 import NavbarPortal from "../NavbarPortal/NavbarPortal";
 import Navbar from "../Navbar/Navbar";
-import { Outlet } from "react-router-dom";
+import { Outlet, } from "react-router-dom";
 import SidebarComponent from "../Sidebar/Sidebar";
+import LoadingScreen from "../LoadingScreen/LoadingScreen";
 
 export default function MasterLayout() {
+  const [isLoading, setLoading] = useState(true);
+  setTimeout(() => {
+    setLoading(false);
+  }, 1200);
+  const {loginData} = useContext(AuthContext) || {};
+
+
   const [collapsed, setCollapsed] = useState(false);
 
   const toggleSidebar = () => {
@@ -22,9 +30,13 @@ export default function MasterLayout() {
     return <div>Loading...</div>;
   }
 
-  const { loginData } = authContext;
+
 
   return (
+    <>
+         {isLoading ? <LoadingScreen/>:<Box>
+   
+   
     <Box
       sx={{
         display: "flex",
@@ -51,9 +63,9 @@ export default function MasterLayout() {
             position: "sticky",
             top: 0,
             left: 0,
-            width: collapsed ? "75px" : "243px",
+             width: {xs:"100px",sm:"80px", md: collapsed ? "100px" : "250px"},
             height: "100vh",
-            transition: "width 0.3s",
+            transition: "width 0.2s",
             overflowX: "hidden",
             bgcolor: "#f0f0f0",
             zIndex: 1000,
@@ -61,6 +73,7 @@ export default function MasterLayout() {
         >
           <SidebarComponent onToggle={toggleSidebar} collapsed={collapsed} />
         </Box>
+        
       )}
 
       {/* Main Content (Outlet) */}
@@ -68,7 +81,7 @@ export default function MasterLayout() {
         component="main"
         sx={{
           flexGrow: 1,
-          height: "100vh",
+          // height: "100vh",
           overflowY: "auto",
           padding: loginData?.role === "admin" ? 2 : 0,
           paddingX: loginData?.role === "admin" ? 2 : 0,
@@ -82,7 +95,7 @@ export default function MasterLayout() {
           sx={{
             padding: loginData?.role === "admin" ? 2 : 2,
             paddingX: loginData?.role === "admin" ? 2 : 6,
-            minHeight: "calc(100vh - 290px)",
+             minHeight: "calc(100vh - 290px)",
           }}
         >
           <Outlet />
@@ -90,5 +103,9 @@ export default function MasterLayout() {
         {loginData?.role !== "admin" && <Footer />}
       </Box>
     </Box>
+    </Box>}
+    </>
+
+
   );
 }

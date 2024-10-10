@@ -29,16 +29,18 @@ import Rooms from "./modules/Admin/components/Rooms/Rooms";
 import Users from "./modules/Admin/components/Users/Users";
 import { useContext } from "react";
 import { AuthContext } from "./context/authcontext";
+import PaymentPageNavigate from "./modules/User/components/PaymentPageNavigate/PaymentPageNavigate";
 
 function App() {
   const { loginData } = useContext(AuthContext) || {};
-  const getDefaultRouteElement = () => {
-    if (loginData?.role === "admin") {
-      return <Navigate to="dashboard/home" replace />;
-    } else {
-      return <Navigate to="dashboard/homepage" replace />;
-    }
-  };
+
+  // const getDefaultRouteElement = () => {
+  //   if (loginData?.role === "admin") {
+  //     return <Navigate to="dashboard/home" replace />;
+  //   } else {
+  //     return <Navigate to="dashboard/homepage" replace />;
+  //   }
+  // };
 
   const routes = createHashRouter([
     {
@@ -52,10 +54,10 @@ function App() {
         { path: "room-details/:roomId", element: <RoomDetail /> },
         { path: "dashboard/all-bookings", element: <AllBookings /> },
         // Protected Routes: Only accessible to admins
-        {
-          index: true,
-          element: getDefaultRouteElement(), // Decide where to redirect based on the role
-        },
+        // {
+        //   index: true,
+        //   element: getDefaultRouteElement(), // Decide where to redirect based on the role
+        // },
 
         // Public Routes
         {
@@ -69,13 +71,12 @@ function App() {
         },
         { path: "dashboard/all-rooms", element: <AllRooms /> },
         { path: "dashboard/room-details/:roomId", element: <RoomDetail /> },
-        { path: "dashboard/payment/:bookingId", element: <Payment /> },
 
         // Protected Routes for Admin
         {
           path: "dashboard/home",
           element: (
-            <ProtectedRoute allowedRoles={["admin"]}>
+            <ProtectedRoute>
               <Home />
             </ProtectedRoute>
           ),
@@ -83,15 +84,48 @@ function App() {
         {
           path: "dashboard/facilities",
           element: (
-            <ProtectedRoute allowedRoles={["admin"]}>
+            <ProtectedRoute>
               <Facilities />
+            </ProtectedRoute>
+          ),
+        },
+        {
+          path: "dashboard/all-bookings",
+          element: (
+            <ProtectedRoute>
+              <AllBookings />
+            </ProtectedRoute>
+          ),
+        },
+        {
+          path: "dashboard/payment/:bookingId",
+          element: (
+            <ProtectedRoute>
+              <Payment />
+            </ProtectedRoute>
+          ),
+        },
+        {
+          path: "dashboard/payment-page",
+          element: (
+            <ProtectedRoute>
+              <PaymentPageNavigate />
+            </ProtectedRoute>
+          ),
+        },
+
+        {
+          path: "dashboard/favorites",
+          element: (
+            <ProtectedRoute>
+              <FavoriteRooms />
             </ProtectedRoute>
           ),
         },
         {
           path: "dashboard/ads-list",
           element: (
-            <ProtectedRoute allowedRoles={["admin"]}>
+            <ProtectedRoute>
               <AdsList />
             </ProtectedRoute>
           ),
@@ -99,7 +133,7 @@ function App() {
         {
           path: "dashboard/list-booking",
           element: (
-            <ProtectedRoute allowedRoles={["admin"]}>
+            <ProtectedRoute>
               <ListBooking />
             </ProtectedRoute>
           ),
@@ -107,7 +141,7 @@ function App() {
         {
           path: "dashboard/users",
           element: (
-            <ProtectedRoute allowedRoles={["admin"]}>
+            <ProtectedRoute>
               <Users />
             </ProtectedRoute>
           ),
@@ -115,7 +149,7 @@ function App() {
         {
           path: "dashboard/rooms",
           element: (
-            <ProtectedRoute allowedRoles={["admin"]}>
+            <ProtectedRoute>
               <Rooms />
             </ProtectedRoute>
           ),
@@ -123,18 +157,8 @@ function App() {
         {
           path: "dashboard/add-room",
           element: (
-            <ProtectedRoute allowedRoles={["admin"]}>
+            <ProtectedRoute>
               <AddRoom />
-            </ProtectedRoute>
-          ),
-        },
-
-        // User-specific routes for logged-in users
-        {
-          path: "dashboard/favorites",
-          element: (
-            <ProtectedRoute allowedRoles={["user", "admin"]}>
-              <FavoriteRooms />
             </ProtectedRoute>
           ),
         },
@@ -142,7 +166,7 @@ function App() {
         {
           path: "dashboard/change-password",
           element: (
-            <ProtectedRoute allowedRoles={["user", "admin"]}>
+            <ProtectedRoute>
               <ChangePassword />
             </ProtectedRoute>
           ),

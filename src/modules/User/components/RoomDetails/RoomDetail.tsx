@@ -22,7 +22,7 @@ import ic_wifi from "../../../../assets/images/ic_wifi.png";
 import ic_ac from "../../../../assets/images/ic_ac.png";
 import ic_kulkas from "../../../../assets/images/ic_kulkas.png";
 import ic_tv from "../../../../assets/images/ic_tv.png";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import "react-date-range/dist/styles.css";
 import "react-date-range/dist/theme/default.css";
@@ -33,6 +33,7 @@ import { RoomsUrl, UserBookingsUrl } from "../../../../constants/End_Points";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import ReviewsSection from "./ReviewsSection";
 import { toast } from "react-toastify";
+import { AuthContext } from "../../../../context/authcontext";
 
 type Facility = {
   _id: string;
@@ -56,6 +57,7 @@ type RoomDetails = {
 function RoomDetail() {
   const { roomId } = useParams();
   const location = useLocation();
+  let { loginData }: any = useContext(AuthContext);
   const [openLoginModal, setOpenLoginModal] = useState(false);
   const { startDate, endDate, capacity } = location.state || {
     startDate: new Date(),
@@ -116,8 +118,12 @@ function RoomDetail() {
 
         // Handle success response
         if (response.data.success == true) {
-          toast.success(response.data.message);
-          navigate(`/dashboard/payment/${response.data.data.booking._id}`);
+          if (loginData?.role === "user") {
+            toast.success(response.data.message);
+            navigate(`/dashboard/payment/${response.data.data.booking._id}`); // Redirect user after booking
+          } else {
+            setOpenLoginModal(true);
+          }
         }
       } catch (error) {
         // Handle error during booking
@@ -310,7 +316,7 @@ function RoomDetail() {
                 <img src={ic_bedroom} alt="ic_bedroom" />
                 <Typography color="#B0B0B0">
                   <span style={{ fontWeight: "bold", color: "#152C5B" }}>
-                    {Math.ceil(Math.random() * 6)}
+                    {/* {Math.ceil(Math.random() * 6)} */} 3
                   </span>{" "}
                   beds
                 </Typography>
@@ -471,10 +477,10 @@ function RoomDetail() {
                 size="large"
                 sx={{
                   backgroundColor: "#3252DF",
-                  padding: { xs: "10px 20px", md: "10px 30px" },
+                  padding: { xs: "10px ", sm: "10px 30px" },
                   textTransform: "none",
                   fontWeight: "bold",
-                  width: { xs: "200px", md: "200px", lg: "300px" },
+                  width: { xs: "100px", sm: "300px" },
                 }}
                 onClick={handleBooking}
               >
@@ -543,7 +549,7 @@ function RoomDetail() {
           </Typography>
           <Button
             variant="contained"
-            sx={{ backgroundColor: "green", marginX: 3 }}
+            sx={{ backgroundColor: "green", marginX: 3, my: 2 }}
             onClick={() => {
               navigate("/login");
             }}

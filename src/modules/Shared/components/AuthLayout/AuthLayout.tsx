@@ -1,4 +1,7 @@
-import { Outlet } from "react-router-dom";
+import { useContext, useEffect } from "react";
+import { Outlet, useNavigate } from "react-router-dom";
+import { AuthContext } from "../../../../context/authcontext";
+import { Box } from "@mui/material";
 export default function AuthLayout() {
   // const navigate = useNavigate();
   // React.useEffect(() => {
@@ -7,9 +10,19 @@ export default function AuthLayout() {
   //   }
   // });
 
+  const { loginData } = useContext(AuthContext) || {};
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (loginData?.role === "admin") {
+      navigate("/dashboard/home", { replace: true });
+    }
+  }, [loginData, navigate]);
+
   return (
-    <div>
-      <Outlet />
-    </div>
+    <>
+      <Box>
+        <Outlet />
+      </Box>
+    </>
   );
 }

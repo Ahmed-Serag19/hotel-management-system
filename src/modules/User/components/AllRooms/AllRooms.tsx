@@ -1,4 +1,8 @@
-import { RoomsUrl, favoriteUrl } from "../../../../constants/End_Points";
+import {
+  Base_Url,
+  RoomsUrl,
+  favoriteUrl,
+} from "../../../../constants/End_Points";
 import { Box, Container, Grid2, Tooltip, Typography } from "@mui/material";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useContext, useEffect, useState } from "react";
@@ -7,7 +11,7 @@ import { AuthContext } from "../../../../context/authcontext";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import HeaderUserRoom from "../../../Shared/components/HeaderUserRoom/HeaderUserRoom";
 import LoadingScreen from "../../../Shared/components/LoadingScreen/LoadingScreen";
-import NoData from "../../../Shared/components/NoData/NoData";
+
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import axios from "axios";
 import { format } from "date-fns";
@@ -17,7 +21,7 @@ export default function AllRooms() {
   let { loginData }: any = useContext(AuthContext);
   let navigate = useNavigate();
   let location = useLocation();
-  const [isLoading, setLoading] = useState(false);
+
   // Handle the incoming values from location.state
   const { startDate, endDate, capacity } = location.state || {};
 
@@ -25,10 +29,10 @@ export default function AllRooms() {
 
   const [, setTotalCount] = useState(0);
   const [page] = useState(0);
-  const [, setTotalPages] = useState(1);
-  const pageSize = 10;
+  // const [, setTotalPages] = useState(1);
+  const pageSize = 12;
   const defaultStartDate = "2023-01-20";
-  const defaultEndDate = "2023-09-30";
+  const defaultEndDate = "2023-01-30";
 
   const handleRoomClick = (
     roomId: string,
@@ -48,25 +52,56 @@ export default function AllRooms() {
   };
 
   //Fetch all rooms with optional startDate, endDate, and capacity
+  // let getAllRoom = async (page: number) => {
+  //   try {
+  //     let response = await axios.get(`${RoomsUrl.getAllRoom}/available`, {
+  //       params: {
+  //         page: page + 1,
+  //         size: pageSize,
+  //         startDate: startDate
+  //           ? format(new Date(startDate), "yyyy-MM-dd")
+  //           : defaultStartDate || format(new Date(), "yyyy-MM-dd")  ,
+  //         endDate: endDate
+  //           ? format(new Date(endDate), "yyyy-MM-dd")
+  //           : defaultEndDate || format(new Date(), "yyyy-MM-dd") ,
+  //         capacity: capacity || 2, // Default capacity to 2
+  //       },
+  //     });
+
   let getAllRoom = async (page: number) => {
     try {
-      let response = await axios.get(`${RoomsUrl.getAllRoom}/available`, {
-        params: {
-          page: page + 1,
-          size: pageSize,
-          startDate: startDate
-            ? format(new Date(startDate), "yyyy-MM-dd")
-            : defaultStartDate || format(new Date(), "yyyy-MM-dd"),
-          endDate: endDate
-            ? format(new Date(endDate), "yyyy-MM-dd")
-            : defaultEndDate || format(new Date(), "yyyy-MM-dd"),
-          capacity: capacity || 2, // Default capacity to 2
-        },
-      });
+      let params: any = {
+        page: page + 1,
+        size: pageSize,
+      };
+      if (startDate) {
+        params.startDate =
+          format(new Date(startDate), "yyyy-MM-dd") ||
+          format(new Date(), "yyyy-MM-dd");
+      }
 
+      if (endDate) {
+        params.endDate =
+          format(new Date(endDate), "yyyy-MM-dd") ||
+          format(new Date(), "yyyy-MM-dd");
+      }
+
+      if (capacity) {
+        params.capacity = capacity || 2;
+      }
+
+      let response;
+
+      if (startDate || endDate || capacity) {
+        response = await axios.get(`${Base_Url}/portal/rooms/available`, {
+          params,
+        });
+      } else {
+        response = await axios.get(RoomsUrl.getAllRoom);
+      }
       setRoomList(response.data.data.rooms);
       setTotalCount(response.data.data.totalCount);
-      setTotalPages(Math.ceil(response.data.data.totalCount / pageSize));
+      //count={Math.ceil(totalCount / size)}
     } catch (error: any) {
       toast.error("Failed to fetch rooms", error);
     }
@@ -94,91 +129,83 @@ export default function AllRooms() {
   };
 
   useEffect(() => {
-    setLoading(true);
     getAllRoom(page);
-    setTimeout(() => {
-      setLoading(false);
-    }, 2500);
   }, [page, startDate, endDate, capacity]);
 
   return (
     <>
-      {!isLoading ? (
-        <Box>
-          {roomList.length > 0 ? (
-            <Container>
-              <HeaderUserRoom
-                title={"Explore ALL Rooms"}
-                linkTo={"all-rooms"}
-                NameLink={"Explore"}
-                Name={"ALL Rooms"}
-              />
+      <Box>
+        {roomList.length > 0 ? (
+          <Container>
+            <HeaderUserRoom
+              title={"Explore ALL Rooms"}
+              linkTo={"all-rooms"}
+              NameLink={"Explore"}
+              Name={"ALL Rooms"}
+            />
 
-              <Grid2 container>
-                {roomList.map((room: any) => (
-                  <Grid2
-                    size={{ xs: 12, sm: 6, md: 4 }}
-                    sx={{ my: 2 }}
-                    key={room._id}
+            <Grid2 container>
+              {roomList.map((room: any) => (
+                <Grid2
+                  size={{ xs: 12, sm: 6, md: 4 }}
+                  sx={{ my: 2 }}
+                  key={room._id}
+                >
+                  <Box
+                    className="ImgList "
+                    sx={{ height: { xs: "175px", sm: "215px" }, width: "90%" }}
                   >
-                    <Box
-                      className="ImgList "
-                      sx={{ height: "215px", width: "90%" }}
-                    >
-                      <Box sx={{ position: "relative" }}>
-                        <Box
-                          component="img"
-                          alt="img-room"
-                          src={room?.images[0]}
-                          sx={{
-                            height: "215px",
-                            borderRadius: "15px",
-                            width: "100%",
-                          }}
-                        />
-                        <Box className="headerImg">
-                          <Typography>
-                            {"$" + room.price + "" + " per night"}
-                          </Typography>
-                        </Box>
-                      </Box>
-                      <Box className="LayerIcon">
-                        <Box className="IconsBar">
-                          <Tooltip title="Details Room">
-                            <VisibilityIcon
-                              fontSize="large"
-                              onClick={() =>
-                                handleRoomClick(
-                                  room._id,
-                                  capacity,
-                                  startDate,
-                                  endDate
-                                )
-                              }
-                            />
-                          </Tooltip>
-
-                          <Tooltip title="Add To Favorite">
-                            <FavoriteIcon
-                              fontSize="large"
-                              onClick={() => addToFav(room._id)}
-                              sx={{ marginLeft: "15px" }}
-                            />
-                          </Tooltip>
-                        </Box>
+                    <Box sx={{ position: "relative" }}>
+                      <Box
+                        component="img"
+                        alt="img-room"
+                        src={room?.images[0]}
+                        sx={{
+                          height: { xs: "175px", sm: "215px" },
+                          borderRadius: "15px",
+                          width: "100%",
+                        }}
+                      />
+                      <Box className="headerImg">
+                        <Typography>
+                          {"$" + room.price + "" + " per night"}
+                        </Typography>
                       </Box>
                     </Box>
-                  </Grid2>
-                ))}
-              </Grid2>
-            </Container>
-          ) : (
-            <NoData />
-          )}
-        </Box>
-      ) : (
-        <LoadingScreen />
-      )}
+                    <Box className="LayerIcon">
+                      <Box className="IconsBar">
+                        <Tooltip title="Details Room">
+                          <VisibilityIcon
+                            fontSize="large"
+                            onClick={() =>
+                              handleRoomClick(
+                                room._id,
+                                capacity,
+                                startDate,
+                                endDate
+                              )
+                            }
+                          />
+                        </Tooltip>
+
+                        <Tooltip title="Add To Favorite">
+                          <FavoriteIcon
+                            fontSize="large"
+                            onClick={() => addToFav(room._id)}
+                            sx={{ marginLeft: "15px" }}
+                          />
+                        </Tooltip>
+                      </Box>
+                    </Box>
+                  </Box>
+                </Grid2>
+              ))}
+            </Grid2>
+          </Container>
+        ) : (
+          <LoadingScreen />
+        )}
+      </Box>
     </>
   );
 }

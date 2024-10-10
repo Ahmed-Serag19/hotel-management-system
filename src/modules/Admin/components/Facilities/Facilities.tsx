@@ -18,12 +18,11 @@ import {
   selectStyle,
   style,
 } from "../Facilities/FacilitiesData";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 
 import { FaRegEdit } from "react-icons/fa";
 import ModalPop from "../../../Shared/components/ModalPop/ModalPop";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
-import NoData from "../../../Shared/components/NoData/NoData";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -37,8 +36,16 @@ import { facility_Urls } from "../../../../constants/End_Points";
 import { tableCellClasses } from "@mui/material/TableCell"; // for table border
 import { toast } from "react-toastify";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../../../../context/authcontext";
+import LoadingScreenTable from "../../../Shared/components/LoadingScreenTables/LoadingScreenTables";
 
 export default function Facilities() {
+  let navigate = useNavigate();
+  let { loginData }: any = useContext(AuthContext);
+  if (loginData?.role != "admin") {
+    navigate("/NotFound");
+  }
   const [facility, setFacility] = useState([]);
   const [modalOpen, setModalOpen] = useState(false); //add& update
   const [isUpdate, setIsUpdate] = useState(false); //add& update
@@ -145,200 +152,222 @@ export default function Facilities() {
 
   useEffect(() => {
     getFacility();
+    // setLoading(true);
+
+    // setTimeout(() => {
+    //   setLoading(false);
+    // }, 1000);
   }, [page, rowsPerPage]);
 
   return (
     <>
-      <TitleTables
-        titleTable="Facilities"
-        btn="Facility"
-        onClick={openAddModal}
-      />
+      {loginData?.role == "admin" ? (
+        <Box>
+          {/* {!isLoading ? (<Box> */}
+          <TitleTables
+            titleTable="Facilities"
+            btn="Facility"
+            onClick={openAddModal}
+          />
 
-      {/* modAl add && update*/}
+          {/* modAl add && update*/}
 
-      <Modal
-        open={modalOpen}
-        onClose={closeModal}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-        sx={{ fontFamily: "Poppins" }}
-      >
-        <Box sx={style}>
-          <Box
-            sx={{
-              display: "flex",
-              justifyContent: "space-between",
-            }}
+          <Modal
+            open={modalOpen}
+            onClose={closeModal}
+            aria-labelledby="modal-modal-title"
+            aria-describedby="modal-modal-description"
+            sx={{ fontFamily: "Poppins" }}
           >
-            <Typography
-              id="modal-modal-title"
-              sx={{ fontSize: "25px", fontWeight: "700", color: "#494949" }}
-              variant="h6"
-              component="h2"
-            >
-              {isUpdate ? "Update Facility" : "Add Facility"}
-            </Typography>
-            <i
-              onClick={closeModal}
-              style={{
-                color: "#CC0000",
-                textAlign: "right",
-                cursor: "pointer",
-              }}
-              className="fa-regular fa-xl fa-circle-xmark"
-            ></i>
-          </Box>
-          <form onSubmit={handleSubmit((data) => saveOrUpdateFacility(data))}>
-            <TextField
-              id="name"
-              label="Name"
-              type="text"
-              autoComplete="name"
-              sx={{ bgcolor: "#F7F7F7", width: "100%", mt: "70px", mb: 1 }}
-              error={!!errors.name}
-              {...register("name", {
-                required: "Name is required",
-              })}
-            />
-            {errors.name && (
-              <FormHelperText sx={{ color: "#d32f2f" }}>
-                {typeof errors.name?.message === "string"
-                  ? errors.name?.message
-                  : ""}
-              </FormHelperText>
-            )}
-            <Stack
-              sx={{
-                mt: 5,
-                width: "100%",
-                display: "flex",
-                justifyContent: "end",
-                borderTop: "3px",
-              }}
-              spacing={2}
-              direction="row"
-            >
-              <Button
-                onClick={saveOrUpdateFacility}
-                disabled={isSubmitting}
-                type="submit"
+            <Box sx={style}>
+              <Box
                 sx={{
-                  backgroundColor: "#203FC7",
-                  textTransform: "none",
-                  fontSize: "17px",
-                  fontWeight: 500,
+                  display: "flex",
+                  justifyContent: "space-between",
                 }}
-                variant="contained"
               >
-                {isUpdate ? "Update" : "Save"}
-              </Button>
-            </Stack>
-          </form>
-        </Box>
-      </Modal>
-      {/* model delete */}
-      <ModalPop
-        open={openDelete}
-        handleClose={handleCloseDelete}
-        FunctionBtn={deleteFacility}
-      />
-
-      <Box sx={{ pb: 1 }}>
-        {facility.length > 0 ? (
-          <Box>
-            <Table
-              sx={{
-                minWidth: 350,
-                [`& .${tableCellClasses.root}`]: {
-                  borderBottom: "none",
-                },
-                mt: "50px",
-              }}
-              aria-label="simple table"
-            >
-              <TableHead sx={{ hight: "50px" }}>
-                <TableRow sx={TableBorderRow}>
-                  <TableCell sx={FirstCell}>Name</TableCell>
-                  <TableCell
+                <Typography
+                  id="modal-modal-title"
+                  sx={{ fontSize: "25px", fontWeight: "700", color: "#494949" }}
+                  variant="h6"
+                  component="h2"
+                >
+                  {isUpdate ? "Update Facility" : "Add Facility"}
+                </Typography>
+                <i
+                  onClick={closeModal}
+                  style={{
+                    color: "#CC0000",
+                    textAlign: "right",
+                    cursor: "pointer",
+                  }}
+                  className="fa-regular fa-xl fa-circle-xmark"
+                ></i>
+              </Box>
+              <form
+                onSubmit={handleSubmit((data) => saveOrUpdateFacility(data))}
+              >
+                <TextField
+                  id="name"
+                  label="Name"
+                  type="text"
+                  autoComplete="name"
+                  sx={{ bgcolor: "#F7F7F7", width: "100%", mt: "70px", mb: 1 }}
+                  error={!!errors.name}
+                  {...register("name", {
+                    required: "Name is required",
+                  })}
+                />
+                {errors.name && (
+                  <FormHelperText sx={{ color: "#d32f2f" }}>
+                    {typeof errors.name?.message === "string"
+                      ? errors.name?.message
+                      : ""}
+                  </FormHelperText>
+                )}
+                <Stack
+                  sx={{
+                    mt: 5,
+                    width: "100%",
+                    display: "flex",
+                    justifyContent: "end",
+                    borderTop: "3px",
+                  }}
+                  spacing={2}
+                  direction="row"
+                >
+                  <Button
+                    onClick={saveOrUpdateFacility}
+                    disabled={isSubmitting}
+                    type="submit"
                     sx={{
-                      color: "#1F263E",
+                      backgroundColor: "#203FC7",
+                      textTransform: "none",
+                      fontSize: "17px",
                       fontWeight: 500,
-                      fontFamily: "Poppins",
                     }}
+                    variant="contained"
                   >
-                    Created at
-                  </TableCell>
+                    {isUpdate ? "Update" : "Save"}
+                  </Button>
+                </Stack>
+              </form>
+            </Box>
+          </Modal>
+          {/* model delete */}
+          <ModalPop
+            open={openDelete}
+            handleClose={handleCloseDelete}
+            FunctionBtn={deleteFacility}
+          />
 
-                  <TableCell sx={LastCell}>Action</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody
-                sx={{
-                  border: "none",
-                  borderTop: "none",
-                  borderCollapse: "none",
-                }}
-              >
-                {facility.map((facilityData: any) => (
-                  <StyledTableRow
-                    key={facilityData._id}
+          <Box sx={{ pb: 1, overflowX: { xs: "visible", md: "hidden" } }}>
+            {facility.length > 0 ? (
+              <Box>
+                <Table
+                  sx={{
+                    minWidth: 350,
+                    [`& .${tableCellClasses.root}`]: {
+                      borderBottom: "none",
+                    },
+                    mt: "50px",
+                  }}
+                  aria-label="simple table"
+                >
+                  <TableHead sx={{ hight: "50px" }}>
+                    <TableRow sx={TableBorderRow}>
+                      <TableCell sx={FirstCell}>Name</TableCell>
+                      <TableCell
+                        sx={{
+                          color: "#1F263E",
+                          fontWeight: 500,
+                          fontFamily: "Poppins",
+                        }}
+                      >
+                        Created at
+                      </TableCell>
+
+                      <TableCell sx={LastCell}>Action</TableCell>
+                    </TableRow>
+                  </TableHead>
+                  <TableBody
                     sx={{
-                      "&:last-child td, &:last-child th": { border: 0 },
-                      fontFamily: "Poppins",
+                      border: "none",
+                      borderTop: "none",
+                      borderCollapse: "none",
                     }}
                   >
-                    <TableCell sx={{ color: "#3A3A3D", fontFamily: "Poppins" }}>
-                      {facilityData.name}
-                    </TableCell>
-                    <TableCell>{Numbers(facilityData.createdAt)}</TableCell>
-                    <TableCell>
-                      <Select
-                        sx={selectStyle}
-                        value=""
-                        displayEmpty
-                        inputProps={{ "aria-label": "Without label" }}
-                        IconComponent={MoreHorizIcon}
+                    {facility.map((facilityData: any) => (
+                      <StyledTableRow
+                        key={facilityData._id}
+                        sx={{
+                          "&:last-child td, &:last-child th": { border: 0 },
+                          fontFamily: "Poppins",
+                        }}
                       >
-                        <MenuItem
-                          onClick={() => openUpdateModal(facilityData)}
-                          sx={{ color: "#1F263E", fontFamily: "Poppins" }}
-                          value={20}
+                        <TableCell
+                          sx={{ color: "#3A3A3D", fontFamily: "Poppins" }}
                         >
-                          <FaRegEdit
-                            style={{ color: "#203FC7", marginRight: "10px" }}
-                          />{" "}
-                          Edit
-                        </MenuItem>
-                        <MenuItem
-                          sx={{ color: "#1F263E", fontFamily: "Poppins" }}
-                          onClick={() => handleOpenDelete(facilityData._id)}
-                          value={30}
-                        >
-                          <RiDeleteBin6Line
-                            style={{ color: "#203FC7", marginRight: "10px" }}
-                          />{" "}
-                          Delete
-                        </MenuItem>
-                      </Select>
-                    </TableCell>
-                  </StyledTableRow>
-                ))}
-              </TableBody>
-            </Table>
-            <TablePagination
-              component="div"
-              count={totalCount}
-              page={page}
-              onPageChange={handleChangePage}
-              rowsPerPage={rowsPerPage}
-              onRowsPerPageChange={handleChangeRowsPerPage}
-            />
+                          {facilityData.name}
+                        </TableCell>
+                        <TableCell>{Numbers(facilityData.createdAt)}</TableCell>
+                        <TableCell>
+                          <Select
+                            sx={selectStyle}
+                            value=""
+                            displayEmpty
+                            inputProps={{ "aria-label": "Without label" }}
+                            IconComponent={MoreHorizIcon}
+                          >
+                            <MenuItem
+                              onClick={() => openUpdateModal(facilityData)}
+                              sx={{ color: "#1F263E", fontFamily: "Poppins" }}
+                              value={20}
+                            >
+                              <FaRegEdit
+                                style={{
+                                  color: "#203FC7",
+                                  marginRight: "10px",
+                                }}
+                              />{" "}
+                              Edit
+                            </MenuItem>
+                            <MenuItem
+                              sx={{ color: "#1F263E", fontFamily: "Poppins" }}
+                              onClick={() => handleOpenDelete(facilityData._id)}
+                              value={30}
+                            >
+                              <RiDeleteBin6Line
+                                style={{
+                                  color: "#203FC7",
+                                  marginRight: "10px",
+                                }}
+                              />{" "}
+                              Delete
+                            </MenuItem>
+                          </Select>
+                        </TableCell>
+                      </StyledTableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+                <TablePagination
+                  component="div"
+                  count={totalCount}
+                  page={page}
+                  onPageChange={handleChangePage}
+                  rowsPerPage={rowsPerPage}
+                  onRowsPerPageChange={handleChangeRowsPerPage}
+                />
+              </Box>
+            ) : (
+              <LoadingScreenTable />
+            )}
           </Box>
-        ) : (
-          <NoData />
-        )}
-      </Box>
+        </Box>
+      ) : (
+        navigate("/NotFound")
+      )}
     </>
   );
 }

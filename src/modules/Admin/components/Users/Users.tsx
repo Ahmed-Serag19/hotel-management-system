@@ -12,14 +12,17 @@ import {
   Select,
   Typography,
   TablePagination,
+  Stack,
 } from "@mui/material";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { get_user } from "../../../../constants/End_Points";
 import { toast } from "react-toastify";
 import styled from "@emotion/styled";
 import { tableCellClasses } from "@mui/material/TableCell";
-import NoData from "../../../Shared/components/NoData/NoData";
+import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../../../../context/authcontext";
+import LoadingScreenTable from "../../../Shared/components/LoadingScreenTables/LoadingScreenTables";
 
 interface UsersData {
   _id: string;
@@ -32,6 +35,12 @@ interface UsersData {
 }
 
 export default function UsersTable() {
+  let navigate = useNavigate();
+  let { loginData }: any = useContext(AuthContext);
+  if (loginData?.role != "admin") {
+    navigate("/NotFound");
+  }
+
   const [users, setUsers] = useState<UsersData[]>([]);
   const [openView, setOpenView] = useState(false); // View modal
   const [selectedUser, setSelectedUser] = useState<UsersData | null>(null); // Store the selected user's data
@@ -63,7 +72,7 @@ export default function UsersTable() {
   const getUsers = async () => {
     try {
       const response = await axios.get(
-        `${get_user.getAllUsers}?page=${page}&limit=${rowsPerPage}`,
+        `${get_user.getAllUsers}?page=${page + 1}&size=${rowsPerPage}`,
         {
           headers: { Authorization: localStorage.getItem("token") || "" },
         }
@@ -76,7 +85,13 @@ export default function UsersTable() {
   };
 
   useEffect(() => {
+
+    
+   
     getUsers();
+
+
+  
   }, [page, rowsPerPage]);
 
   // Style rows (color alternation)
@@ -109,6 +124,8 @@ export default function UsersTable() {
         aria-describedby="view-modal-description"
         sx={{ fontFamily: "Poppins" }}
       >
+
+
         <Box sx={style}>
           <Typography
             id="view-modal-title"
@@ -145,10 +162,38 @@ export default function UsersTable() {
           )}
         </Box>
       </Modal>
+        
+      
+      {loginData?.role === "admin" ?<Box>
+        
+     <Box>
+
+        <Box
+        sx={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          height:{xs:"30px",sm:"100px"},
+        }}
+      >
+        <Stack sx={{ color: "#1F263E" , }} >
+          <Typography variant="h6" sx={{ fontFamily: "Poppins" ,fontSize:{xs:"16px",md:"20px"} }}>
+           Users Table Details
+          </Typography>
+          <Typography
+            sx={{fontSize:{xs:"12px",md:"14px"},  lineHeight: "2px" }}
+          >
+            You can check all details
+          </Typography>
+        </Stack>
+
+       
+      </Box>
 
       {/* Users Table */}
-      <Box sx={{ pb: 3, overflowX: "auto" }}>
+      <Box sx={{ pb: 3, overflowX:{xs:"visible",md:"hidden"}}}>
         {users.length > 0 ? (
+          <Box>
           <Table
             sx={{
               minWidth: 350,
@@ -176,7 +221,7 @@ export default function UsersTable() {
                 <TableCell sx={{ fontWeight: 500 }}>Phone</TableCell>
                 <TableCell sx={{ fontWeight: 500 }}>Country</TableCell>
                 <TableCell sx={{ fontWeight: 500 }}>Role</TableCell>
-                <TableCell sx={{ fontWeight: 500 }}>Image</TableCell>
+                {/* <TableCell sx={{ fontWeight: 500 }}>Image</TableCell> */}
                 <TableCell
                   sx={{
                     fontWeight: 500,
@@ -198,9 +243,9 @@ export default function UsersTable() {
                   <TableCell>{userData.phoneNumber}</TableCell>
                   <TableCell>{userData.country}</TableCell>
                   <TableCell>{userData.role}</TableCell>
-                  <TableCell>
+                  {/* <TableCell>
                     {userData.profileImage?.[0]?.name || "No Image"}
-                  </TableCell>
+                  </TableCell> */}
                   <TableCell>
                     <Select
                       sx={{
@@ -226,20 +271,25 @@ export default function UsersTable() {
               ))}
             </TableBody>
           </Table>
-        ) : (
-          <NoData />
+                      <TablePagination
+                      component="div"
+                      count={totalCount}
+                      page={page}
+                      onPageChange={handleChangePage}
+                      rowsPerPage={rowsPerPage}
+                      onRowsPerPageChange={handleChangeRowsPerPage}
+                    />
+                    
+                    </Box>) : (
+          <LoadingScreenTable/>
         )}
       </Box>
+</Box>
 
-      {/* Table Pagination */}
-      <TablePagination
-        component="div"
-        count={totalCount}
-        page={page}
-        onPageChange={handleChangePage}
-        rowsPerPage={rowsPerPage}
-        onRowsPerPageChange={handleChangeRowsPerPage}
-      />
+</Box> : navigate("/NotFound")}
+      
+
+
     </>
   );
 }

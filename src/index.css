@@ -143,22 +143,13 @@ margin-left: 5px;
   background-color: #f5f1f1;
 }
 
-@media screen and (min-width: 900px) and (max-width: 1366px) {
-  .inputReset .css-1jk99ih-MuiInputBase-input-MuiOutlinedInput-input,
+@media screen and (min-width: 900px) and (max-width: 1400px) {
+ .css-1jk99ih-MuiInputBase-input-MuiOutlinedInput-input,
   .css-lc42l8-MuiInputBase-input-MuiOutlinedInput-input {
  height: 15px !important;
  padding:  14px !important;
  }
- .inputRegister .css-1jk99ih-MuiInputBase-input-MuiOutlinedInput-input,
- .css-lc42l8-MuiInputBase-input-MuiOutlinedInput-input {
-height: 15px !important;
-padding:  14px !important;
-}
-.inputLogin .css-1jk99ih-MuiInputBase-input-MuiOutlinedInput-input,
- .css-lc42l8-MuiInputBase-input-MuiOutlinedInput-input {
-height: 15px !important;
-padding:  14px !important;
-}
+
 
 
 }
