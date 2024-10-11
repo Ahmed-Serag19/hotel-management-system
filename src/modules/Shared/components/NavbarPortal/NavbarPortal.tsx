@@ -40,7 +40,7 @@ const StyledNavLink = styled(NavLink)<{ isActive: boolean }>(
 );
 export default function NavbarPortal(props: Props) {
   const navigate = useNavigate();
-  const { loginData }: any = useContext(AuthContext);
+  const { loginData, logout }: any = useContext(AuthContext);
 
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
@@ -48,7 +48,10 @@ export default function NavbarPortal(props: Props) {
   const handleDrawerToggle = () => {
     setMobileOpen((prevState) => !prevState);
   };
-
+  const handleLogOut = () => {
+    logout();
+    navigate("/homepage");
+  };
   const container =
     window !== undefined ? () => window().document.body : undefined;
 
@@ -152,10 +155,7 @@ export default function NavbarPortal(props: Props) {
                     </MenuItem>
                     <MenuItem
                       sx={{ color: "#1F263E", fontFamily: "Poppins" }}
-                      onClick={() => {
-                        localStorage.removeItem("token");
-                        navigate("/login");
-                      }}
+                      onClick={handleLogOut}
                       value={30}
                     >
                       Logout

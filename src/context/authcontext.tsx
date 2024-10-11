@@ -23,15 +23,14 @@ export default function AuthContextProvider(props: any) {
     setLoginData(decodedToken);
   };
   useEffect(() => {
-    if(localStorage.getItem("token"))
-      {
-        saveLoginData()
-      }
+    if (localStorage.getItem("token")) {
+      saveLoginData();
+    }
     // localStorage.getItem("token")
   }, []);
 
   const logout = () => {
-    localStorage.removeItem("token");
+    localStorage.clear();
     setLoginData(null);
   };
 

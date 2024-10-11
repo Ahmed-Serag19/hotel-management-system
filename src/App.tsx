@@ -49,15 +49,11 @@ function App() {
       errorElement: <NotFound />,
       children: [
         // Public Routes: Homepage, AllRooms, RoomDetails accessible to all, including guests
+        { index: true, element: <Homepage /> },
         { path: "homepage", element: <Homepage /> },
         { path: "all-rooms", element: <AllRooms /> },
         { path: "room-details/:roomId", element: <RoomDetail /> },
         { path: "dashboard/all-bookings", element: <AllBookings /> },
-        // Protected Routes: Only accessible to admins
-        // {
-        //   index: true,
-        //   element: getDefaultRouteElement(), // Decide where to redirect based on the role
-        // },
 
         // Public Routes
         {
